@@ -3,8 +3,6 @@
 ## 📹 동영상 링크
 [![Unity Portfolio (4K)](https://img.youtube.com/vi/sTdEx9n8rMI/0.jpg?v=1)](https://www.youtube.com/watch?v=sTdEx9n8rMI)
 
-> **Chrono Breach**는 Unity3D로 제작된 **RPG 게임**입니다. 다양한 기능과 시스템이 구현되어 있으며, 1년 1개월 동안 개발되었습니다.
-
 [🔗 유튜브 영상 바로 보기](https://www.youtube.com/watch?v=sTdEx9n8rMI)
 
 ---
@@ -13,6 +11,7 @@
 
 - **Unity Version**: 2021.3.17f1
 - **제작 기간**: 1년 1개월
+- **게임 장르**: 3D Action RPG
 
 ---
 
