@@ -13,7 +13,7 @@
 - **Unity Version**: 2021.3.17f1
 - **제작 기간**: 1년 3개월
 - **게임 장르**: 3D Action RPG
-
+- **이메일**: whtkrl@gmail.com
 ---
 
 ## ⏳ 타임라인
