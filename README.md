@@ -1,7 +1,7 @@
 # 🎮 Unity3D Portfolio RPG Game - Chrono Breach
 
 ## 📹 동영상 링크
-**동영상 화질을 4K로 시청해주시면 감사합니다.** 
+**동영상 화질을 4k를 선택하여 시청해주시면 감사합니다.** 
 [![Unity Portfolio (4K)](https://img.youtube.com/vi/sTdEx9n8rMI/0.jpg?v=1)](https://www.youtube.com/watch?v=sTdEx9n8rMI)
 
 [🔗 유튜브 영상 바로 보기](https://www.youtube.com/watch?v=sTdEx9n8rMI)
