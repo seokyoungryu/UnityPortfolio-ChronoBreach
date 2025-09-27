@@ -3,6 +3,9 @@
 ## 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
 [![Unity Portfolio (4K)](https://img.youtube.com/vi/sTdEx9n8rMI/0.jpg?v=1)](https://www.youtube.com/watch?v=sTdEx9n8rMI)
+<a href="https://www.youtube.com/watch?v=sTdEx9n8rMI" target="_blank">
+  <img src="https://img.youtube.com/vi/sTdEx9n8rMI/maxresdefault.jpg" alt="Unity Portfolio (4K)" style="width:100%;">
+</a>
 
 [🔗 유튜브 영상 바로 보기](https://www.youtube.com/watch?v=sTdEx9n8rMI)
 
