@@ -34,23 +34,23 @@ public class CounterAttackState : GenealState
 
     [Header("Settings")]
     [SerializeField] private float counterComboResetTime = 3f;
-    [SerializeField, Tooltip("Counter ¼º°ø ÈÄ ¾îÅÃ ¾ÈÇÏ¸é moveState ÀÌµ¿±îÁö ½Ã°£.")]
+    [SerializeField, Tooltip("Counter ì„±ê³µ í›„ ì–´íƒ ì•ˆí•˜ë©´ moveState ì´ë™ê¹Œì§€ ì‹œê°„.")]
     private float successExitTime = 0.5f;
-    [SerializeField, Tooltip("CounterAttackÇÒ °æ¿ì. Á¾·á ÈÄ °ø°İ °¡´É ½Ã°£")]
+    [SerializeField, Tooltip("CounterAttackí•  ê²½ìš°. ì¢…ë£Œ í›„ ê³µê²© ê°€ëŠ¥ ì‹œê°„")]
     private float waitCanAttackTime = 0f;
-    [SerializeField, Tooltip("Counter Á¾·á ÈÄ ´Ù½Ã ÀçÁøÀÔ °¡´É ½Ã°£")]
+    [SerializeField, Tooltip("Counter ì¢…ë£Œ í›„ ë‹¤ì‹œ ì¬ì§„ì… ê°€ëŠ¥ ì‹œê°„")]
     private float delayAfterReEnterTime = 0f;
 
     [Header("DefenseParray")]
-    [SerializeField, Tooltip("Denfense ½Ã Parrying Detect À¯Áö ÇÒ ½Ã°£")]
+    [SerializeField, Tooltip("Denfense ì‹œ Parrying Detect ìœ ì§€ í•  ì‹œê°„")]
     private float defenseDetectParryTime = 0.5f;
     [Header("AfterCounterAttack")]
-    [SerializeField, Tooltip("CounterAttack ÈÄ Parrying Detect½Ã À¯Áö ÇÒ ½Ã°£")]
+    [SerializeField, Tooltip("CounterAttack í›„ Parrying Detectì‹œ ìœ ì§€ í•  ì‹œê°„")]
     private float afterDetectTime = 0.5f;
-    [SerializeField, Tooltip("CounterAttack ÈÄ ÃÖ´ë Parrying ¼ö")]
+    [SerializeField, Tooltip("CounterAttack í›„ ìµœëŒ€ Parrying ìˆ˜")]
     private int afterMaxParryCount = 2;
     private float attackEndTime = 0f;
-    private bool excuteParrying = false;    //CounterAttack ÈÄ Parry Detect ½ÇÇà.
+    private bool excuteParrying = false;    //CounterAttack í›„ Parry Detect ì‹¤í–‰.
     private int currentParryCount = 0;
 
     private float currentTimer = 0f;
@@ -114,10 +114,10 @@ public class CounterAttackState : GenealState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log($"<color=green> Ä«¿îÅÍ ½Ãµµ isCounterAttack {isCounterAttack} canReEnterState {canReEnterState}</color>");
+            Debug.Log($"<color=green> ì¹´ìš´í„° ì‹œë„ isCounterAttack {isCounterAttack} canReEnterState {canReEnterState}</color>");
             if (isCounterAttack && canReEnterState)
             {
-                Debug.Log($"<color=yellow> Ä«¿îÅÍ ÀçÁøÀÔ</color>");
+                Debug.Log($"<color=yellow> ì¹´ìš´í„° ì¬ì§„ì…</color>");
                 stateController.ChangeState(stateController.counterAttackStateHash, 0);
             }
             else if (defenseSucess)
@@ -129,16 +129,16 @@ public class CounterAttackState : GenealState
         {
             if (controller.playerStats.CurrentStamina < controller.playerStats.RollSpCost)
             {
-                CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("½ºÅÂ¹Ì³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("ìŠ¤íƒœë¯¸ë‚˜ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             }
             else
                 stateController.ChangeState(controller.rollStateHash);
         }
 
-        if (currentSuccessCounterType != CounterAttackType.NONE && isCounterSucess && canCounterAttack) //Ä«¿îÅÍ ¼º°ø½Ã.
+        if (currentSuccessCounterType != CounterAttackType.NONE && isCounterSucess && canCounterAttack) //ì¹´ìš´í„° ì„±ê³µì‹œ.
         {
             currentTimer += Time.deltaTime;
-            if (Input.GetMouseButtonDown(0) && !isCounterAttack)   //Ä«¿îÅÍ ¼º°ø½Ã ¸¶¿ì½º Å¬¸¯½Ã -> Ä«¿îÅÍ ¾îÅÃ.
+            if (Input.GetMouseButtonDown(0) && !isCounterAttack)   //ì¹´ìš´í„° ì„±ê³µì‹œ ë§ˆìš°ìŠ¤ í´ë¦­ì‹œ -> ì¹´ìš´í„° ì–´íƒ.
             {
                 currentTimer = 0f;
                 if (counterAttack_Co != null)
@@ -146,7 +146,7 @@ public class CounterAttackState : GenealState
                 counterAttack_Co = CounterAttackProcess();
                 StartCoroutine(counterAttack_Co);
             }
-            else if (currentTimer >= successExitTime && !isCounterAttack && !canParry)  // Ä«¿îÅÍ ¼º°øÇß´Âµ¥ ¸¶¿ì½º Å¬¸¯¾ÈÇÏ¸é  exitTime ÈÄ ÀÚµ¿ moveState·Î.
+            else if (currentTimer >= successExitTime && !isCounterAttack && !canParry)  // ì¹´ìš´í„° ì„±ê³µí–ˆëŠ”ë° ë§ˆìš°ìŠ¤ í´ë¦­ì•ˆí•˜ë©´  exitTime í›„ ìë™ moveStateë¡œ.
             {
                 stateController.ChangeState(stateController.moveStateHash);
             }
@@ -162,8 +162,6 @@ public class CounterAttackState : GenealState
         if (excuteSuccessComboResetTime) CheckSuccessComboReset();
     }
 
-    //ÀÏ´Ü ºü¸£°Ô Ä«¿îÅÍ ¾îÅÃÀ» ÇßÀ»°æ¿ì move·Î °¬À»¶§ reEnter µô·¹ÀÌ°¡ Á¸ÀçÇÔ... (?) 
-    //¸Ó°¡¹®Á¦Áö.
 
     public bool exitStop = false;
 
@@ -173,15 +171,13 @@ public class CounterAttackState : GenealState
         stateController.Conditions.CanGetDamage = true;
         ResetConditionTimer();
 
-        if (isCounterAttack) excuteWaitEnterAttackCoolTime = true;                                              //Ä«¿îÅÍ ¾îÅÃ½Ã.
-        if (!isCounterAttack) excuteFailReEnterCoolTime = true;        //Ä«¿îÅÍ ½ÇÆĞ½Ã.
+        if (isCounterAttack) excuteWaitEnterAttackCoolTime = true;                                              //ì¹´ìš´í„° ì–´íƒì‹œ.
+        if (!isCounterAttack) excuteFailReEnterCoolTime = true;        //ì¹´ìš´í„° ì‹¤íŒ¨ì‹œ.
         else controller.Conditions.CanCounter = true;
 
-        //CommonUIManager.Instance.ExcuteGlobalNotifer("CounterExit ");  //Å×½ºÆ®
         excuteSuccessComboResetTime = true;
         ExitInitCounterSetting();
-       // StopAllCoroutines();
-        Debug.Log($"<color=black> Ä«¿îÅÍ »óÅÂ EXIT </color> IsDetectParry {controller.Conditions.IsDetectParry}");
+        Debug.Log($"<color=black> ì¹´ìš´í„° ìƒíƒœ EXIT </color> IsDetectParry {controller.Conditions.IsDetectParry}");
     }
 
 
@@ -198,11 +194,11 @@ public class CounterAttackState : GenealState
     }
 
     /// <summary>
-    /// AI Ä«¿îÅÍ ¼º°ø ½Ã 
+    /// AI ì¹´ìš´í„° ì„±ê³µ ì‹œ 
     /// </summary>
     public void CounterSuccess(AIController aicontroller)
     {
-       // Debug.Log("Ä«¿îÅÍ ¼º°ø");
+       // Debug.Log("ì¹´ìš´í„° ì„±ê³µ");
         currentSuccessCounterType = (aicontroller.aiAttackType == AIController.AIAttackType.MELEE)
                                      ? CounterAttackType.MELEE : CounterAttackType.RANGE;
         counterSuccessTargetAI = aicontroller;
@@ -210,11 +206,11 @@ public class CounterAttackState : GenealState
     }
 
     /// <summary>
-    /// Base(Shoot Obstacle) Ä«¿îÅÍ ¼º°ø ½Ã 
+    /// Base(Shoot Obstacle) ì¹´ìš´í„° ì„±ê³µ ì‹œ 
     /// </summary>
     public void CounterSuccess(BaseController baseController, CounterAttackType type)
     {
-        //Debug.Log("Ä«¿îÅÍ ¼º°ø");
+        //Debug.Log("ì¹´ìš´í„° ì„±ê³µ");
         currentSuccessCounterType = type;
         counterSuccessTargetAI = baseController;
         CommonCounterSuccess();
@@ -253,7 +249,7 @@ public class CounterAttackState : GenealState
                 TimeManager.Instance.ExcuteTimeData(counterSkillClip.counterDefenseClip.GetTimeData);
             else
                 TimeManager.Instance.ExcuteBaseTimeData(TimeInfoType.COUNTER_SUCCESS);
-           // Debug.Log("<color=yellow> Ä«¿îÅÍ ¼º°ø </color>");
+           // Debug.Log("<color=yellow> ì¹´ìš´í„° ì„±ê³µ </color>");
 
         }
         else
@@ -264,7 +260,7 @@ public class CounterAttackState : GenealState
             GameManager.Instance.Cam.ShakeCamera(counterSkillClip.counterDefenseClip.ParryingShakeInfo);
             EffectManager.Instance.GetEffectObjectRandom(counterParryEffect, counterEffectTr.position, Vector3.zero, Vector3.zero);
             TimeManager.Instance.ExcuteBaseTimeData(TimeInfoType.COUNTER_PARRYING);
-           // Debug.Log("<color=blue> ÆĞ¸µ ¼º°ø </color>");
+           // Debug.Log("<color=blue> íŒ¨ë§ ì„±ê³µ </color>");
         }
 
         if (isCounterAttack && !controller.Conditions.IsCounting)
@@ -316,10 +312,6 @@ public class CounterAttackState : GenealState
 
     }
 
-    //ÀÏ´Ü Å¸ÀÔ ½½·Î¿ì¸¦ ¾ÈÇÏ°í ¹Ù·Î °ø°İÇßÀ» °æ¿ì ¸ØÃã..
-    //Á¶±İ ÀÖ´Ù°¡ °ø°İÇÒ °æ¿ì ¸ØÃßÁö ¾ÊÀ½. ¸Ó°¡¹®Á¦Áö.
-
-
     private IEnumerator CounterAttackProcess()
     {
         if (defense_Co != null) StopCoroutine(defense_Co);
@@ -332,10 +324,9 @@ public class CounterAttackState : GenealState
         defenseSucess = false;
         canParry = false;
         TimeManager.Instance.TimeReset();
-        //CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("Ä«¿îÅÍ ¾îÅÃ!");  //Å×½ºÆ®
         attackState.RotateToTarget(counterSuccessTargetAI.transform);
 
-        //µ¥¹ÌÁö Ã³¸® 
+        //ë°ë¯¸ì§€ ì²˜ë¦¬ 
         if (currentSuccessCounterType == CounterAttackType.MELEE)
         {
             controller.myAnimator.Play(counterSkillClip.counterAttackClip.animationName);
@@ -380,20 +371,17 @@ public class CounterAttackState : GenealState
 
         }
         canReEnterState = true;
-        Debug.Log($"<color=green> °ø°İ ÀçÁøÀÔ Çã¿ë! {canReEnterState} </color>");
+        Debug.Log($"<color=green> ê³µê²© ì¬ì§„ì… í—ˆìš©! {canReEnterState} </color>");
         controller.Conditions.IsCounting = false;
         controller.Conditions.IsDetectParry = true;
-        //Debug.Log($"<color=gray> IsDetectParry 1 </color> IsDetectParry {controller.Conditions.IsDetectParry}");
 
 
         yield return new WaitUntil(() => (Time.time - startTime) >= attackEndTime || excuteParrying);
-        Debug.Log("<color=green> °ø°İ Á¾·á! </color>");
+        Debug.Log("<color=green> ê³µê²© ì¢…ë£Œ! </color>");
 
-        // °ø°İ ¾Ö´ÔÀÌ ³¡³¯À»¶§ ÆĞ¸µ¼º°øÇß´Ù¸é ±×³É Á¾·á
-        // °ø°İ ¾Ö´ÔÀÌ ³¡³µÀ»¶§ ÆĞ¸µ ¼º°øÀ» ¾ÈÁ™´Ù¸é move
         if (!excuteParrying)
         {
-            Debug.Log("Á¾·á1");
+            Debug.Log("ì¢…ë£Œ1");
             controller.ChangeState(controller.moveStateHash,0);
         }
     }
@@ -403,12 +391,11 @@ public class CounterAttackState : GenealState
         excuteParrying = true;
         canParry = true; 
         controller.Conditions.IsDetectParry = true;
-       // Debug.Log($"<color=gray> IsDetectParry 3 </color> IsDetectParry {controller.Conditions.IsDetectParry}");
 
         yield return new WaitForSeconds(afterDetectTime);
 
         controller.Conditions.IsDetectParry = false;
-        Debug.Log("Á¾·á2");
+        Debug.Log("ì¢…ë£Œ2");
         controller.ChangeState(controller.moveStateHash, 0);
 
     }
@@ -427,7 +414,7 @@ public class CounterAttackState : GenealState
 
     private void CounterFailReEnterCoolTime()
     {
-        Debug.Log($"<color=red> Àç¿£ÅÍ ½ÃÀÛ.. </color> ");
+        Debug.Log($"<color=red> ì¬ì—”í„° ì‹œì‘.. </color> ");
 
         controller.Conditions.CanCounter = false;
         currentReEnterTimer += Time.deltaTime;
