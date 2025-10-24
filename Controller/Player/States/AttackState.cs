@@ -39,9 +39,9 @@ public class AttackState : GenealState
     [Header("Animator Hash")]
     private int attackSpeedFloatHash = 0;
 
-    bool isStart = false;   // Å×½ºÆ®¿ë
-    float timer = 0f;      // Å×½ºÆ®¿ë
-    public string input;    // Å×½ºÆ®¿ë
+    bool isStart = false;   // í…ŒìŠ¤íŠ¸ìš©
+    float timer = 0f;      // í…ŒìŠ¤íŠ¸ìš©
+    public string input;    // í…ŒìŠ¤íŠ¸ìš©
 
     public int AttackIndex { get { return attackIndex; } set { attackIndex = value; } }
     public List<AIController> CanDamageEnemy { get { return canDamageEnemy; }}
@@ -84,12 +84,7 @@ public class AttackState : GenealState
 
     public override void UpdateAction(PlayerStateController stateController)
     {
-        //if (isStart)   // Å×½ºÆ®¿ë
-       //     timer += Time.deltaTime;    // Å×½ºÆ®¿ë
-       //if (isinput)
-       //    inputTimer += Time.deltaTime;
-
-       // HandleInputAttackType(); À¸·Î Á¤¸® updateActionºÎºĞÀº ±ò²ûÇÏ°Ô ÇØµÎ±â.
+     
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if (stateController.IsMove() == false && stateController.Conditions.CanChangeCountAttackState())
@@ -98,7 +93,7 @@ public class AttackState : GenealState
             {
                 if (controller.playerStats.CurrentStamina < controller.playerStats.RollSpCost)
                 {
-                    CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("½ºÅÂ¹Ì³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+                    CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("ìŠ¤íƒœë¯¸ë‚˜ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
                 }
                 else
                     stateController.ChangeState(controller.rollStateHash);
@@ -152,7 +147,6 @@ public class AttackState : GenealState
         StopAllCoroutines();
         currentCombo = null;
 
-        //test
         isinput = false;
         inputTimer = 0f;
         if (isAttack)
@@ -162,15 +156,6 @@ public class AttackState : GenealState
     }
 
 
-    /// <summary>
-    // ÄÚ·çÆ¾ µ¥¹ÌÁö
-    // ÄÚ·çÆ¾ End °Ë»ç. 
-    // µÎ°¡Áö ÄÚ·çÆ¾À¸·Î °Ë»ç ½ÇÇàÇÔ.  end½Ã±îÁö can combo InputÀÌ °¡´ÉÇÔ.
-    // Áß¿ä. canComboinputÀ» °ø°İ Á÷ÈÄ·Î ÀâÀ½. ±×¸®ÇÏ¿© ¹Ù·Î ÄŞº¸¸¦ ÇÒ¼öÀÖ°ÔÇÔ. 
-    // ÄŞº¸ ÀÔ·Â¾øÀ¸¸é End °Ë»ç·Î ÀÎÇØ ÀÚµ¿ move »óÅÂ·Î.
-    // ÄŞº¸ ÀÔ·Â½Ã ¹Ù·Î °ø°İÀ»ÇÔ. (canComboInputÀ¸·Î Å¸ÀÌ¹ÖÀ» Á¤ÇØ¼­, °ø°İ ³¡³ª´Â ÁöÁ¡¿¡¼­ ¹Ù·Î inputÀ» ¹ŞÀ»¼öÀÖ±â¶§¹®¿¡)
-    /// </summary>
-    /// <param name="comboData"></param>
     private void Attack(ComboData comboData)
     {
         if (!UseStamina(comboData))
@@ -208,7 +193,6 @@ public class AttackState : GenealState
         float endTime = comboData.comboClip.endForWaitTime + comboData.comboClip.GetAttactEndAnimationFrameToTime(atkSpeed);
 
         yield return new WaitForSeconds(canInputTime);
-       // Debug.Log("ÄŞº¸ °¡´É!");
         canInputCombo = true;
 
         yield return new WaitForSeconds(endTime - canInputTime);
@@ -221,7 +205,7 @@ public class AttackState : GenealState
 
         if (controller.playerStats.CurrentStamina < comboData.comboClip.staminaCost)
         {
-            CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("½ºÅÂ¹Ì³ª°¡ ºÎÁ·ÇÕ´Ï´Ù.");
+            CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("ìŠ¤íƒœë¯¸ë‚˜ê°€ ë¶€ì¡±í•©ë‹ˆë‹¤.");
             return false;
         }
         else
@@ -244,7 +228,7 @@ public class AttackState : GenealState
 
 
     /// <summary>
-    ///  ÀÔ·Â °ªÀÌ ¾ø°í ÀûÀÌ °ø°İ ¹üÀ§ ¾È¿¡  ÀÖÀ¸¸é ÀûÂÊÀ¸·Î È¸Àü, ¾øÀ¸¸é ÀÔ·Â ¹æÇâÀ¸·Î È¸Àü.
+    ///  ì…ë ¥ ê°’ì´ ì—†ê³  ì ì´ ê³µê²© ë²”ìœ„ ì•ˆì—  ìˆìœ¼ë©´ ì ìª½ìœ¼ë¡œ íšŒì „, ì—†ìœ¼ë©´ ì…ë ¥ ë°©í–¥ìœ¼ë¡œ íšŒì „.
     /// </summary>
     public void RotateAttackDirection(float range, ref Collider nearColl)
     {
@@ -262,14 +246,10 @@ public class AttackState : GenealState
 
 
     /// <summary>
-    /// ¸ÖÆ¼ µ¥¹ÌÁö °Ô»ê ÄÚ·çÆ¾ 
+    /// ë©€í‹° ë°ë¯¸ì§€ ê²Œì‚° ì½”ë£¨í‹´ 
     /// </summary>
     private IEnumerator MultiAttackingProcess(ComboData comboData)
     {
-        //Debug.Log("A½ÃÀÛ"); // Å×½ºÆ®¿ë
-        isStart = true;   // Å×½ºÆ®¿ë
-        timer = 0;       // Å×½ºÆ®¿ë
-
         RotateAttackDirection(attackRange,ref nearCollider);
         controller.myAnimator.CrossFade(comboData.comboClip.animationName, 0.1f);
         SpawnAttackEffects(comboData.comboClip, controller.playerStats.CurrentAtkSpeed);
@@ -280,7 +260,6 @@ public class AttackState : GenealState
             waitTimeSum += attackTiming[i];
             attackIndex = i;
             yield return new WaitForSeconds(attackTiming[i]);
-           // Debug.Log("AÅ¸ÀÌ¹Ö! : " + timer);  // Å×½ºÆ®¿ë
             FindCanAttackEnemy(comboData.comboClip, ref detectEnemyColliders, controller.targetLayer);
             RandomEffectInfo effect = comboData.comboClip.hitEffectList.Length > i ? comboData.comboClip.hitEffectList[i] : null;
             DamageEnemy(effect, comboData.comboClip.hitEffectList[i].effectSound,comboData.comboClip.attackStrengthType[i], comboData.comboClip.attackShakeCam[i], i, comboData.comboClip.damage[i], comboData.comboClip.GetTimeData);
@@ -289,8 +268,6 @@ public class AttackState : GenealState
        // SetAnimationTime(currentCombo);
         yield return new WaitForSeconds(attackTimeLimit - waitTimeSum);
         isAttacking = false;
-        isStart = false;   // Å×½ºÆ®¿ë
-        //Debug.Log("AÁ¾·á : "+ timer );  // Å×½ºÆ®¿ë
     }
 
 
@@ -307,7 +284,7 @@ public class AttackState : GenealState
 
 
     /// <summary>
-    ///  °ø°İ Å¸ÀÌ¹Ö °è»ê.
+    ///  ê³µê²© íƒ€ì´ë° ê³„ì‚°.
     /// </summary>
     public float[] SetMultiAttackTimings(int[] timingFrames,AnimationClip animClip,float timingSpeed = 1)
    {
@@ -353,7 +330,7 @@ public class AttackState : GenealState
     }
 
     /// <summary>
-    /// °ø°İ °¡´ÉÇÑ Enemy¸¦ Ã£¾Æ¼­ canDamageEnemy ¸®½ºÆ®¿¡ Ãß°¡.
+    /// ê³µê²© ê°€ëŠ¥í•œ Enemyë¥¼ ì°¾ì•„ì„œ canDamageEnemy ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€.
     /// </summary>
     private bool FindEnemy(float attackAngle, float attackRange, int maxTargetCount, ref Collider[] detectColliders, LayerMask detectLayer)
     {
@@ -390,7 +367,7 @@ public class AttackState : GenealState
   
 
     /// <summary>
-    /// canDamageEnemy¿¡ Ãß°¡µÈ enemy¸¦ µ¥¹ÌÁö.
+    /// canDamageEnemyì— ì¶”ê°€ëœ enemyë¥¼ ë°ë¯¸ì§€.
     /// </summary>
     public void DamageEnemy(RandomEffectInfo effectList,SoundList hitSound,AttackStrengthType attackStrengthType,CameraShakeInfo shakeInfo ,int index, float dmg,TimeData timeData ,AttackSkillClip attackSkillClip = null)
     {
