@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-//1. ¿©±â¼­´Â ´ë½Ã ÀÛµ¿À» ±¸Çö.
-//2. ½ÇÁ¦ µğÅØÆ® ºÎºĞÀº ¾îµğ¼­?  
-//   -> ¿©±â¼­ ±¸ÇöÇÏ°í. DashUI? ºÎºĞ¿¡¼­ È£ÃâÇÏ±â.?
 
 public class DashState : GenealState
 {
@@ -17,45 +14,45 @@ public class DashState : GenealState
 
     public BaseController targetController = null;  // hide
 
-    [Header("´ë½Ã ÃÊ±âÈ­")]
+    [Header("ëŒ€ì‹œ ì´ˆê¸°í™”")]
     [SerializeField] private int initCount = 5;
     private bool isActive = false;
     private float currentCoolTimer = 0f;
-    private float coolTimePerCount = 0f; //°¢ Ä«¿îÆ® ÄğÅ¸ÀÓ.
+    private float coolTimePerCount = 0f; //ê° ì¹´ìš´íŠ¸ ì¿¨íƒ€ì„.
 
-    [Header("Ä«¸Ş¶ó Stop Distance Far")]
+    [Header("ì¹´ë©”ë¼ Stop Distance Far")]
     [SerializeField] private float farCamSmoothSpeed = 10f;
     [SerializeField] private float farChangeFOV = 100;
     [SerializeField] private float farReturnFOVWaitTime = 0.1f;
     [SerializeField] private float farDelayFOVMoveTime = 0.1f;
 
-    [Header("Ä«¸Ş¶ó Stop Distance Near")]
+    [Header("ì¹´ë©”ë¼ Stop Distance Near")]
     [SerializeField] private float nearCamSmoothSpeed = 7f;
     [SerializeField] private float nearChangeFOV = 85;
     [SerializeField] private float nearReturnFOVWaitTime = 0.2f;
     [SerializeField] private float nearDelayFOVMoveTime = 0.1f;
 
 
-    [Header("Å¸°ÙÆÃ Å½Áö")]
+    [Header("íƒ€ê²ŸíŒ… íƒì§€")]
     [SerializeField] private float targetingAllowAngle = 90f;
     [SerializeField] private float targetingAllowDistance = 3f;
     [SerializeField] private Vector2 targetingLimitScreenPoint = new Vector2(300, 300);
     private Vector3 checkAngleDir = Vector3.zero;
     private Transform gizmosTarget = null;
 
-    [Header("Àå¾Ö¹° °Ë»ç")]
+    [Header("ì¥ì• ë¬¼ ê²€ì‚¬")]
     [SerializeField] private float detectSphereRadius = 3f;
     private RaycastHit[] detectObstacleColls = new RaycastHit[10];
     private Vector3 gizmoObstacleDir;
     private float gizmoObstacleDistance;
 
-    [Header("Áö¸é °Ë»ç")]
+    [Header("ì§€ë©´ ê²€ì‚¬")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float minDetectHeight = -10f;
     [SerializeField] private float maxDetectHeight = 10f;
     [SerializeField] private float groundStartYOffset = 2f;
-    [SerializeField] private float groundYRange = 4f;   // range¸¸Å­ À§ÂÊ Å¸°Ù °¡´É°ª.
+    [SerializeField] private float groundYRange = 4f;   // rangeë§Œí¼ ìœ„ìª½ íƒ€ê²Ÿ ê°€ëŠ¥ê°’.
     [SerializeField] private float minDetectTargetDistance = 1f;
     [SerializeField] private float groundDetectRadius = 1f;
     [SerializeField] private float groundDetectInterval = 0.5f;
@@ -72,12 +69,12 @@ public class DashState : GenealState
     private List<Vector3> drawEnemyHitPoints = new List<Vector3>();
 
 
-    [Header("ÀÌµ¿")]
-    [SerializeField] private float dashStopDistance = 4f; //Àû ÅÚÆ÷ °Å¸®.
-    private Vector3 tmpDashPosition = Vector3.zero;   //ÀÓ½Ã ÀÌµ¿ÇÒ À§Ä¡
-    private Vector3 canDashPosition = Vector3.zero;  //ÀÌµ¿ °¡´ÉÇÑ À§Ä¡.
+    [Header("ì´ë™")]
+    [SerializeField] private float dashStopDistance = 4f; //ì  í…”í¬ ê±°ë¦¬.
+    private Vector3 tmpDashPosition = Vector3.zero;   //ì„ì‹œ ì´ë™í•  ìœ„ì¹˜
+    private Vector3 canDashPosition = Vector3.zero;  //ì´ë™ ê°€ëŠ¥í•œ ìœ„ì¹˜.
 
-   // [Header("°ø°İ")]
+   // [Header("ê³µê²©")]
     private int damageDetectCount = 0;
     private Collider[] damageColls = new Collider[10];
 
@@ -121,8 +118,6 @@ public class DashState : GenealState
 
     private void Start()
     {
-        //stateController.playerConditions.CurrentNeedDashCount = initCount;
-        //isActive = true;
         isActive = false;
         if (cam == null) cam = GameManager.Instance.Cam;
         coolTimePerCount = dashClip.skillCoolTime / initCount;
@@ -189,11 +184,11 @@ public class DashState : GenealState
         centerScreenPoint = cam.MainCam.WorldToScreenPoint(centerPosition);
 
         DetectEnemyColliders();
-        ExcuteSettingTarget(); // ¿©±â¼­ dashTargetTr ¼¼ÆÃ.
+        ExcuteSettingTarget(); 
 
         if (dashTargetTr != null)
         {
-            SettingTmpDashPosition(dashTargetTr);  //realPosition ¼¼ÆÃ. 
+            SettingTmpDashPosition(dashTargetTr);  
             if (!CheckCanDashGround())
                 dashTargetTr = null;
             else if (dashTargetTr.GetComponentInParent<AIConditions>() && !dashTargetTr.GetComponentInParent<AIConditions>().CanDetect)
@@ -322,19 +317,19 @@ public class DashState : GenealState
         gizmoObstacleDir = targetDir;
         gizmoObstacleDistance = distance;
 
-        //¶¥ÀÏ°æ¿ì
+        //ë•…ì¼ê²½ìš°
         if (CheckDetectGround(targetDir, distance))
         {
             return false;
         }
 
-        /// ÀÌºÎºĞ¿¡ ÇØ´ç Å¸°Ù¿¡ ·¹ÀÌ¾î ½÷¼­ Àå¾Ö¹° ÀÖ³ª ÆÇ´ÜÇÏ±â.
+        /// ì´ë¶€ë¶„ì— í•´ë‹¹ íƒ€ê²Ÿì— ë ˆì´ì–´ ì´ì„œ ì¥ì• ë¬¼ ìˆë‚˜ íŒë‹¨í•˜ê¸°.
         if (CheckDetectObstacle(targetDir, distance))
         {
             return false;
         }
 
-        //Å¸°ÙÆÃÀÏ °æ¿ì 
+        //íƒ€ê²ŸíŒ…ì¼ ê²½ìš° 
         if (distance <= targetingAllowDistance)
         {
             if (centerScreenPoint.x + targetingLimitScreenPoint.x >= point.x && centerScreenPoint.x - targetingLimitScreenPoint.x <= point.x &&
@@ -353,7 +348,6 @@ public class DashState : GenealState
 
     private bool CheckDetectGround(Vector3 dir, float distance)
     {
-        // Raycast¸¦ ½÷¼­, Ãæµ¹µÈ ¿ÀºêÁ§Æ®¿¡ ´ëÇÑ Á¤º¸¸¦ ¾ò´Â´Ù.
         if (Physics.Raycast(centerPosition, dir, distance, groundLayer))
         {
             return true;
@@ -475,30 +469,27 @@ public class DashState : GenealState
     {
         RaycastHit groundHit;
 
-        //¶¥ ¹ß°ß ¸øÇÏ¸é.
+        //ë•… ë°œê²¬ ëª»í•˜ë©´.
         if (!Physics.Raycast(startPosition, -Vector3.up, out groundHit, groundYRange, groundLayer))
         {
-         //   Debug.Log("DetectEnemy - ¶¥ ¹ß°ß ¸øÇÔ");
             return true;
         }
 
 
 
-        //¶¥ À§Ä¡±îÁö ¹°Ã¼°¡ ÀÖ´ÂÁö °Ë»ç. (½ÃÀÛ radius¿¡ °ËÃâ¾ÈµÊ)
+        //ë•… ìœ„ì¹˜ê¹Œì§€ ë¬¼ì²´ê°€ ìˆëŠ”ì§€ ê²€ì‚¬. (ì‹œì‘ radiusì— ê²€ì¶œì•ˆë¨)
         if (Physics.SphereCast(startPosition, groundDetectRadius, -Vector3.up, out groundCheckRayHit, groundHit.point.y, enemyLayer))
         {
             drawEnemyHitPoints.Add(groundCheckRayHit.point);
-          //  Debug.Log("DetectEnemy - ¶¥ À§Ä¡±îÁö ¹°Ã¼°¡ ÀÖ´ÂÁö °Ë»ç. ¹ß°ß (½ÃÀÛ radius¿¡ °ËÃâ¾ÈµÊ)");
             return true;
         }
 
 
 
-        //½ÃÀÛ radius¿¡ ¹°Ã¼°¡ ÀÖ´ÂÁö °Ë»ç
+        //ì‹œì‘ radiusì— ë¬¼ì²´ê°€ ìˆëŠ”ì§€ ê²€ì‚¬
         if (Physics.OverlapSphereNonAlloc(startPosition, groundDetectRadius, groundEnemyColls, enemyLayer) > 0)
          {
             drawEnemyHitPoints.Add(startPosition);
-           // Debug.Log("DetectEnemy - ½ÃÀÛ radius¿¡ ¹°Ã¼°¡ ÀÖÀ½");
             return true;
          }
 
@@ -517,7 +508,6 @@ public class DashState : GenealState
         float endTime = dashClip.EndTime;
 
 
-        //ÇöÀç À§Ä¡¿Í Å¸°ÙÀ§Ä¡ÀÇ °Å¸®°¡ stopDistanceº¸´Ù ÀÛÀ¸¸é ÀÌµ¿ xÇÏ°í ÇØ´ç ÀÚ¸®¿¡¼­ µ¥¹ÌÁö¹× ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà.
         if (CanTeleportToTarget(dashTargetTr))
         {
             StartCoroutine(DashCameraProcess_Co(false));
@@ -576,8 +566,6 @@ public class DashState : GenealState
         damageDetectCount = Physics.OverlapSphereNonAlloc(transform.position, clip.DashDamageRange, damageColls, enemyLayer);
         controller.SortFindEmenyByNearDistance(controller.transform,ref damageColls);
         int damageCount = 0;
-
-        //Debug.Log("damageDetectCount : " + damageDetectCount);
 
         for (int i = 0; i < damageDetectCount; i++)
         {
@@ -709,22 +697,20 @@ public class DashState : GenealState
 
                 BaseController targetCon = retDetectTargets[i].GetComponent<BaseController>();
                 Vector3 targetPosition = targetCon != null ? targetCon.damagedPosition.position : retDetectTargets[i].transform.position;
-                Ray ray = new Ray(centerPosition, targetPosition - (controller.transform.position + (Vector3)centerOffset)); // ÇöÀç °´Ã¼¿¡¼­ Å¸°ÙÀ¸·Î ·¹ÀÌ¸¦ ½ô
+                Ray ray = new Ray(centerPosition, targetPosition - (controller.transform.position + (Vector3)centerOffset)); // í˜„ì¬ ê°ì²´ì—ì„œ íƒ€ê²Ÿìœ¼ë¡œ ë ˆì´ë¥¼ ì¨
                 float distance = (targetPosition - centerPosition).magnitude;
                 RaycastHit hit;
 
-                // ·¹ÀÌ°¡ Àå¾Ö¹°¿¡ ¸Â¾ÒÀ» °æ¿ì
                 if (Physics.Raycast(ray, out hit, distance,controller.groundLayer + controller.obstacleLayer))
                 {
-                    // ·¹ÀÌ°¡ Àå¾Ö¹°¿¡ ¸ÂÀ¸¸é ±× Ãæµ¹ ÁöÁ¡¿¡ »¡°£»ö ±¸¸¦ ±×¸®±â
                     Gizmos.color = Color.red;
-                    Gizmos.DrawSphere(hit.point, 1f); // Ãæµ¹ ÁöÁ¡¿¡ ±¸ ±×¸®±â
+                    Gizmos.DrawSphere(hit.point, 1f); 
                     Gizmos.DrawLine(centerPosition, targetPosition);
                 }
                 else
                 {
                     Gizmos.color = Color.green;
-                    Gizmos.DrawLine(centerPosition, targetPosition); // Å¸°ÙÀ¸·Î ÇâÇÏ´Â ¼± ±×¸®±â
+                    Gizmos.DrawLine(centerPosition, targetPosition); 
                 }
             }
         }
