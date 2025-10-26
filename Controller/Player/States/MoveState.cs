@@ -8,7 +8,7 @@ public class MoveState : GenealState
 {
     [SerializeField] private bool drawGizmos = true;
 
-    [Header("¿Ãµø ≈∏¿‘")]
+    [Header("Ïù¥Îèô ÌÉÄÏûÖ")]
     [SerializeField] private PlayerMoveType moveType = PlayerMoveType.STAND;
 
     [Header("Reference")]
@@ -130,10 +130,6 @@ public class MoveState : GenealState
         MoveTypeSetting();
         CheckBreakLimit();
         UseGravityCheck();
-        //ResetVelocity();
-        
-        //if (stateController.playerConditions.GetIsFiexRotateSkillingBool())
-        //    return;
     }
 
     public override void AlwaysCheckUpdate(PlayerStateController stateController)
@@ -167,7 +163,6 @@ public class MoveState : GenealState
 
     private void Handler()
     {
-        //if (!GameManager.Instance.canUseCamera) return;
         if (QuestManager.Instance.isDialoging || !SettingManager.Instance.CanExcuteScreenTouch ||
             CommonUIManager.Instance.GetActiveUICount() > 0 ||CursorManager.Instance.CurrentCursorMode == CursorMode.VISIBLE) return;
 
@@ -193,7 +188,7 @@ public class MoveState : GenealState
             {
                 if (controller.playerStats.CurrentStamina < controller.playerStats.RollSpCost)
                 {
-                    CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("Ω∫≈¬πÃ≥™∞° ∫Œ¡∑«’¥œ¥Ÿ.");
+                    CommonUIManager.Instance.ExcuteGlobalSimpleNotifer("Ïä§ÌÉúÎØ∏ÎÇòÍ∞Ä Î∂ÄÏ°±Ìï©ÎãàÎã§.");
                 }
                 else
                     controller.ChangeState(controller.rollStateHash);
@@ -240,7 +235,7 @@ public class MoveState : GenealState
 
         moveDirection = controller.cam.transform.parent.forward * Input.GetAxis("Vertical") +
                                controller.cam.transform.parent.right * Input.GetAxis("Horizontal");
-        moveDirection.y = 0f; // y πÊ«‚¿∫ ∞Ì¡§
+        moveDirection.y = 0f; 
         moveDirection.Normalize();
 
 
@@ -425,19 +420,11 @@ public class MoveState : GenealState
 
 
     #region Slope
-    //1. øÏº± ∞ÊªÁ ø√∂Û∞•ºˆ ¿’¥¬¡ˆ ∞ÀªÁ. ( ∞ÊªÁ ≥Ù¿ÃøÕ ∞¢µµ)
-    //2. ∞ÊªÁ ø√∂Û∞•∂ß πÃ≤Ù∑Ø¡ˆ¥¬ (¡ﬂ∑¬) ªÁøÎ«“¡ˆ . ªÁøÎæ»«œ∏È ∞ÊªÁø√∂Û∞•∂ß πÃ≤Ù∑≥ x
-    //3. ∞ÊªÁ ≥ª∑¡∞•∂ß ≈Î≈Î ∆¢¥¬∞Õ.
-    //4. ø√∂Û∞•∂ß ≥ª∑¡∞•∂ß º”µµ ¿œ¡§.
-
     public bool IsSlope()
     {
         if (Physics.Linecast(controller.transform.position + Vector3.up * 1f, controller.transform.position + Vector3.down * slopeDownDistance, out downSlopeHit, slopeLayer))
         {
-            //π´∏≠ ¿ß¬ ¿∏∑Œ ∑π¿Ã∏¶ «—π¯¥ı Ω˜º≠ ∞¢µµ ∞ÀªÁ.
-            //¡Ô, 1¬˜¥¬ ¿‹¿‹«— ¿Âæ÷π∞µÈ 2¬˜¥¬ Ω«¡¶ ground
             slopeAngle = Vector3.Angle(Vector3.up, downSlopeHit.normal);
-          // Debug.Log("Slope angel : " + slopeAngle);
             if (slopeAngle <= limitSlopeAngle && slopeAngle > 0f)
                 return true;
         }
@@ -446,14 +433,11 @@ public class MoveState : GenealState
 
     private bool IsCanAmount()
     {
-        //1¬˜ √Êµπ√º ∞®¡ˆΩ√.
         if(Physics.Linecast(controller.transform.position + Vector3.up * amountHeight, controller.transform.position + Vector3.up * amountHeight + controller.transform.forward * amountDistance, out canAmountHit, amountLayer ))
         {
-            //2¬˜ «„øÎ∞°¥… ≥Ù¿Ã¿Œ¡ˆ ∞ÀªÁ.
             if (!IsLimitAmount())
             {
                 amountAngle = Vector3.Angle(Vector3.up, canAmountHit.normal);
-                //Debug.Log("Amount angel : " + amountAngle);
                 return true;
             }
             else
@@ -464,7 +448,6 @@ public class MoveState : GenealState
 
     private bool IsLimitAmount()
     {
-        // √Êµπ√º ∞®¡ˆΩ√.
         if (Physics.Linecast(controller.transform.position + Vector3.up * limitAmountHeight, controller.transform.position + Vector3.up * limitAmountHeight + controller.transform.forward * amountDistance, out limitAmountHit, amountLayer))
             return true;
         return false;
@@ -477,16 +460,13 @@ public class MoveState : GenealState
         {
             if (Physics.Linecast(controller.transform.position + Vector3.up * 0.5f, controller.transform.position + Vector3.down * 0.04f, controller.groundLayer))
             {
-                //Debug.Log("∞Ë¥‹ √£¥¬µ• ∂•¿Ã ∞À√‚µ .");
                 return false;
             }
 
             currStairAngle = Vector3.Angle(Vector3.up, stairSlopeHit.normal);
-            //Debug.Log("IsStairSlope : " + angle);
 
             if (currStairAngle <= stairAngle && currStairAngle > 0f)
             {
-               // Debug.Log("∞Ë¥‹ √£¿Ω");
                 return true;
             }
 
@@ -648,7 +628,7 @@ public class MoveState : GenealState
             Gizmos.color = Color.magenta;
             Gizmos.DrawLine(canAmountHit.point, canAmountHit.point + dir.normalized * amountDistance);
 
-            // «•∏È¿« ¿ß¬  ∫§≈Õ ±∏«œ±‚
+            // ÌëúÎ©¥Ïùò ÏúÑÏ™Ω Î≤°ÌÑ∞ Íµ¨ÌïòÍ∏∞
             Vector3 surfaceUp = Vector3.Cross(Vector3.Cross(canAmountHit.normal, Vector3.up), canAmountHit.normal).normalized;
             Gizmos.color = Color.magenta;
             Gizmos.DrawLine(canAmountHit.point, canAmountHit.point + surfaceUp * 3f);
