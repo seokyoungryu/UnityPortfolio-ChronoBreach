@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-// Æ÷¼Ç »ç¿ë ¿©±â¼­ Àû¿ëÇÏ±â. / ¹«±â µî ¾ÆÀÌÅÛµµ / ¹öÇÁµµ / µğ¹öÇÁµµ 
+
 public class PlayerStatus : BaseStatus, IDamageable 
 {
     [SerializeField] private EffectInfo levelUpEffect;
 
     [SerializeField] private float rollSpCost = 10f;
     #region  Origin Stats
-    //ÇÃ·¹ÀÌ¾î ¿øº» ½ºÅÈÀº ÀúÀåµÊ. 
+    //í”Œë ˆì´ì–´ ì›ë³¸ ìŠ¤íƒ¯ì€ ì €ì¥ë¨. 
     [Header("Player Origin Stats Settings")]        
     [SerializeField] private ExpData expData = null;
     [SerializeField] private ExpContainer nextExp = null;
@@ -56,7 +56,7 @@ public class PlayerStatus : BaseStatus, IDamageable
     [SerializeField] private float luckPercentage = 0f;
     [SerializeField] private float dexPercentage = 0f;
     [SerializeField] private float intPercentage = 0f;
-    [SerializeField] private float damagePercentage = 0f; // ÃÖÁ¾ µ¥¹ÌÁö ÁÙ‹š 1000 ÀÔÇô¾ßµÇ¸é 1000 * damagePercentage
+    [SerializeField] private float damagePercentage = 0f; // ìµœì¢… ë°ë¯¸ì§€ ì¤„Â‹Âš 1000 ì…í˜€ì•¼ë˜ë©´ 1000 * damagePercentage
     [SerializeField] private float atkPercentage = 0f;
     [SerializeField] private float expPercentage = 0f;
     #endregion
@@ -675,7 +675,7 @@ public class PlayerStatus : BaseStatus, IDamageable
         onLevelUpInit?.Invoke(this);
         onUpdateStatInfos?.Invoke(this);
         UpdateStats();
-        //·¹º§¾÷ »ç¿îµå, ·¹º§¾÷ ÀÌÆåÆ® ÁÖ±â.
+        //ë ˆë²¨ì—… ì‚¬ìš´ë“œ, ë ˆë²¨ì—… ì´í™íŠ¸ ì£¼ê¸°.
         onExpUpdate?.Invoke(this);
     }
 
@@ -702,8 +702,8 @@ public class PlayerStatus : BaseStatus, IDamageable
             RewardExp tempReward = new RewardExp();
             tempReward.Icon = GameManager.Instance.StandardExp.Icon;
             tempReward.ExpValue = (int)value;
-            tempReward.RewardName = $"°æÇèÄ¡ +{value}";
-            tempReward.Description = $"°æÇèÄ¡ {value} È¹µæ";
+            tempReward.RewardName = $"ê²½í—˜ì¹˜ +{value}";
+            tempReward.Description = $"ê²½í—˜ì¹˜ {value} íšë“";
         }
 
         UpdateStats();
@@ -733,8 +733,8 @@ public class PlayerStatus : BaseStatus, IDamageable
             RewardStatPoint tempReward = new RewardStatPoint();
             tempReward.Icon = GameManager.Instance.StandardStatpoint.Icon;
             tempReward.StatPoint = (int)value;
-            tempReward.RewardName = $"½ºÅÈÆ÷ÀÎÆ® +{value}";
-            tempReward.Description = $"½ºÅÈÆ÷ÀÎÆ® {value} È¹µæ";
+            tempReward.RewardName = $"ìŠ¤íƒ¯í¬ì¸íŠ¸ +{value}";
+            tempReward.Description = $"ìŠ¤íƒ¯í¬ì¸íŠ¸ {value} íšë“";
         }
         onUpdateFunctionUIs?.Invoke(this);
         UpdateStats();
@@ -751,8 +751,8 @@ public class PlayerStatus : BaseStatus, IDamageable
             RewardSkillPoint tempReward = new RewardSkillPoint();
             tempReward.Icon = GameManager.Instance.StandardSkillpoint.Icon;
             tempReward.SkillPoint = (int)value;
-            tempReward.RewardName = $"½ºÅ³Æ÷ÀÎÆ® +{value}";
-            tempReward.Description = $"½ºÅ³Æ÷ÀÎÆ® {value} È¹µæ";
+            tempReward.RewardName = $"ìŠ¤í‚¬í¬ì¸íŠ¸ +{value}";
+            tempReward.Description = $"ìŠ¤í‚¬í¬ì¸íŠ¸ {value} íšë“";
         }
 
         UpdateStats();
