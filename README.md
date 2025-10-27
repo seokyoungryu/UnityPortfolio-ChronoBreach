@@ -6,8 +6,6 @@
 <img width="6501" height="4621" alt="Image" src="https://github.com/user-attachments/assets/e02e22a7-f2e9-484d-bfb1-7e3d20c282d2" />
 
 [🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?url=https://gist.githubusercontent.com/seokyoungryu/d5c66ba3b41479d296d11ce4a98a83e2/raw/d6c9808739442d64e3c819a91d3123694449386a/UML_Main.drawio)
-<a href="https://app.diagrams.net/?#U=https://gist.githubusercontent.com/seokyoungryu/d5c66ba3b41479d296d11ce4a98a83e2/raw/d6c9808739442d64e3c819a91d3123694449386a/UML_Main.drawio" target="_blank">🧩 UML 클래스 다이어그램 열기</a>
-
 
 ## 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
