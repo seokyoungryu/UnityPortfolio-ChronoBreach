@@ -3,7 +3,7 @@
 
 ## ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
-
+<img width="6501" height="4621" alt="Image" src="https://github.com/user-attachments/assets/e02e22a7-f2e9-484d-bfb1-7e3d20c282d2" />
 
 
 ## 📹 동영상 링크
