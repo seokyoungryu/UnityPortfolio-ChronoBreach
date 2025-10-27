@@ -58,18 +58,13 @@ public class FindTargetDecision : Decision
                 dir.Normalize();
 
                 float angle = Vector3.Angle(controller.transform.forward, dir);
-                //float sightAngle = controller.aIVariables.Target == null ? 360f : (controller.aIVariables.sightAngle / 2f);
                 if (Mathf.Abs(angle) <= (controller.aIVariables.sightAngle / 2f))
                 {
                     float distance = Vector3.Distance(controller.transform.position, target.transform.position);
                     if (distance < nearDistance)
                     {
-                        // if (controller.IsDetectObstacle(controller.damagedPosition, target.GetComponent<BaseController>().damagedPosition))
-                        //     continue;
                         nearDistance = distance;
                         controller.aIVariables.SetTarget(target.GetComponent<BaseController>());
-                        //Debug.Log("Find Decision Target : " + controller.aIVariables.target);
-
                     }
                 }
             }
