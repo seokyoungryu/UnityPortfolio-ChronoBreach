@@ -9,7 +9,6 @@ public class AttackState : GenealState
     [Header("Reference")]
     private ComboController comboController = null;
     private ComboData currentCombo = null;
-    // private StringBuilder stringBuilder = new StringBuilder();
     private List<int> inputs = new List<int>();
     private Collider[] detectEnemyColliders = new Collider[10];
     private List<AIController> canDamageEnemy = new List<AIController>();
@@ -38,10 +37,6 @@ public class AttackState : GenealState
 
     [Header("Animator Hash")]
     private int attackSpeedFloatHash = 0;
-
-    bool isStart = false;   // 테스트용
-    float timer = 0f;      // 테스트용
-    public string input;    // 테스트용
 
     public int AttackIndex { get { return attackIndex; } set { attackIndex = value; } }
     public List<AIController> CanDamageEnemy { get { return canDamageEnemy; }}
@@ -84,7 +79,6 @@ public class AttackState : GenealState
 
     public override void UpdateAction(PlayerStateController stateController)
     {
-     
         if(Input.GetKeyDown(KeyCode.Space))
         {
             if (stateController.IsMove() == false && stateController.Conditions.CanChangeCountAttackState())
@@ -265,9 +259,7 @@ public class AttackState : GenealState
             DamageEnemy(effect, comboData.comboClip.hitEffectList[i].effectSound,comboData.comboClip.attackStrengthType[i], comboData.comboClip.attackShakeCam[i], i, comboData.comboClip.damage[i], comboData.comboClip.GetTimeData);
         }
 
-       // SetAnimationTime(currentCombo);
         yield return new WaitForSeconds(attackTimeLimit - waitTimeSum);
-        isAttacking = false;
     }
 
 
@@ -340,7 +332,6 @@ public class AttackState : GenealState
         int attackCount = 0;
 
         controller.SortFindEmenyByNearDistance(controller.transform, ref detectColliders);
-        //stateController.Test_DebugDistance(stateController.transform, detectColliders);
         if (enemysCount > 0)
         {
             for (int i = 0; i < enemysCount; i++)
