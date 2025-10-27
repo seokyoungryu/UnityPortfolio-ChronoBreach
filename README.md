@@ -4,7 +4,6 @@
 ## ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img width="6501" height="4621" alt="Image" src="https://github.com/user-attachments/assets/e02e22a7-f2e9-484d-bfb1-7e3d20c282d2" />
-[🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?#U=https://gist.githubusercontent.com/seokyoungryu/d5c66ba3b41479d296d11ce4a98a83e2/raw/d6c9808739442d64e3c819a91d3123694449386a/UML_Main.drawio)
 
 
 
