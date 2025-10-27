@@ -6,12 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Actions/Attack")]
 public class AttackAction : Action
 {
-   //스탠딩의 attack count일 경우 
-   //AttackAction을 재 진입해서 완료시키기.
-   //만역 finalAttack이 아니면 재진입, 다음 공격이 존재하면 다음공격 standing attack하다가 
-   //standing count가 남으면 재진입해서 채우기.
-
-
     public override void OnEnterAction(AIController controller)
     {
         controller.aiAnim.Play("Reset");
@@ -80,16 +74,11 @@ public class AttackAction : Action
         controller.aiConditions.detectedOn = false;
         controller.aIFSMVariabls.currentAttackRange = 0f;
         controller.StopAllCoroutines();
-        //Debug.Log("공격 상태 OUT");
     }
 
     private IEnumerator MeleeAttackProcess(AIController controller)
     {
-        //이부분 따로 뺴기.
 
-        isStart = true;  //DE
-        timer = 0f;     //DE
-                        //Debug.Log("S : " + timer);
         controller.aiConditions.IsAttacking = true;
         controller.aiConditions.detectedOn = false;
         SettingMeleeAttackClip(controller);
@@ -113,7 +102,6 @@ public class AttackAction : Action
             currentTarget = 0;
 
            yield return new WaitForSeconds(controller.aIFSMVariabls.meleeAttackTimingTime[i]);
-            //Debug.Log("데미지! : "+ timer);
             if (FindCanDamagedToTarget(controller, false, i))
             {
                 for (int x = 0; x < controller.aIFSMVariabls.canDamageEnemy.Count; x++)
@@ -126,14 +114,12 @@ public class AttackAction : Action
                                                            controller.aIFSMVariabls.canDamageEnemy[x].damagedPosition.position,
                                                            Vector3.zero, Vector3.zero);
                     SoundManager.Instance.PlayOneShot(controller.aIFSMVariabls.meleeClip.hitEffect[i].effectSound);
-                    //SoundManager.Instance.PlaySoundAtPosition(controller.aIFSMVariabls.meleeClip.hitEffect[i].effectSound, controller.damagedPosition);
                     Damage(controller, controller.aIFSMVariabls.canDamageEnemy[x], false, x, controller.aIFSMVariabls.attackDamage[i], controller.aIFSMVariabls.meleeClip.attackStrengthType[i]);
                     currentTarget++;
                 }
             }
         }
 
-        //Debug.Log("M : " + timer);
         yield return new WaitForSeconds((controller.aIFSMVariabls.attackEndTime - controller.aIFSMVariabls.attackWaitTime) + controller.aIFSMVariabls.meleeClip.waitAttackEndTime);
 
         if (controller.aIFSMVariabls.meleeClip.isFinalClip || controller.aIFSMVariabls.meleeClip.nextAttackClip == null)
@@ -150,11 +136,8 @@ public class AttackAction : Action
 
 
         controller.aIFSMVariabls.attackComboCount++;
-
         controller.aiConditions.IsAttacking = false;
         controller.aiConditions.detectedOn = false;
-        //Debug.Log("E : " + timer);
-        isStart = false;  //DE
 
 
     }
@@ -175,7 +158,6 @@ public class AttackAction : Action
 
 
         yield return new WaitForSeconds(controller.aIFSMVariabls.rangeClip.waitAttackEndTime);
-        //끝
         controller.aIFSMVariabls.attackComboCount++;
         controller.aiConditions.IsAttacking = false;
         controller.aiConditions.IsEndAttacking = true;
