@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "AI/Decisions/Can Dash")]
 public class CanDashDecision : Decision
 {
-    //액셀레이트 같은 경우는 SetDestination으로 하기떄문에 검사 안해도될듯?
-    //텔포만 검사.
-    //max can dash distance도 추가해서 검사.
     public override bool Decide(AIController controller)
     {
         if (controller.aIVariables.target == null) return false;
@@ -27,7 +24,6 @@ public class CanDashDecision : Decision
     private bool CanDashHeight(AIController controller)
     {
         float yHeight = controller.aIVariables.target.transform.position.y - controller.transform.position.y;
-        //Debug.Log("H : " + yHeight);
         if (yHeight >= controller.aIVariables.rangeDashHeight.x && yHeight <= controller.aIVariables.rangeDashHeight.y)
             return true;
 
@@ -56,7 +52,6 @@ public class CanDashDecision : Decision
         controller.aIFSMVariabls.dashDirection.Normalize();
         Ray ray = new Ray(target.damagedPosition.position, controller.aIFSMVariabls.dashDirection);
 
-        //1차 타겟과 텔포 위치에 장애물 있나 판단.
         if (Physics.Raycast(ray, out controller.aIFSMVariabls.dashHit, controller.aIFSMVariabls.randomDashDistance, controller.obstacleLayer + controller.limitDashObstacleLayer))
             return false;
 
@@ -65,17 +60,13 @@ public class CanDashDecision : Decision
         if (count > 0)
             return false;
 
-        //2차 해당 위치에서 땅이 있나 판단.
         float height = Mathf.Abs(controller.aIVariables.rangeDashHeight.x) + controller.aIVariables.rangeDashHeight.y;
         ray = new Ray(target.transform.position + controller.aIFSMVariabls.dashDirection * controller.aIFSMVariabls.randomDashDistance + Vector3.up * height, Vector3.down);
         if (!Physics.SphereCast(ray, 0.5f, out controller.aIFSMVariabls.dashHit, height, controller.groundLayer))
             return false;
 
-        //3차 높이가 되는지 확인
         if (!CanDashHeight(controller))
             return false;
-
-        // Debug.Log("Decision Can Dash Distance : " + controller.aIFSMVariabls.randomDashDistance);
 
         return true;
     }
@@ -99,8 +90,6 @@ public class CanDashDecision : Decision
 
         Vector3 dir = Quaternion.Euler(0,controller.aIFSMVariabls.randomDirAngle,0) * target.transform.forward;
         dir.Normalize();
-        //Debug.Log("Decision Angle : " + controller.aIFSMVariabls.randomDirAngle);
-
         return dir;
     }
 
@@ -112,7 +101,6 @@ public class CanDashDecision : Decision
 
         Ray ray = new Ray(target.damagedPosition.position, controller.aIFSMVariabls.dashDirection);
 
-        //1차 타겟과 텔포 위치에 장애물 있나 판단.
         if (Physics.Raycast(ray, out controller.aIFSMVariabls.dashHit, controller.aIFSMVariabls.randomDashDistance, controller.obstacleLayer))
         {
             Gizmos.color = Color.red;
@@ -124,7 +112,6 @@ public class CanDashDecision : Decision
             Gizmos.DrawLine(target.damagedPosition.position, target.damagedPosition.position + controller.aIFSMVariabls.dashDirection * controller.aIFSMVariabls.randomDashDistance);
         }
 
-        //2차 해당 위치에서 땅이 있나 판단.
         float height = Mathf.Abs(controller.aIVariables.rangeDashHeight.x) + controller.aIVariables.rangeDashHeight.y;
         ray = new Ray(target.transform.position + controller.aIFSMVariabls.dashDirection * controller.aIFSMVariabls.randomDashDistance + Vector3.up * height, Vector3.down);
         if (!Physics.SphereCast(ray, 0.5f, out controller.aIFSMVariabls.dashHit, height, controller.groundLayer))
@@ -145,7 +132,6 @@ public class CanDashDecision : Decision
 
         }
 
-        //3차 높이가 되는지 확인
         if (!CanDashHeight(controller))
         {
             Gizmos.color = Color.red;
