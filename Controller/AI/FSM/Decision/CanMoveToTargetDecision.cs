@@ -39,8 +39,3 @@ public class CanMoveToTargetDecision : Decision
     }
 }
 
-
-//정리하기.
-//1. bool 형태로 강제 이동 해야됨.음..
-//2. 강제이동이 필요할때 MoveToTarget variables에 강제이동 = flase하고.
-//3. decision으로 강제이동이 있는지 검사. 있다면 -> 강제이동음....
