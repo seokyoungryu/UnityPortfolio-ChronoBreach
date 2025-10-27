@@ -15,7 +15,7 @@ public enum CreateAIType
 
 
 /// <summary>
-/// SpawnData¿« ±‚¡ÿ¿∫ Map Data. Map¿« ¿ßƒ°∏¶ ±‚π›¿∏∑Œ ¿€º∫.
+/// SpawnDataÏùò Í∏∞Ï§ÄÏùÄ Map Data. MapÏùò ÏúÑÏπòÎ•º Í∏∞Î∞òÏúºÎ°ú ÏûëÏÑ±.
 /// </summary>
 public abstract class BaseSpawnData : ScriptableObject
 {
@@ -24,7 +24,7 @@ public abstract class BaseSpawnData : ScriptableObject
     protected DungeonSpawnPositionList dungeonPositinList = null;
     protected bool isCompleteDungeon = false;
     protected bool isFailDungeon = false;
-    [Header("Task.Delay (1000 -> 1√ )")]
+    [Header("Task.Delay (1000 -> 1Ï¥à)")]
     [SerializeField] protected int spawnDeleyTime = 800;
     [SerializeField] protected int eachSpawnDelayTime = 200;
     protected BaseController playerController = null;
@@ -35,10 +35,10 @@ public abstract class BaseSpawnData : ScriptableObject
     private Collider[] checkBossEntryColl;
     private List<ObpInfo> obpObjs = new List<ObpInfo>();
 
-    [Header("∞Ëº” ¡∏¿Á«“ ∫Æ")]
+    [Header("Í≥ÑÏÜç Ï°¥Ïû¨Ìï† Î≤Ω")]
     [SerializeField] protected SpawnBarrierInfo[] existBarriers;
 
-    [Header("Boss BGM Ω««‡ ¿ß«ÿ")]
+    [Header("Boss BGM Ïã§Ìñâ ÏúÑÌï¥")]
     public LayerMask checkLayer = TagAndLayerDefine.LayersIndex.Player;
     [SerializeField] protected CheckBossBGMInfo checkBossBgmInfo;
 
@@ -55,7 +55,7 @@ public abstract class BaseSpawnData : ScriptableObject
     {
         foreach (ObpInfo info in obpObjs)
             ObjectPooling.Instance.SetOBP(info.obpName, info.obpGo);
-        Debug.Log("Clear Ω««‡!");
+        Debug.Log("Clear Ïã§Ìñâ!");
     }
 
     public virtual void ExcuteEndProcess()
@@ -85,13 +85,11 @@ public abstract class BaseSpawnData : ScriptableObject
     {
         info.SetSpawnPositions(dungeonPositinList.GetSpawnPosition(info.SpawnPositionIndex));
         EffectManager.Instance.GetEffectObjectInfo(info.SpawnAppearEffect, info.SpawnPosition, Vector3.zero, Vector3.zero);
-        //  if (type == CreateAIType.ENEMY) SoundManager.Instance.PlayExtraSound(UISoundType.SPAWN_ENEMY);
-        //  else if (type == CreateAIType.PLAYABLEAI) SoundManager.Instance.PlayExtraSound(UISoundType.SPAWN_PLAYABLEAI);
 
         AIController enemy = AIManager.Instance.CreateAI(info.EnemyObpName, info.EnemyInfoList);
 
         if (enemy == null)
-            Debug.Log("<color=yellow> ¿Ã∞≈ NULL </color>");
+            Debug.Log("<color=yellow> Ïù¥Í±∞ NULL </color>");
 
         enemy.gameObject.SetActive(false);
 
@@ -145,7 +143,7 @@ public abstract class BaseSpawnData : ScriptableObject
 
     public async void SpawnAllPlayableAI(BaseDungeonEnemyInfo[] info)
     {
-        Debug.Log("«√∑π¿ÃæÓ∫Ì ª˝º∫ : " + info.Length);
+        Debug.Log("ÌîåÎ†àÏù¥Ïñ¥Î∏î ÏÉùÏÑ± : " + info.Length);
 
         for (int i = 0; i < info.Length; i++)
         {
@@ -182,7 +180,7 @@ public abstract class BaseSpawnData : ScriptableObject
             Debug.Log("dungeonPositinList NUll Setting : " + dungeonPositinList);
         }
 
-        Debug.Log("√º≈© BOSS BGM ƒ⁄∑Á∆æ Ω««‡..");
+        Debug.Log("Ï≤¥ÌÅ¨ BOSS BGM ÏΩîÎ£®Ìã¥ Ïã§Ìñâ..");
         yield return new WaitForSeconds(checkBossBgmInfo.delayTime);
 
         checkBossBgmInfo.spawnPosition = dungeonPositinList.GetTriggerTransform(checkBossBgmInfo.positionIndex).localPosition;
@@ -193,7 +191,7 @@ public abstract class BaseSpawnData : ScriptableObject
 
             if (checkBossEntryColl?.Length > 0)
             {
-                Debug.Log("≈Ω¡ˆ!!!!!!!!!!!!!!!!!!!!!!!!");
+                Debug.Log("ÌÉêÏßÄ!!!!!!!!!!!!!!!!!!!!!!!!");
                 isExcuteBossBGM = true;
                 onExcuteBoss?.Invoke();
             }
@@ -223,4 +221,3 @@ public abstract class BaseSpawnData : ScriptableObject
 }
 
 
-//±‚¥…¿∫ «—∞≥¿«function Scriptable¿” ex) ¡ˆ≈∞±‚ function 1∞≥ -> ¥Ÿ∏• spawnData,  functionø°º≠ enum¿∏∑Œ ∞ÀªÁ«ÿº≠ ∞¢∞¢ ¥Ÿ∏• «¡∑ŒººΩ∫ Ω««‡.
