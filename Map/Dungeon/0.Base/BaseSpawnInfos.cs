@@ -5,11 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class BaseSpawnInfos
 {
-    //´øÀüÀÇ ÇÑ°÷ÀÇ »ı¼º Á¤º¸
-    //¸ó½ºÅÍ OBP, À§Ä¡, isDead µî ¿©·¯ º¯¼öµé, 
     [SerializeField] protected string infoName = string.Empty;
     [SerializeField] protected SpawnProcessType currentProcess = SpawnProcessType.WAIT;
-    [SerializeField] protected float waitNextRound = 1f; //¶ó¿îµå ¿Ï·áÈÄ ´ÙÀ½ ¶ó¿îµå ½ÃÀÛ ´ë±â½Ã°£
+    [SerializeField] protected float waitNextRound = 1f; //ë¼ìš´ë“œ ì™„ë£Œí›„ ë‹¤ìŒ ë¼ìš´ë“œ ì‹œì‘ ëŒ€ê¸°ì‹œê°„
     [SerializeField] protected string globalNotifier = string.Empty;
 
     public string InfoName { get { return infoName; } set { infoName = value; } }
