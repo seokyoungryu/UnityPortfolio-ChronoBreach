@@ -13,8 +13,6 @@ public class RescurAction : Action
 
     public override void Act(AIController controller, float deltaTime)
     {
-        //타겟 범위만큼 체ㅋ하다가 발견시 타겟 등록후 rescurAction Exit하기
-
     }
 
     public override void OnExitAction(AIController controller)
