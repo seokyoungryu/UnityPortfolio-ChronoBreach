@@ -1,5 +1,11 @@
 # 🎮 Unity3D Portfolio RPG Game - Chrono Breach
 
+
+## ⚙️ UML 클래스 다이어그램
+프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
+
+
+
 ## 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
 <a href="https://www.youtube.com/watch?v=sTdEx9n8rMI" target="_blank">
