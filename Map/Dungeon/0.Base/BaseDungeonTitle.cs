@@ -47,7 +47,7 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
     public string TargetString => targetString;
     public string InitGlobalNotifier => initGlobalNotifier;
 
-    //´øÀü Entry½Ã ÄÁÆ®·Ñ·¯ ¼¼ÆÃ.
+    //ë˜ì „ Entryì‹œ ì»¨íŠ¸ë¡¤ëŸ¬ ì„¸íŒ….
     public virtual void SettingControllers(PlayerStateController controller)
     {
         originController = controller;
@@ -97,12 +97,12 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
             if (type == DrawEnemyType.PLAYABLE)
             {
                 Handles.color = Color.white;
-                Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" ¾Æ±º({i}) »ı¼º À§Ä¡");
+                Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" ì•„êµ°({i}) ìƒì„± ìœ„ì¹˜");
             }
             else if (type == DrawEnemyType.NORAML)
             {
                 Handles.color = Color.red;
-                Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" Àû({i}) »ı¼º À§Ä¡");
+                Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" ì ({i}) ìƒì„± ìœ„ì¹˜");
             }
             else if (type == DrawEnemyType.TARGET)
             {
@@ -111,12 +111,12 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
                     if ((infos[i] as TargetDungeonEnemyInfo).IsTarget)
                     {
                         Handles.color = Color.magenta;
-                        Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" Å¸°Ù({i}) »ı¼º À§Ä¡");
+                        Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" íƒ€ê²Ÿ({i}) ìƒì„± ìœ„ì¹˜");
                     }
                     else
                     {
                         Handles.color = Color.red;
-                        Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" Àû({i}) »ı¼º À§Ä¡");
+                        Handles.Label(pos + Vector3.up * 1f, "Wave" + wave + "-" + round + $" ì ({i}) ìƒì„± ìœ„ì¹˜");
                     }
                 }
             }
@@ -142,7 +142,7 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
         Vector3 playerPos = dungeonSpawnPosition.GetSpawnPosition(dungeonMapData.SpawnIndex);
 #if UNITY_EDITOR
         Handles.color = Color.blue;
-        Handles.Label(playerPos + Vector3.up * 2.5f, "ÇÃ·¹ÀÌ¾î »ı¼º À§Ä¡") ;
+        Handles.Label(playerPos + Vector3.up * 2.5f, "í”Œë ˆì´ì–´ ìƒì„± ìœ„ì¹˜") ;
         Handles.DrawWireCube(playerPos + Vector3.up * 1f, Vector3.one * 2f);
         if (dungeonMapData.PlayerRotation == -Vector3.one)
         {
@@ -169,7 +169,6 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
             Handles.Label(drawSpawnTriggerPos + Vector3.up * 2f, "Wave Entry Trigger");
             Handles.color = Color.green;
             Handles.DrawWireCube(drawSpawnTriggerPos + Vector3.up * triggerInfos[i].extend.y / 2f, triggerInfos[i].extend);
-            //Gizmos.DrawWireCube(drawSpawnTriggerPos + Vector3.up * triggerInfos[i].extend.y / 2f, triggerInfos[i].extend);
 #endif
         }
     }
@@ -184,7 +183,6 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
             Handles.Label(drawSpawnTriggerPos + Vector3.up * 2f, "Check Boss BGM");
             Handles.color = Color.green;
             Handles.DrawWireCube(drawSpawnTriggerPos + Vector3.up * info.spawnSize.y / 2f, info.spawnSize);
-            //Gizmos.DrawWireCube(drawSpawnTriggerPos + Vector3.up * triggerInfos[i].extend.y / 2f, triggerInfos[i].extend);
 #endif
     }
 
@@ -202,7 +200,6 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
             Gizmos.matrix = rotationMatrix;
             Gizmos.color = Color.white;
             Gizmos.DrawWireCube(Vector3.zero, barrierInfos[i].spawnSize);
-            // Gizmos.DrawWireCube(drawBarrierPos, barrierInfos[i].spawnSize);
 #endif
         }
     }
@@ -220,7 +217,6 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
             Gizmos.matrix = rotationMatrix;
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(Vector3.zero, barrierInfos[i].spawnSize);
-            // Gizmos.DrawWireCube(drawBarrierPos, barrierInfos[i].spawnSize);
 #endif
         }
     }
@@ -243,27 +239,3 @@ public abstract class BaseDungeonTitle : BaseScriptableObject
     }
 #endif
 }
-
-// Å¸ÀÌÆ²¿¡¼­ ÀÏ´Ü ±âº»ÀûÀÎ°Å ¼¼ÆÃÇØÁÜ. 
-// ÇÃ·¹ÀÌ¾î°¡ UI·Î ´øÀü Entry ÇÏ¸é ½ÇÇàÇÒ°Å.
-// 1. GameManager¿¡ ÇöÀç Å¸ÀÌÆ² ³Ö±â. 
-// 2. ÀÏ´Ü TitleÀÇ MapData¸¦ ½ÇÇà. (¸Ê ÀÌµ¿ or ¾ÀÀÌµ¿ )
-// 3. SettingsController ÇØ¼­ ÇÃ·¹ÀÌ¾î ´Ù ¼¼ÆÃÇØµÒ. (newController´Â ÀÌÁ¦ »ı¼ºÇØÁÖ¸éµÊ)
-//         ¿©±â¼­ºÎÅÍ´Â Function¿¡¼­ ÇØÁÜ. (¹Ø¿¡´Â Normal±â´ÉÀÓ)
-// 4. ÇÃ·¹ÀÌ¾î ÃÊ±â À§Ä¡ ÀÌµ¿. 
-// 5. SpawnData´Â Á¾·ù°¡ ´Ù¸£´Ï±î. ÇÔ¼ö·Î ÅëÀÏ? ¿¹¸¦µé¾î abstract StartSpawn(); À¸·Î?
-
-//±â´ÉÀÇ ±¸º° ±âÁØÀº... ¿Ï·áÁ¶°Ç?ÀÓ 
-//±â´ÉÀ» ³Ê¹« »ó¼¼ÇÏ°Ô ±¸º°ÇÏÁö ¾Ê±â. ¿¹·Î ¿Ï·áÁ¶°Ç (Æ¯Á¤ °³Ã¼ Ã³Ä¡) 
-//±â´É Á¾·ù
-//1. ±âº», ´øÀü ¸ó½ºÅÍ, º¸½º Ã³Ä¡ (Áï ÀüÃ¼ AI Ã³Ä¡) ( Æ®¸®°ÅÀÌ Æ®¸®°Å´Â spawnData´Ï±î »ó°ü¾øÀ»µí?.. ) ( ´øÀü Å¬¸®¾î )
-//2. Æ¯Á¤ Å¸°Ù¸¸ Ã³Ä¡. (Áï »ı¼ºµÈ AIµéÁß¿¡¼­ Æ¯Á¤ °³Ã¼¸¸ Á×ÀÏ °æ¿ì) (Å¸°ÙÀ» ±â´É¿¡¼­ ? µ¥ÀÌÅÍ¿¡¼­? )  (¾Ï»ì or Æ¯Á¤ º¸½º Ã³Ä¡ µî )
-//3. ¹öÆ¼±â (½Ã°£ ¹öÆ¼±â?, spawnData´Â »ı¼ºµÉ ½Ã°£, º¯¼ö·Î Á×¾úÀ» °æ¿ì¸¸ÇÒÁö, °è¼Ó ¼ÒÈ¯ÇÒÁö)   (±â´É¿¡ Á¤ÇØÁø ½Ã°£¸¸Å­ ¹öÆ¼±â.)  (5ºĞ ¹öÆ¼±â, 10ºĞ ¹öÆ¼±â µî) 
-//4. ·¹ÀÌ½Ì (1µî ÇÏ±â?) (·¹ÀÌ½Ì or ¾ÆÀÌÅÛÀü or Â÷¿¡¼­ ÃÑ½î±â? )
-
-//À½.. Áï ±â´É - spawnData°¡ °°¾Æ¾ßµ©. ¾ö¹ĞÈ÷ ¸»ÇÏÀÚ¸é Á¤È®ÇÑ map,category,spawnData,functionÀÌ ÀåÂøµÇ¾ßÇÔ.
-//¿¹¸¦µé¾î  map - ¾óÀ½µ¿±¼ , category - ±âº», ÃÑ(ÀÌ°Íµµ °¡´ÉÇÏ±äÇÔ), ·Îº¿ (°¡´ÉÇÏ±äÇÔ) , ·¹ÀÌ½Ì x 
-//       spawnData - Æ®¸®°Å or All or ¹öÆ¼±â? , ±â´É - ±âº», Æ¯Á¤Å¸°Ù, ¹öÆ¼±â. À½ ... ¤·
-
-//Á¤¸®ÇØº¸ÀÚ¸é, spawnData = function È£È¯µÇ¾ßÇÔ. 
-//Áï ·¹ÀÌ½ÌÀÌ¸é ·¹ÀÌ½ÌspawnData,  ±âº»ÀÌ¸é Æ®¸®°ÅspawnData,  ¹öÆ¼±â¸é ¹öÆ¼±âspawnData, Æ¯Á¤Å¸°ÙÀÌ¸é Æ¯Á¤Å¸°ÙspawnData
