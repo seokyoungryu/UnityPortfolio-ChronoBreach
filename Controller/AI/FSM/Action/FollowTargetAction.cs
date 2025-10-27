@@ -60,10 +60,6 @@ public class FollowTargetAction : Action
                 }
         }
 
-        //현재 딜레이 시간 지나면 쫒음 , 거리 벗어나면 쫒음.
-        //변경
-        //1.DelayFollow일경우 거리 벗어나면 쫒음 , 시간 재고 다시 
-        //2.Update일 경우 계속 따라다님. 
     }
 
 
