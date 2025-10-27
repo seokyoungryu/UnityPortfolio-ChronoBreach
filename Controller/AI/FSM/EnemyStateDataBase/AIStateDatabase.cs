@@ -7,12 +7,9 @@ public class AIStateDatabase : ScriptableObject
 {
     public State startState = null;
 
-    public List<State> enemyStates = null;  //즉 state를 따로 만드는게 아니라  Action, decisions은 스크립터블로 만들지만, 해당 상속받은 
-                                            // OrcStateDataBase의 스크립터블을 생성하고 이 orc데이터베이트의 state에 등록하는식으로.
-                                            // State가 여러개 있고 복잡할수도있으니 여기에 등록해서알아보기 싶게 함. 
+    public List<State> enemyStates = null;  
 
 
-    //start가 null이 아니면. 해당 state에 연결된 전환 state들 enemyStates에 추가하기??
     private void OnValidate()
     {
         SettingEnemyStatesList();
