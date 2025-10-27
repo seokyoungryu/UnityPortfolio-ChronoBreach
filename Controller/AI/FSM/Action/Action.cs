@@ -53,7 +53,6 @@ public abstract class Action : ScriptableObject
     protected void Damage(AIController attacker , BaseController targetController,bool isSkill,int index ,float dmg, AttackStrengthType atkStrengthType)
     {
         (bool, float) dmgValue = attacker.GetDamageValue(true);
-       // Debug.Log($"Atk {attacker.name} : {dmg}  , {dmgValue.Item2}");
 
         if (targetController is PlayerStateController)
         {
@@ -99,7 +98,6 @@ public abstract class Action : ScriptableObject
                     if (CheckTargetInAngle(controller, controller.checkDetectAttackTargetColliders[i].transform, damageAngle))
                     {
                         BaseController canDamageObject = controller.checkDetectAttackTargetColliders[i].GetComponent<BaseController>();
-                        //음.. this와 target의 laycast를 쏴서 장애물이 없으면 데미지 주기. (벽 뒤에 숨어있거나 그런거)
                         if (canDamageObject != null)
                             controller.aIFSMVariabls.canDamageEnemy.Add(canDamageObject);
                     }
