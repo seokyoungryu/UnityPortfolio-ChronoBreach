@@ -7,7 +7,6 @@ public class SkillAction : Action
 {
     public override void OnEnterAction(AIController controller)
     {
-      //  Debug.Log("Ω∫≈≥ ªÛ≈¬ Enter");
         controller.nav.Warp(controller.transform.position);
         controller.aiAnim.applyRootMotion = true;
         controller.nav.updatePosition = false;
@@ -18,11 +17,6 @@ public class SkillAction : Action
         controller.myRigid.velocity = Vector3.zero;
         controller.nav.velocity = Vector3.zero;
         controller.SetNavSpeed(0f);
-
-        //¿Ã∫Œ∫– combat º≥¡§«œ¥¬ Actionø°¥Ÿ∞°
-        //«œ±‚. ¡Ô. ø©±‚º≠ ∑£¥˝¿∏∑Œ ¡§«œ∞Ì Ω∫≈≥¿ª Ω√¿€«œ¥¬∞‘ æ∆¥œ∂Û, combatType¿Ã Skill¿Ã µ«æ˙¿ª∂ß, Ω∫≈≥≈¨∏≥¿ª ºº∆√«œ±‚.
-        //±◊∏Æ∞Ì ø©±‚º≠¥¬ ¥‹º¯»˜ ¡ˆ±› µÓ∑œµ» Ω∫≈≥¿ª Ω««‡«œ¥¬ ø™»∞¿”.
-        //ø©±‚º≠¥¬ ¡∂∞«¿∏∑Œ ∏∏æ‡ «ÿ¥Á ≈¨∏≥¿Ã ƒ≈∏¿”¡ﬂ¿Ã∏È ¥Ÿ∏• ≈¨∏≥¿ª ∞Àªˆ, ¿¸∫Œ ƒ≈∏¿”¿œ∞ÊøÏ attack¿∏∑Œ.
         if (controller.aIFSMVariabls.currentSkillData == null || controller.aIFSMVariabls.currentSkillData.skillClip == null)
         {
             controller.aiConditions.currentCombatType = CurrentCombatType.ATTACK;
@@ -33,9 +27,9 @@ public class SkillAction : Action
         controller.aiAnim.SetFloat(AnimatorKey.BeforeSkillMotionSpeed, controller.aIFSMVariabls.currentSkillData.skillClip.beforeSkillMotionInfo.animationSpeed);
 
         Debug.Log("-------------------");
-        Debug.Log("Ω∫≈≥ Ω««‡!");
-        Debug.Log("Ω∫≈≥ ¿Ã∏ß : " + controller.aIFSMVariabls.currentSkillData.skillName_Kor);
-        Debug.Log("Ω∫≈≥ ≈∏¿‘ : " + controller.aIFSMVariabls.currentSkillData.skillClip.skillType);
+        Debug.Log("Ïä§ÌÇ¨ Ïã§Ìñâ!");
+        Debug.Log("Ïä§ÌÇ¨ Ïù¥Î¶Ñ : " + controller.aIFSMVariabls.currentSkillData.skillName_Kor);
+        Debug.Log("Ïä§ÌÇ¨ ÌÉÄÏûÖ : " + controller.aIFSMVariabls.currentSkillData.skillClip.skillType);
 
         SoundManager.Instance.PlayEffect(controller.aIFSMVariabls.currentSkillData.skillClip.randomVoiceSound);
 
@@ -79,9 +73,6 @@ public class SkillAction : Action
                 controller.transform.rotation = controller.aIFSMVariabls.targetRotation;
             }
         }
-
-     //   Debug.Log("Ω∫≈≥¡ﬂ..");
-
     }
 
     public override void OnExitAction(AIController controller)
@@ -107,13 +98,11 @@ public class SkillAction : Action
 
     private IEnumerator AttackSkillProcess(AIController controller)
     {
-        //Before Skill Motion Process
         if (controller.aIFSMVariabls.currentAttackClip.beforeSkillMotionInfo.beforeMotionClip != null)
             yield return controller.StartCoroutine(ExcuteBeforeSkillMotion_Co(controller.aIFSMVariabls.currentAttackClip.beforeSkillMotionInfo, controller));
 
         controller.aiConditions.detectedOn = false;
         controller.aiAnim.SetFloat(AnimatorKey.SkillSpeed, controller.aIFSMVariabls.currentAttackClip.SkillAnimSpeed);
-       // Debug.Log("Ω∫≈≥ º”µµ : "  + controller.aIFSMVariabls.currentAttackClip.SkillAnimSpeed);
 
         controller.skillController.AddSkillCoolTimeList(controller.aIFSMVariabls.currentSkillData);
         if (controller.aIFSMVariabls.currentSkillData.skillClip.startRotateToTarget)
@@ -140,7 +129,6 @@ public class SkillAction : Action
                 yield return new WaitForSeconds(controller.aIFSMVariabls.attackRotateTiming[i]);
                 controller.aiConditions.detectedOn = false;
                 RotateToTarget(controller);
-               // Debug.Log(controller.aIFSMVariabls.attackRotateTiming[i]);
             }
         }
 
@@ -175,7 +163,6 @@ public class SkillAction : Action
                                                                 controller.aIFSMVariabls.canDamageEnemy[x].transform.position,
                                                                Vector3.zero,
                                                                controller.transform.localScale);
-
                     }
                 }
 
@@ -214,7 +201,7 @@ public class SkillAction : Action
 
         yield return new WaitForSeconds(controller.aIFSMVariabls.currentMagicClip.GetEndTime());
         controller.aiConditions.IsEndSkilling = true;
-        Debug.Log("¡æ∑·");
+        Debug.Log("Ï¢ÖÎ£å");
     }
 
 
@@ -382,50 +369,6 @@ public class SkillAction : Action
     {
         controller.aIFSMVariabls.currentMagicClip.createProjectileInfos[index]?.projectileCreator?.ExcuteCreate(controller, controller.aIVariables.Target?.transform, controller);
     }
-
-
-  //  private Vector3 SetSkillPosition(AIController controller)
-  //  {
-  //      Vector3 retPosition = Vector3.zero;
-  //
-  //      switch(controller.aIFSMVariabls.currentMagicClip.Infos.RangeMoveType)
-  //      {
-  //         case RangeMoveType.THROWING:
-  //              retPosition = controller.skillShootingPosition.position;
-  //             break;
-  //         case RangeMoveType.POINT:
-  //             retPosition = controller.aIVariables.Target.transform.root.position;
-  //              retPosition.y += 0.15f;
-  //             break;
-  //       
-  //         case RangeMoveType.HOMING:
-  //             retPosition = controller.aIVariables.Target.transform.root.position;
-  //              retPosition.y += 0.15f;
-  //             break;
-  //      }
-  //
-  //      return retPosition;
-  //  }
-  //
-  //
-  //  private Vector3 GetSkillDirection(AIController controller)
-  //  {
-  //      Vector3 retDirection = Vector3.zero;
-  //      switch (controller.aIFSMVariabls.currentMagicClip.Infos.RangeMoveType)
-  //      {
-  //          case RangeMoveType.THROWING:
-  //              retDirection = controller.aIVariables.Target.transform.position - controller.transform.position;
-  //              retDirection.y = 0f;
-  //              retDirection.Normalize();
-  //              break;
-  //          case RangeMoveType.POINT:
-  //              break;
-  //
-  //          case RangeMoveType.HOMING:
-  //              break;
-  //      }
-  //      return retDirection;
-  //  }
 
 }
 
