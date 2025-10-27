@@ -12,9 +12,6 @@ public abstract class BaseDungeonMapData : ScriptableObject
 
     public int SpawnIndex => playerSpawnPositionIndex;
     public Vector3 PlayerRotation => playerRotation;
-    /// <summary>
-    /// ¼³Á¤ÇÑ mapÀ¸·Î ÀÌµ¿.
-    /// </summary>
     public abstract void ExcuteTeleportMap();
 
     public virtual void ExcuteTeleportController(PlayerStateController controller, DungeonSpawnPositionList dungeonSpawnPosition)
@@ -26,7 +23,7 @@ public abstract class BaseDungeonMapData : ScriptableObject
         else if (playerRotation != -Vector3.one)
             controller.transform.rotation = Quaternion.Euler(playerRotation);
         Debug.Log("playerSpawnPositionIndex : " + playerSpawnPositionIndex);
-        Debug.Log("refTrans : " + refTrans.position + " ||  localPosition : " + refTrans.localPosition+ " || Çö À§Ä¡ : " + controller.transform.position);
+        Debug.Log("refTrans : " + refTrans.position + " ||  localPosition : " + refTrans.localPosition+ " || Ã‡Ã¶ Ã€Â§Ã„Â¡ : " + controller.transform.position);
     }
 
 
