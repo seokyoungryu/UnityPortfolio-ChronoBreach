@@ -7,9 +7,6 @@ public enum AIStandingType { ATTACK_COUNT = 0, Full_COMBO = 1}
 [CreateAssetMenu(menuName = "AI/Decisions/Can Standing")]
 public class CanStandingDecision : Decision
 {
-    //스탠딩 타입.
-    //1. 공격 한번.
-    //2. 1 콤보.
 
     public override bool Decide(AIController controller)
     {
