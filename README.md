@@ -5,7 +5,8 @@
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img width="6501" height="4621" alt="Image" src="https://github.com/user-attachments/assets/e02e22a7-f2e9-484d-bfb1-7e3d20c282d2" />
 
-[🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?mode=github#U=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UML_Main.drawio)
+[🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?mode=github#U=https%3A%2F%2Fraw.githubusercontent.com%2Fseokyoungryu%2FUnityPortfolio-ChronoBreach%2Fmain%2FUML_Main.drawio)
+
 ## 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
 <a href="https://www.youtube.com/watch?v=sTdEx9n8rMI" target="_blank">
