@@ -16,6 +16,30 @@
 
 [🔗 유튜브 영상 바로 보기](https://www.youtube.com/watch?v=sTdEx9n8rMI)
 
+
+
+> ### [🧩 **UML 클래스 다이어그램 열기**](https://app.diagrams.net/?url=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/refs/heads/main/UML_F.drawio)
+> draw.io에서 UML 다이어그램을 직접 열어볼 수 있습니다.
+
+> ### [🎬 **유튜브 영상 바로 보기**](https://www.youtube.com/watch?v=sTdEx9n8rMI)
+> 시연 영상을 통해 실제 게임 플레이 및 기능을 확인하세요.
+>
+> 
+> ### [🧩 **UML 클래스 다이어그램 열기**](https://app.diagrams.net/?url=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/refs/heads/main/UML_F.drawio)
+> draw.io에서 UML 다이어그램을 직접 열어볼 수 있습니다.
+
+> ### [🎬 **유튜브 영상 바로 보기**](https://www.youtube.com/watch?v=sTdEx9n8rMI)
+> 시연 영상을 통해 실제 게임 플레이 및 기능을 확인하세요.
+
+
+## 📘 참고 링크
+
+**🧩 [UML 클래스 다이어그램 열기](https://app.diagrams.net/?url=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/refs/heads/main/UML_F.drawio)**  
+➡️ draw.io에서 UML 다이어그램을 직접 열 수 있습니다.
+
+**🎬 [유튜브 영상 바로 보기](https://www.youtube.com/watch?v=sTdEx9n8rMI)**  
+➡️ 게임 시연 영상을 바로 확인하세요.
+
 ---
 
 ## 🛠️ 정보
