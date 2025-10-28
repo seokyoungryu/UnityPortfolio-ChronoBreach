@@ -53,12 +53,6 @@ public class NormalSpawnData : TriggerSpawnData<NormalSpawnInfos>
     {
         base.ExcuteEndProcess();
 
-        //End ÇÁ·Î¼¼½º. 
-        //End¸¦ À½.. Å¸°Ù¿¡´Â Ã³¸®ÇÑ Å¸°Ù ¼ö 
-        //·¹ÀÌ½Ì¿¡´Â µî¼ö µî ¿©·¯ Ç×¸ñÀÌ Ãß°¡µÇ°Å³ª »èÁ¦µÉÅÙµ¥.
-        //ÀÌºÎºĞÀº À½ ¾ÆÀÌÅÛ Á¤º¸Ã¢Ã³·³ »ı¼ºÇÏ´À½ÄÀ¸·ÎÇØÁÖ±â.
-        //°í·ÁÇÒÁ¡Àº °¢ Ç×¸ñµéÀÌ floatingÃ³·³ ¿Ã¶ó°¡´Â °Å ?
-
     }
 
     private void OnValidate()
@@ -71,7 +65,7 @@ public class NormalSpawnData : TriggerSpawnData<NormalSpawnInfos>
         for (int i = 0; i < waves.Length; i++)
             for (int x = 0; x < waves[i].RoundInfo.Length; x++)
             {
-                waves[i].RoundInfo[x].RoundName = "¶ó¿îµå" + (x + 1);
+                waves[i].RoundInfo[x].RoundName = "ë¼ìš´ë“œ" + (x + 1);
                 waves[i].RoundInfo[x].EntryRound = (x + 1);
             }
     }
