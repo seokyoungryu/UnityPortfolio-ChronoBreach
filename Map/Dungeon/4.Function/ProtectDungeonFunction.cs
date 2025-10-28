@@ -9,15 +9,6 @@ public class ProtectDungeonFunction : BaseDungeonFunction
 
     public IEnumerator ExcuteProcess(ProtectedDungeonTitle title)
     {
-        //title.SpawnData.dungeon = title.dungeonCoroutine;
-        // title.DungeonMapData.ExcuteTeleportMap();
-        // title.DungeonMapData.ExcuteTeleportController(title.ExcuteController, title.DungeonSpawnPosition);
-        // GameManager.Instance.Cam.SetTarget(title.ExcuteController.gameObject);
-        // title.SpawnData.SettingSpawnPositionList(title.DungeonSpawnPosition);
-        //title.SpawnData.SpawnProtectAI();
-        // CommonUIManager.Instance.ExcuteGlobalNotifer("AI를 보호하며 던전 끝까지 도달하세요.");
-        // if (title.SpawnData.IsFollowing)
-        //     title.SpawnData.ProtectAIController.aIVariables.followTarget = title.ExcuteController.transform;
         SoundManager.Instance.PlayBGM_CrossFade(title.BaseBGM, 4f);
         title.SpawnData.onCompleteDungeon += () => QuestManager.Instance.ReceiveReport(QuestCategoryDefines.COMPLETE_DUNGEON, title.TaskTarget, 1);
         title.SpawnData.onExcuteBoss += () => { SoundManager.Instance.PlayBGM_CrossFade(title.BossBGM, 3f); };
@@ -35,20 +26,11 @@ public class ProtectDungeonFunction : BaseDungeonFunction
 
         GameManager.Instance.Player.playerStats.OnDead_ += () => title?.SpawnData?.ExcuteFailProcess();
 
-        //ScenesManager.Instance.OnExcuteAfterLoading += () => title.SpawnData.StartWave();
-
         yield return new WaitUntil(() => title.SpawnData.isCreateProectedAI);
-
 
         yield return new WaitForSeconds(startWaveTime);
 
         title.SpawnData.StartWave();
-
-        // 1. 던전 entry시 controller 세팅해줌. newController는 생성하고 category에 excuteController로 받아옴.
-        // 2. mapData 세팅해두기. 이거 -> 세팅이 해당 맵으로 이동해주기. 
-        // 3. controller 위치 이동.
-        // spawnData 실행. 1. tRigger, 2. Immediate 
-        // spawnData에서 생성할때 각각 onDead에 해당 info의 state 변경하게하기?.
     }
 
 }
