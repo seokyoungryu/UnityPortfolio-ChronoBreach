@@ -86,27 +86,5 @@ public class NormalDungeonTitle : BaseDungeonTitle
     }
 
 
-    // public override void Draw(SpawnTriggerInfo[] triggerInfos, SpawnBarrierInfo[] barrierInfos)
-    // {
-
-    //   if (normalSpawnData.SpawnType != TriggerSpawnType.TRIGGER) return;
-    //
-    //   if (normalSpawnData.CastCount <= 0)
-    //   {
-    //       Gizmos.color = Color.red;
-    //       Gizmos.DrawWireCube(normalSpawnData.CurrentWave.SpawnTrigger.triggerPosition, normalSpawnData.CurrentWave.SpawnTrigger.extend);
-    //   }
-    //   else
-    //   {
-    //       Gizmos.color = Color.green;
-    //       Gizmos.DrawWireCube(normalSpawnData.CurrentWave.SpawnTrigger.triggerPosition, normalSpawnData.CurrentWave.SpawnTrigger.extend);
-    //   }
-
-#if UNITY_EDITOR
-    //  Handles.color = Color.red;
-    //  Handles.Label(normalSpawnData.CurrentWave.SpawnTrigger.triggerPosition, "스폰 트리거 ");
-
-#endif
-    // }
 
 }
