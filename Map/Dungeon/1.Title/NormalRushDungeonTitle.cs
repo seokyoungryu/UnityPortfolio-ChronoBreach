@@ -66,13 +66,6 @@ public class NormalRushDungeonTitle : BaseDungeonTitle
         DrawEnemySpawnPos(spawnData.Rushs[index].PlayableAIInfos, index + 1, 0, DrawEnemyType.PLAYABLE);
         DrawCommon();
 
-#if UNITY_EDITOR
-        //Handles.color = Color.red;
-        //Handles.Label(rescueSpawnData.CurrentWave.SpawnTrigger.triggerPosition, "스폰 트리거 ");
-        //Handles.color = Color.red;
-        //Handles.Label(rescueSpawnData.FinalReachedPosition.triggerPosition, "최종 도착점 ");
-        //
-#endif
     }
 
     private void DrawCommon()
