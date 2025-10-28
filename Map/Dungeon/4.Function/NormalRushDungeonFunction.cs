@@ -14,13 +14,6 @@ public class NormalRushDungeonFunction : BaseDungeonFunction
 
     public void ExcuteProcess(NormalRushDungeonTitle title)
     {
-        //title.SpawnData.dungeon = title.dungeonCoroutine;
-        // title.DungeonMapData.ExcuteTeleportController(title.ExcuteController, title.DungeonSpawnPosition);
-        // title.DungeonMapData.ExcuteTeleportMap();
-        //GameManager.Instance.Cam.SetTarget(title.ExcuteController.gameObject);
-        // title.SpawnData.SettingSpawnPositionList(title.DungeonSpawnPosition);
-        // title.SpawnData.StartRush();
-
         SoundManager.Instance.PlayBGM_CrossFade(title.BaseBGM, 4f);
         title.SpawnData.dungeon = title.dungeonCoroutine;
         title.DungeonMapData.ExcuteTeleportMap();
