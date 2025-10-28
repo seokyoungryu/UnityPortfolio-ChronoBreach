@@ -14,20 +14,10 @@ public class RescueDungeonFunction : BaseDungeonFunction
 
     public void ExcuteProcess(RescueDungeonTitle title)
     {
-        // title.SpawnData.dungeon = title.dungeonCoroutine;
-        // title.DungeonMapData.ExcuteTeleportController(title.ExcuteController, title.DungeonSpawnPosition);
-        //  title.DungeonMapData.ExcuteTeleportMap();
-        //  GameManager.Instance.Cam.SetTarget(title.ExcuteController.gameObject);
-        // if (title.SpawnData.MinRescuerCount > title.SpawnData.RescuerInfosCount)
-        //     title.SpawnData.MinRescuerCount = title.SpawnData.RescuerInfosCount;
-        // title.SpawnData.SettingSpawnPositionList(title.DungeonSpawnPosition);
-        // title.SpawnData.StartWave();
-        // title.SpawnData.RescuerSetTartget(title.ExcuteController.transform);
-
         SoundManager.Instance.PlayBGM_CrossFade(title.BaseBGM, 4f);
         title.SpawnData.onCompleteDungeon += () =>
         {
-            Debug.Log("¿Ï·á ½ÇÇà! : " + title.TaskTarget.name);
+            Debug.Log("Â¿ÃÂ·Ã¡ Â½Ã‡Ã‡Ã ! : " + title.TaskTarget.name);
             QuestManager.Instance.ReceiveReport(QuestCategoryDefines.COMPLETE_DUNGEON, title.TaskTarget, 1);
         };
         title.SpawnData.onExcuteBoss += () => { SoundManager.Instance.PlayBGM_CrossFade(title.BossBGM, 3f); };
