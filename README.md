@@ -7,6 +7,9 @@
 
 [🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?url=https://gist.githubusercontent.com/seokyoungryu/d5c66ba3b41479d296d11ce4a98a83e2/raw/d6c9808739442d64e3c819a91d3123694449386a/UML_Main.drawio)
 
+[🧩 UML 클래스 다이어그램 열기](https://app.diagrams.net/?url=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/refs/heads/main/UML_F.drawio)
+
+
 ## 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
 <a href="https://www.youtube.com/watch?v=sTdEx9n8rMI" target="_blank">
