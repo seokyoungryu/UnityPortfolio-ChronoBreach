@@ -76,18 +76,10 @@ public class RescueDungeonTitle : BaseDungeonTitle
             DrawEnemySpawnPos(rescueSpawnData.Waves[index].RoundInfo[i].EnemyInfos.ToArray(), index + 1, rescueSpawnData.Waves[index].RoundInfo[i].EntryRound, DrawEnemyType.NORAML);
             DrawEnemySpawnPos(rescueSpawnData.Waves[index].RoundInfo[i].PlayableAIInfos, index + 1, rescueSpawnData.Waves[index].RoundInfo[i].EntryRound, DrawEnemyType.PLAYABLE);
         }
-        //±¸Ãâ À§Ä¡
+        //êµ¬ì¶œ ìœ„ì¹˜
 
 
         DrawCommon();
-
-#if UNITY_EDITOR
-        //Handles.color = Color.red;
-        //Handles.Label(rescueSpawnData.CurrentWave.SpawnTrigger.triggerPosition, "½ºÆù Æ®¸®°Å ");
-        //Handles.color = Color.red;
-        //Handles.Label(rescueSpawnData.FinalReachedPosition.triggerPosition, "ÃÖÁ¾ µµÂøÁ¡ ");
-        //
-#endif
     }
 
     private void DrawCommon()
@@ -96,18 +88,18 @@ public class RescueDungeonTitle : BaseDungeonTitle
         DrawPlayerSpawnPos();
         Vector3 rescuerReachPos = dungeonSpawnPosition.GetTriggerPosition(rescueSpawnData.RescueTargetPosition.positionIndex);
         Handles.color = Color.magenta;
-        Handles.Label(rescuerReachPos + Vector3.up * 2.5f,"ÀÎÁú ±¸Ãâ À§Ä¡"); ;
+        Handles.Label(rescuerReachPos + Vector3.up * 2.5f,"ì¸ì§ˆ êµ¬ì¶œ ìœ„ì¹˜"); ;
         Handles.DrawWireCube(rescuerReachPos + Vector3.up * rescueSpawnData.RescueTargetPosition.extend.y /2f, rescueSpawnData.RescueTargetPosition.extend);
 
-        //º¸½ºÀü ÀÎÁú ÀÌµ¿ Æ®¸®°Å
+        //ë³´ìŠ¤ì „ ì¸ì§ˆ ì´ë™ íŠ¸ë¦¬ê±°
         Vector3 rescuerBossPos = dungeonSpawnPosition.GetTriggerPosition(rescueSpawnData.BossWaveTriggerPos.positionIndex);
         Handles.color = Color.magenta;
-        Handles.Label(rescuerBossPos + Vector3.up * 2.5f, "º¸½ºÀü ÀÎÁú ÀÌµ¿ Æ®¸®°Å"); ;
+        Handles.Label(rescuerBossPos + Vector3.up * 2.5f, "ë³´ìŠ¤ì „ ì¸ì§ˆ ì´ë™ íŠ¸ë¦¬ê±°"); ;
         Handles.DrawWireCube(rescuerBossPos + Vector3.up * rescueSpawnData.BossWaveTriggerPos.extend.y / 2f, rescueSpawnData.BossWaveTriggerPos.extend);
 
         Vector3 rescuerBossMovePos = dungeonSpawnPosition.GetTriggerPosition(rescueSpawnData.ResucerBossWaveIndex);
         Handles.color = Color.magenta;
-        Handles.Label(rescuerBossMovePos + Vector3.up * 2.5f, "º¸½ºÀü ÀÎÁú ÀÌµ¿ À§Ä¡"); ;
+        Handles.Label(rescuerBossMovePos + Vector3.up * 2.5f, "ë³´ìŠ¤ì „ ì¸ì§ˆ ì´ë™ ìœ„ì¹˜"); ;
         Handles.DrawWireCube(rescuerBossMovePos + Vector3.up * 1 , Vector3.one * 3f);
 
 
@@ -115,7 +107,7 @@ public class RescueDungeonTitle : BaseDungeonTitle
         {
             Vector3 pos = dungeonSpawnPosition.GetSpawnPosition(rescueSpawnData.RescuerInfos[i].SpawnPositionIndex);
             Handles.color = Color.yellow;
-            Handles.Label(pos + Vector3.up * 2.5f, (i+1) +"¹ø ÀÎÁú »ı¼º À§Ä¡"); ;
+            Handles.Label(pos + Vector3.up * 2.5f, (i+1) +"ë²ˆ ì¸ì§ˆ ìƒì„± ìœ„ì¹˜"); ;
             Handles.DrawWireCube(pos + Vector3.up * 1f, Vector3.one * 2f);
         }
 #endif
