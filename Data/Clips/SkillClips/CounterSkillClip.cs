@@ -5,20 +5,14 @@ using UnityEngine;
 public enum CounterSkillBuffTimingType
 {
     NONE =-1,
-    SUCCESSED_COUNTER = 0,  //Ä«¿îÅÍ ¼º°ø ½Ã  ex) hp 100 È¸º¹ buffObject(heal)
-    COUNTER_ATTACK =1, // Ä«¿îÅÍ °ø°İ ½Ã
-    SUCCESSCOUNT= 2,  //Ä«¿îÅÍ ¼º°ø È½¼ö ½Ã.
+    SUCCESSED_COUNTER = 0,  //ì¹´ìš´í„° ì„±ê³µ ì‹œ  ex) hp 100 íšŒë³µ buffObject(heal)
+    COUNTER_ATTACK =1, // ì¹´ìš´í„° ê³µê²© ì‹œ
+    SUCCESSCOUNT= 2,  //ì¹´ìš´í„° ì„±ê³µ íšŸìˆ˜ ì‹œ.
 }
 
 [CreateAssetMenu(menuName = "Data/Skill Data/Counter Skill Data", fileName = "SCT_")]
 public class CounterSkillClip : BaseSkillClip
 {
-    // [Header("Buff Object")]
-    // [Tooltip("Buff ½ÃÁ¡")] 
-    // public CounterSkillBuffTimingType buffTimingType = CounterSkillBuffTimingType.NONE;
-    // public BuffStatsObject[] buffObjects = null;
-    // [Tooltip("buffTimingTypeÀÌ SuccessCountÀÏ °æ¿ì \n Success Counter È½¼ö ¸¶´Ù buff ½ÇÇà. \n ¡Ø buffObjects¿Í ÀÎµ¦½º°¡ µ¿ÀÏ.")]
-    // public int[] buffTimingSuccessCounts;
 
     [Header("Sounds")]
     public SoundList entrySound;
@@ -28,15 +22,15 @@ public class CounterSkillClip : BaseSkillClip
     public CounterDefenseClip counterDefenseClip = null;
     public CounterRangeReflectClip counterRangeReflectClip = null;
 
-    [Header("µî·Ï Anim Clip º¸±â¿ë")]
+    [Header("ë“±ë¡ Anim Clip ë³´ê¸°ìš©")]
     public AnimationClip meleeAnimationClip = null;
     public float meleeAnimSpeed = 1f;
     public AnimationClip rangeAnimationClip = null;
     public float rangeAnimSpeed = 1f;
 
-    [Header("PlayerÀü¿ë ½ºÅ³ Àá±İÇØÁ¦ Á¶°Ç")]
+    [Header("Playerì „ìš© ìŠ¤í‚¬ ì ê¸ˆí•´ì œ ì¡°ê±´")]
     public CounterSkillUpgrade condition;
-    [Header("Player¿ë SKill Upgrade")]
+    [Header("Playerìš© SKill Upgrade")]
     public CounterSkillUpgrade[] upgrades;
 
 
@@ -48,9 +42,6 @@ public class CounterSkillClip : BaseSkillClip
         {
             CounterSkillClip clone = copyClip as CounterSkillClip;
             skillType = SkillType.COUNTER;
-           // buffTimingType = clone.buffTimingType;
-           // buffTimingSuccessCounts = clone.buffTimingSuccessCounts;
-            //   buffObjects = clone.buffObjects;
             counterAttackClip = CloneComboDatas(clone.counterAttackClip);
             counterDefenseClip = clone.counterDefenseClip;
             counterRangeReflectClip = CloneReflectClipDatas(clone.counterRangeReflectClip);
@@ -98,7 +89,6 @@ public class CounterSkillClip : BaseSkillClip
 
         counterAttackClip.Upgrade(currentSkillIndex);
         counterRangeReflectClip.Upgrade(currentSkillIndex);
-       // this.buffObjects = upgrade.SkillInfo.BuffObject;
     }
     public override void UseRequipedSkill(PlayerSkillController skillController)
     {
