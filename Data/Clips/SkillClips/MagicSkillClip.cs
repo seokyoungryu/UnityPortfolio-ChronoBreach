@@ -19,8 +19,7 @@ public class MagicSkillClip : BaseSkillClip
 
     [Header("Property")]
     public float canExcuteDistance = 5f;
-  //  public bool rotatingWhenCasting = false; // true¸é animµ¿¾È Å¸°ÙÇÑÅ× È¸Àü.
-    public int rotatingEndFrame = 0;  //È¸Àü ¸ØÃâ ÇÁ·¹ÀÓ.
+    public int rotatingEndFrame = 0;  
     public bool eachTargetEffect = false;
     public TimeData excuteTimeData = null;
 
@@ -34,7 +33,7 @@ public class MagicSkillClip : BaseSkillClip
     public float animationSpeed = 1f;
      public List<MagicProjectileInfo> createProjectileInfos = new List<MagicProjectileInfo>();
 
-    [Header("Player¿ë SKill Upgrade")]
+    [Header("Playerìš© SKill Upgrade")]
     public MagicSkillUpgrade[] upgrades;
 
 
@@ -48,7 +47,6 @@ public class MagicSkillClip : BaseSkillClip
             MagicSkillClip clone = copyClip as MagicSkillClip;
             skillType = SkillType.MAGIC;
             castingSound = clone.castingSound;
-            //rotatingWhenCasting = clone.rotatingWhenCasting;
             rotatingEndFrame = clone.rotatingEndFrame;
             skillAnimationName = clone.skillAnimationName;
             skillAnimationClip = clone.skillAnimationClip;
@@ -142,14 +140,6 @@ public class MagicSkillClip : BaseSkillClip
                     upgrades[i].SkillLevel = (i + 1);
                 }
             }
-
-            // for (int i = 0; i < createProjectileInfos.Count; i++)
-            // {
-            //     if (condition.SkillInfo.GetProjectileCreator.Count < createProjectileInfos.Count)
-            //         condition.SkillInfo.GetProjectileCreator.Add(createProjectileInfos[i].projectileCreator);
-            //     else
-            //         condition.SkillInfo.GetProjectileCreator[i] = createProjectileInfos[i].projectileCreator; 
-            // }
 
         }
     }
