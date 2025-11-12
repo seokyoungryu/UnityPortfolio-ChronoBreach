@@ -19,7 +19,6 @@ public class ProgressLoadingBar : MonoBehaviour
 
     public static void LoadingSetting(int sceneIndex)
     {
-        Debug.Log("index : " + sceneIndex);
         loadingSceneIndex = sceneIndex;
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
        
@@ -31,10 +30,8 @@ public class ProgressLoadingBar : MonoBehaviour
     {
         bool isUnloadScene = false;
         ScenesManager.Instance.ActiveTempLoadingUI(false);
-        Debug.Log("ºñµ¿±â ½ÃÀÛ - " + SceneManager.GetActiveScene().name);
         asyncOp = SceneManager.LoadSceneAsync(sceneIndex);
         asyncOp.completed += (op) => ScenesManager.Instance.OnExcuteDoneLoading();
-        asyncOp.completed += (op) => Debug.Log("¿Ï·á - " + op + SceneManager.GetActiveScene().name);
         asyncOp.completed += (op) => GameManager.Instance.canUseCamera = true;
 
         asyncOp.allowSceneActivation = false;
@@ -66,7 +63,6 @@ public class ProgressLoadingBar : MonoBehaviour
                     yield break;
                 }
             }
-            Debug.Log("·ÎµùÁß.. " + randomUnloadPerc);
         }
 
     }
