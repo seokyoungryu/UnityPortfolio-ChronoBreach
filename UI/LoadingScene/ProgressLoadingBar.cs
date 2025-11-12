@@ -21,7 +21,6 @@ public class ProgressLoadingBar : MonoBehaviour
     {
         Debug.Log("index : " + sceneIndex);
         loadingSceneIndex = sceneIndex;
-        // SceneManager.LoadScene(2);
         SceneManager.LoadScene(2, LoadSceneMode.Additive);
        
     }
@@ -32,11 +31,10 @@ public class ProgressLoadingBar : MonoBehaviour
     {
         bool isUnloadScene = false;
         ScenesManager.Instance.ActiveTempLoadingUI(false);
-        Debug.Log("ºñµ¿±â ½ÃÀÛ - " + SceneManager.GetActiveScene().name);
+        Debug.Log("ÂºÃ±ÂµÂ¿Â±Ã¢ Â½ÃƒÃ€Ã› - " + SceneManager.GetActiveScene().name);
         asyncOp = SceneManager.LoadSceneAsync(sceneIndex);
         asyncOp.completed += (op) => ScenesManager.Instance.OnExcuteDoneLoading();
-        asyncOp.completed += (op) => Debug.Log("¿Ï·á - " + op + SceneManager.GetActiveScene().name);
-        //asyncOp.completed += (op) => GameManager.Instance.Cam?.ResetRotation();
+        asyncOp.completed += (op) => Debug.Log("Â¿ÃÂ·Ã¡ - " + op + SceneManager.GetActiveScene().name);
         asyncOp.completed += (op) => GameManager.Instance.canUseCamera = true;
 
         asyncOp.allowSceneActivation = false;
@@ -48,10 +46,7 @@ public class ProgressLoadingBar : MonoBehaviour
         {
             yield return null;
             if (!isUnloadScene && asyncOp.progress >= randomUnloadPerc)
-            {
                  isUnloadScene = true;
-                 //SceneManager.UnloadSceneAsync(0);
-            }
 
             if (asyncOp.progress < 0.9f)
             {
@@ -71,7 +66,7 @@ public class ProgressLoadingBar : MonoBehaviour
                     yield break;
                 }
             }
-            Debug.Log("·ÎµùÁß.. " + randomUnloadPerc);
+            Debug.Log("Â·ÃŽÂµÃ¹ÃÃŸ.. " + randomUnloadPerc);
         }
 
     }
