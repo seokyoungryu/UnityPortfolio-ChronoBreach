@@ -34,7 +34,7 @@
 
 # 던전
 던전 UML 
-<img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UML_D.png" alt="UML Diagram" width="600" />
+<img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UML_D1.png" alt="UML Diagram" width="600" />
 
 초기에는 모든 적을 처치하면 클리어되는 단순한 구조의 던전만 구현할 계획이었습니다.
 그러나 던전별로 고유한 클리어 조건을 제공하면 게임 플레이의 다양성과 확장성이 크게 향상될 것이라고 판단하여, 다양한 클리어 방식을 지원하는 형태로 시스템을 확장하게 되었습니다.
