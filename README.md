@@ -57,8 +57,8 @@
 - 던전의 이름, 유형, 설명 등  
 - 던전을 식별하고 UI 및 시스템에서 활용되는 기본 정보  
 - **( Normal, Rush, Protect, Rescuer, Target )**
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Title.png" width="650"/> </p>
 
-<사진>
   
 ## Category
 - DungeonController에서 관리하는 주요 제어 설정  
@@ -96,11 +96,13 @@
 
 ## SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
-  - Enemy/Boss 스폰 리스트  
-  - 라운드 구성  
-  - 웨이브 패턴  
+  - Enemy/Boss 스폰 리스트
+  - Playable AI 리스트
+  - 이동 불가 벽 정보
+  - 웨이브/라운드 구성   
 
-<사진>
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/SpawnD1.png" width="650"/> </p>
+
 
 
 ## ⏳ 트러블 슈팅
