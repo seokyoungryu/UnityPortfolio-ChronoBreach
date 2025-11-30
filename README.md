@@ -37,7 +37,7 @@
 
 ## 📌 Dungeon System
 **모듈형 확장 구조의 유연한 던전 UML**🎯
-<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UML_D1.png" width="650"/> </p>
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_D1.png" width="650"/> </p>
 
 
 # 🎯 설계 목적
