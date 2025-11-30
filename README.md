@@ -61,9 +61,27 @@
 
   
 ## Category
-- DungeonController에서 관리하는 주요 제어 설정  
-- 던전 흐름 제어, 웨이브/라운드 진행 로직, 클리어 판정 방식  
-
+- 사용하는 Controller 설정.
+```csharp
+[CreateAssetMenu(menuName ="Map/Dungeon Category/Normal ", fileName ="NormalDungeonCategory")]
+public class NormalDungeonCategory : BaseDungeonCateogry
+{
+    public override PlayerStateController InitControllerSetting(BaseDungeonTitle title)
+    {
+        PlayerStateController originController = title.OriginController;
+        originController.allowStates.Clear();
+        originController.allowStates.Add(originController.GetState<MoveState>());
+        originController.allowStates.Add(originController.GetState<AttackState>());
+        originController.allowStates.Add(originController.GetState<RollState>());
+        originController.allowStates.Add(originController.GetState<SkillState>());
+        originController.allowStates.Add(originController.GetState<DamagedState>());
+        originController.allowStates.Add(originController.GetState<CounterAttackState>());
+        originController.allowStates.Add(originController.GetState<DeadState>());
+        originController.allowStates.Add(originController.GetState<DashState>());
+        return originController;
+    }
+}
+```
 ## Condition
 - 던전에 입장하기 위한 조건을 명시  
   - 플레이어 레벨  
@@ -76,6 +94,32 @@
   - 몬스터/보스 스폰  
   - 클리어 조건 체크  
   - 종료 및 보상 처리  
+
+```csharp
+[CreateAssetMenu(menuName = "Map/Dungeon Function/Normal Function ", fileName = "NormalFunction")]
+public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
+{
+    public override void ExcuteProcess(NormalDungeonTitle title)
+    {
+        SoundManager.Instance.PlayBGM_CrossFade(title.BaseBGM, 4f);
+        title.SpawnData.dungeon = title.dungeonCoroutine;
+        title.DungeonMapData.ExcuteTeleportMap();
+
+        title.SpawnData.onExcuteBoss += () => { SoundManager.Instance.PlayBGM_CrossFade(title.BossBGM, 3f); };
+        ScenesManager.Instance.OnExcuteAfterLoading = () => title.DungeonMapData.ExcuteTeleportController(title.ExcuteController, title.DungeonSpawnPosition);
+        ScenesManager.Instance.OnExcuteAfterLoading += () => title.SpawnData.SettingSpawnPositionList(title.DungeonSpawnPosition);
+        ScenesManager.Instance.OnExcuteAfterLoading += () => GameManager.Instance.Cam.SetTarget(title.ExcuteController.gameObject);
+        ScenesManager.Instance.OnExcuteAfterLoading += () => GameManager.Instance.Cam.ResetRotation();
+        ScenesManager.Instance.OnExcuteAfterLoading += () => title.SpawnData.StartWave();
+        ScenesManager.Instance.OnExcuteAfterLoading += () => title.SpawnData.CreateExistBarrier();
+        ScenesManager.Instance.OnExcuteAfterLoading += () => CommonUIManager.Instance.ExcuteGlobalNotifer(title.InitGlobalNotifier);
+
+        title.SpawnData.onCompleteDungeon += () => QuestManager.Instance.ReceiveReport(QuestCategoryDefines.COMPLETE_DUNGEON, title.TaskTarget, 1);
+        GameManager.Instance.Player.playerStats.OnDead_ += () => title?.SpawnData?.ExcuteFailProcess();
+    }
+}
+
+```
 
 ## Reward
 - 클리어 보상 정보  
@@ -100,7 +144,7 @@
   - Playable AI 리스트
   - 이동 불가 벽 정보
   - 웨이브/라운드 구성   
-
+- **( Normal, Rush, Protect, Rescuer, Target, TimeAttackRush )**
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/SpawnD1.png" width="650"/> </p>
 
 
