@@ -50,14 +50,14 @@
 ## 🎯 Dungeon 구성 요소 
 아래 구성들은 던전 시스템의 핵심 데이터를 간결하게 표현한 구조입니다.  
 
-### Title
+## Title
 - 던전의 이름, 유형, 설명 등  
 - 던전을 식별하고 UI 및 시스템에서 활용되는 기본 정보  
 - **( Normal, Rush, Protect, Rescuer, Target )**
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Title.png" width="650"/> </p>
 
   
-### Category
+## Category
 - 사용하는 Controller 설정.
 ```csharp
 [CreateAssetMenu(menuName ="Map/Dungeon Category/Normal ", fileName ="NormalDungeonCategory")]
@@ -81,13 +81,13 @@ public class NormalDungeonCategory : BaseDungeonCateogry
 ```
 - Normal Category에서는 플레이어 컨트롤러가 사용 가능한 State를 세팅합니다.
 
-### Condition
+## Condition
 - 던전에 입장하기 위한 조건을 명시  
   - 플레이어 레벨  
   - 필요 아이템  
   - 특정 스테이지 선행 여부  
 
-### Function
+## Function
 - 던전 진행 전체를 담당하는 핵심 프로세스  
   - 라운드 시작  
   - 몬스터/보스 스폰  
@@ -120,7 +120,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ```
 
-### Reward
+## Reward
 - 클리어 보상 정보  
   - 경험치
   - 명성치
@@ -129,10 +129,10 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 골드  
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="700" style="display:inline-block;"/>
   
-### MapData
+## MapData
 - 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
 
-### SpawnPosition
+## SpawnPosition
 - 던전 내 위치 정보 구성 요소  
   - 플레이어 시작 위치  
   - Enemy/Boss 스폰 지점  
@@ -147,7 +147,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 </div>
 - OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
-### SpawnData 
+## SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
   - Enemy/Boss 스폰 리스트
   - Playable AI 리스트
@@ -160,8 +160,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ## ⚡ Dash System
 <div align="center">
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="300" style="display:inline-block;"/>
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G1.gif" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="300" style="display:inline-block;"/>
 </div>
 고속 타격 기반의 지형·적 감지형 대시 시스템 🚀
 
@@ -179,7 +179,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 대시는 아래와 같은 5단계 구조로 실행됩니다.
 
-### 1) 🎯 Target Detect
+## Target Detect
 
 시야각, 거리, 스크린 포인트, 장애물 등을 기반으로
 플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
@@ -190,8 +190,8 @@ SphereCast + OverlapSphereNonAlloc 병합 검출
 
 타깃 UI로 현재 선택된 대상 시각화
 
-<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash_Target.png" width="650"/> </p>
-### 2) 🌏 Ground Check (지면 탐색)
+
+## Ground Check
 
 대시 가능한 지점을 찾기 위해
 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
@@ -242,7 +242,7 @@ private bool CheckCanDashGround()
 }
 ```
 
-### 3) 👾 Enemy Detection
+## Enemy Detection
 
 대시 경로에 적이 있는지 검사해
 충돌 위험 시 Skip 또는 Hit 처리합니다.
@@ -277,7 +277,7 @@ private bool DetectEnemy(Vector3 startPosition)
 }
 ```
 
-### 4) 🧱 Obstacle Check
+## Obstacle Check
 
 대시 경로에 장애물이 존재하는지 사전 검출합니다.
 
@@ -285,7 +285,7 @@ SphereCast 기반 충돌 예측
 
 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
 
-### 5) ⚡ Dash Movement + Camera + UI
+## Dash Movement + Camera + UI
 
 대시 이동이 허용되면 다음 처리가 이루어집니다.
 
@@ -297,8 +297,7 @@ SphereCast 기반 충돌 예측
 
 대시 스택 기반 쿨타임 회복
 
-<p align="center"> <img src="YOUR_DASH_GIF.gif" width="600"/> </p>
-## 🎮 Dash 주요 구조
+##  Dash 주요 구조
 ● DashState
 
 대시 전체를 통제하는 핵심 State 클래스입니다.
