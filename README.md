@@ -82,6 +82,8 @@ public class NormalDungeonCategory : BaseDungeonCateogry
     }
 }
 ```
+- Normal Category에서는 플레이어 컨트롤러가 사용 가능한 State를 세팅합니다.
+
 ## Condition
 - 던전에 입장하기 위한 조건을 명시  
   - 플레이어 레벨  
@@ -137,6 +139,15 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 플레이어 시작 위치  
   - Enemy/Boss 스폰 지점  
   - 트리거 이벤트 위치  
+
+  <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처1.png" width="700" style="display:inline-block;"/>
+-OnValidate() 합수로 밑에있는 Map Position Prefab의 정보를 자동 세팅합니다.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처2.png" width="500" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="500" style="display:inline-block;"/>
+</div>
+- OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
 ## SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
