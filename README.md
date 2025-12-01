@@ -32,15 +32,12 @@
 
 # ⏳ 핵심 기술 파트
 
-
-
-
 ## 📌 Dungeon System
 **모듈형 확장 구조의 유연한 던전 UML**🎯
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_D1.png" width="650"/> </p>
 
 
-# 🎯 설계 목적
+## 🎯 설계 목적
 초기에는 단순히 모든 적 처치 시 클리어되는 구조만 구현하려 했으나, 던전별로 고유한 목표와 규칙을 제공하면 게임 플레이의 깊이와 다양성이 크게 향상된다고 판단하여 현재의 모듈형·확장형 구조로 발전시켰습니다.  
 
 설계 과정에서는 다음 두 가지를 특히 중점적으로 고려했습니다.  
@@ -50,17 +47,17 @@
 
 ---
 
-# 🎯 Dungeon 구성 요소 
+## 🎯 Dungeon 구성 요소 
 아래 구성들은 던전 시스템의 핵심 데이터를 간결하게 표현한 구조입니다.  
 
-## Title
+### Title
 - 던전의 이름, 유형, 설명 등  
 - 던전을 식별하고 UI 및 시스템에서 활용되는 기본 정보  
 - **( Normal, Rush, Protect, Rescuer, Target )**
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Title.png" width="650"/> </p>
 
   
-## Category
+### Category
 - 사용하는 Controller 설정.
 ```csharp
 [CreateAssetMenu(menuName ="Map/Dungeon Category/Normal ", fileName ="NormalDungeonCategory")]
@@ -84,13 +81,13 @@ public class NormalDungeonCategory : BaseDungeonCateogry
 ```
 - Normal Category에서는 플레이어 컨트롤러가 사용 가능한 State를 세팅합니다.
 
-## Condition
+### Condition
 - 던전에 입장하기 위한 조건을 명시  
   - 플레이어 레벨  
   - 필요 아이템  
   - 특정 스테이지 선행 여부  
 
-## Function
+### Function
 - 던전 진행 전체를 담당하는 핵심 프로세스  
   - 라운드 시작  
   - 몬스터/보스 스폰  
@@ -123,7 +120,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ```
 
-## Reward
+### Reward
 - 클리어 보상 정보  
   - 경험치
   - 명성치
@@ -131,10 +128,10 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 아이템  
   - 골드  
 
-## MapData
+### MapData
 - 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
 
-## SpawnPosition
+### SpawnPosition
 - 던전 내 위치 정보 구성 요소  
   - 플레이어 시작 위치  
   - Enemy/Boss 스폰 지점  
@@ -149,7 +146,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 </div>
 - OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
-## SpawnData 
+### SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
   - Enemy/Boss 스폰 리스트
   - Playable AI 리스트
@@ -158,6 +155,15 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 - **( Normal, Rush, Protect, Rescuer, Target, TimeAttackRush )**
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/SpawnD1.png" width="650"/> </p>
 
+
+
+## 📌 Dash State 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처2.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="300" style="display:inline-block;"/>
+</div>
+
+## 🎯 설계 목적
 
 
 ## ⏳ 트러블 슈팅
