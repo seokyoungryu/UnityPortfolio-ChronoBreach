@@ -132,7 +132,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 골드  
 
 ## MapData
-- 던전에 사용되는 맵 프리팹과 환경 데이터  
+- 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
 
 ## SpawnPosition
 - 던전 내 위치 정보 구성 요소  
