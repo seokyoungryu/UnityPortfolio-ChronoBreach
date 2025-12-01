@@ -144,8 +144,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 -OnValidate() 합수로 밑에있는 Map Position Prefab의 정보를 자동 세팅합니다.
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처2.png" width="500" style="display:inline-block;"/>
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="500" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처2.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="300" style="display:inline-block;"/>
 </div>
 - OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
