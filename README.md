@@ -127,7 +127,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 스킬포인트
   - 아이템  
   - 골드  
-
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="700" style="display:inline-block;"/>
+  
 ### MapData
 - 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
 
@@ -157,13 +158,175 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 
 
-## 📌 Dash State 
+## ⚡ Dash System
 <div align="center">
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/333.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="300" style="display:inline-block;"/>
 </div>
+고속 타격 기반의 지형·적 감지형 대시 시스템 🚀
 
-## 🎯 설계 목적
 
+대시 시스템은 단순한 돌진이 아니라,
+지형·적·장애물·카메라·쿨타임 UI가 모두 연결된 고급 전투 시스템으로 설계되었습니다.
+
+아래 두 가지 목표를 중심으로 구현되었습니다.
+
+정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화
+
+전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능
+
+## ⭐ Dash 설계 핵심 요소
+
+대시는 아래와 같은 5단계 구조로 실행됩니다.
+
+### 1) 🎯 Target Detect
+
+시야각, 거리, 스크린 포인트, 장애물 등을 기반으로
+플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
+
+SphereCast + OverlapSphereNonAlloc 병합 검출
+
+장애물 투과 여부 선 판정
+
+타깃 UI로 현재 선택된 대상 시각화
+
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash_Target.png" width="650"/> </p>
+### 2) 🌏 Ground Check (지면 탐색)
+
+대시 가능한 지점을 찾기 위해
+목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
+
+작동 방식:
+
+플레이어 → 타깃 방향으로 일정 Interval만큼 전진
+
+각 시점에서 아래로 SphereCast
+
+적이 있는 위치면 Skip
+
+최초로 안전한 지면을 찾으면 그 위치로 이동 확정
+
+🔑 핵심 코드
+```csharp
+private bool CheckCanDashGround()
+{
+    sumInterval = 0f;
+    targetDirFromDashPos = (dashTargetTr.position - tmpDashPosition);
+    groundDistance = targetDirFromDashPos.magnitude;
+    groundSumCount = (int)((groundDistance - minDetectTargetDistance) / groundDetectInterval);
+    currentTargetHeight = (dashTargetTr.position - controller.transform.position).y;
+
+    if (currentTargetHeight < minDetectHeight || currentTargetHeight > maxDetectHeight)
+        return false;
+
+    targetDirFromDashPos.y = 0f;
+    targetDirFromDashPos.Normalize();
+
+    for (int i = 0; i < groundSumCount; i++)
+    {
+        startPos = tmpDashPosition + targetDirFromDashPos * sumInterval + Vector3.up * groundStartYOffset;
+        sumInterval += groundDetectInterval;
+
+        if (DetectEnemy(startPos))
+            continue;
+
+        if (Physics.SphereCast(startPos, groundDetectRadius, -Vector3.up,out groundCheckRayHit, groundYRange, groundLayer))
+        {
+            canDashPosition = groundCheckRayHit.point;
+            return true;
+        }
+        else
+            canDashPosition = Vector3.zero;
+    }
+    return false;
+}
+```
+
+### 3) 👾 Enemy Detection
+
+대시 경로에 적이 있는지 검사해
+충돌 위험 시 Skip 또는 Hit 처리합니다.
+
+🔑 핵심 코드
+```csharp
+private bool DetectEnemy(Vector3 startPosition)
+{
+    RaycastHit groundHit;
+
+    // 1) 지면이 없는 경우 - 안전
+    if (!Physics.Raycast(startPosition, -Vector3.up, out groundHit, groundYRange, groundLayer))
+        return true;
+
+    // 2) 지면까지 SphereCast 시 적 감지
+    if (Physics.SphereCast(startPosition, groundDetectRadius, -Vector3.up,
+        out groundCheckRayHit, groundHit.point.y, enemyLayer))
+    {
+        drawEnemyHitPoints.Add(groundCheckRayHit.point);
+        return true;
+    }
+
+    // 3) 시작 지점에 적이 있는지 검사
+    if (Physics.OverlapSphereNonAlloc(startPosition, groundDetectRadius,
+        groundEnemyColls, enemyLayer) > 0)
+    {
+        drawEnemyHitPoints.Add(startPosition);
+        return true;
+    }
+
+    return false;
+}
+```
+
+### 4) 🧱 Obstacle Check
+
+대시 경로에 장애물이 존재하는지 사전 검출합니다.
+
+SphereCast 기반 충돌 예측
+
+장애물과 충돌하면 Target 자동 변경 또는 대시 취소
+
+### 5) ⚡ Dash Movement + Camera + UI
+
+대시 이동이 허용되면 다음 처리가 이루어집니다.
+
+카메라 FOV 변화
+
+원거리/근거리 대시별 SmoothSpeed 자동 조절
+
+성공 카운트 UI 업데이트
+
+대시 스택 기반 쿨타임 회복
+
+<p align="center"> <img src="YOUR_DASH_GIF.gif" width="600"/> </p>
+## 🎮 Dash 주요 구조
+● DashState
+
+대시 전체를 통제하는 핵심 State 클래스입니다.
+주요 역할:
+
+타겟 탐지
+
+지면 검사
+
+장애물 검사
+
+대시 이동
+
+카메라 효과
+
+성공 카운트 UI
+
+쿨타임 스택 시스템
+
+● DashSkillClip
+
+대시에 필요한 연출(이동 거리 / 이펙트 / 사운드) 을 제어합니다.
+
+● DashTargetMaskUI / DashSuccessCountUI
+
+대상 선택 UI
+
+대시 성공 횟수 누적 UI 표시
 
 ## ⏳ 트러블 슈팅
 
