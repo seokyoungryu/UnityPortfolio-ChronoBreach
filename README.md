@@ -159,8 +159,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ## 📌 Dash State 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처2.png" width="300" style="display:inline-block;"/>
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/화면 캡처3.png" width="300" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/333.png" width="300" style="display:inline-block;"/>
 </div>
 
 ## 🎯 설계 목적
