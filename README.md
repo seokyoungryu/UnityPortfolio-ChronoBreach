@@ -3,7 +3,7 @@
 
 ## ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
-<img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UML_F4.drawio.png" alt="UML Diagram" width="600" />
+<img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_F4.drawio.png" alt="UML Diagram" width="600" />
 
 
 
