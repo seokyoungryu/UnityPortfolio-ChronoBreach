@@ -159,10 +159,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 
 ## ⚡ Dash System
-<div align="center">
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G1.gif" width="300" style="display:inline-block;"/>
-  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="300" style="display:inline-block;"/>
-</div>
+<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="600" style="display:inline-block;"/>
 고속 타격 기반의 지형·적 감지형 대시 시스템 
 
 대시 시스템은 단순한 돌진이 아니라,
@@ -175,8 +172,11 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능
 
 ## ⭐ Dash 설계 핵심 요소
-
-대시는 아래와 같은 5단계 구조로 실행됩니다.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G1.gif" width="450" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="450" style="display:inline-block;"/>
+</div>
+- 대시는 아래와 같은 5단계 구조로 실행됩니다.
 
 ## Target Detect
 
@@ -281,6 +281,38 @@ private bool DetectEnemy(Vector3 startPosition)
  - 성공 카운트 UI 업데이트
  - 대시 스택 기반 쿨타임 회복
 
+  ```csharp
+ private IEnumerator DashMoveProcess_Co()
+    {
+        if (dashTargetTr == null)
+            yield break;
+        float endTime = dashClip.EndTime;
+
+        if (CanTeleportToTarget(dashTargetTr))
+        {
+            StartCoroutine(DashCameraProcess_Co(false));
+            yield return new WaitForSeconds(farDelayFOVMoveTime);
+            controller.RotateToTarget(dashTargetTr.position);
+            controller.myAnimator.CrossFade(dashClip.AnimationName, 0.1f);
+            controller.TranslatePosition(canDashPosition);
+            controller.StartCoroutine(DashDamageProcess_Co());
+        }
+        else
+        {
+            StartCoroutine(DashCameraProcess_Co(true));
+            yield return new WaitForSeconds(nearDelayFOVMoveTime);
+            controller.RotateToTarget(dashTargetTr.position);
+            controller.myAnimator.CrossFade(dashClip.AnimationName, 0.1f);
+            controller.StartCoroutine(DashDamageProcess_Co());
+        }
+
+        yield return new WaitForSeconds(dashClip.EndTime);
+        doneDashState = true;
+        dashTargetTr = null;
+    }
+ 
+
+```
 
 ##  Dash 주요 구조
 ● DashState
