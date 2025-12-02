@@ -174,20 +174,17 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G1.gif" width="450" style="display:inline-block;"/>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="450" style="display:inline-block;"/>
 </div>
+
 - 대시는 아래와 같은 5단계 구조로 실행됩니다.
 
 ## Target Detect
-
 - 시야각, 거리, 스크린 포인트, 장애물 등을 기반으로 플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
  - SphereCast + OverlapSphereNonAlloc 병합 검출
  - 장애물 투과 여부 선 판정
  - 타깃 UI로 현재 선택된 대상 시각화
 
-
 ## Ground Check
-
 - 대시 가능한 지점을 찾기 위해 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
-
 - 작동 방식
  - 플레이어 → 타깃 방향으로 일정 Interval만큼 전진
  - 각 시점에서 아래로 SphereCast
@@ -231,7 +228,6 @@ private bool CheckCanDashGround()
 ```
 
 ## Enemy Detection
-
 - 대시 경로에 적이 있는지 검사해 충돌 감지 시 Skip 또는 Hit 처리합니다.
 
 🔑 핵심 코드
