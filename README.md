@@ -265,14 +265,16 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 ## Obstacle Check
-
+<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Ground.gif" width="400" style="display:inline-block;"/>
+ 
 - 대시 경로에 장애물이 존재하는지 사전 검출합니다.
  - SphereCast 기반 충돌 예측
 
 - 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
 
 ## Dash Movement + Camera + UI
-
+<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UI1.gif" width="400" style="display:inline-block;"/>
+ 
 - 대시 이동이 허용되면 다음 처리가 이루어집니다.
  - 카메라 FOV 변화
  - 원거리/근거리 대시별 SmoothSpeed 자동 조절
@@ -312,35 +314,6 @@ private bool DetectEnemy(Vector3 startPosition)
 
 ```
 
-##  Dash 주요 구조
-● DashState
-
-대시 전체를 통제하는 핵심 State 클래스입니다.
-주요 역할:
-
-타겟 탐지
-
-지면 검사
-
-장애물 검사
-
-대시 이동
-
-카메라 효과
-
-성공 카운트 UI
-
-쿨타임 스택 시스템
-
-● DashSkillClip
-
-대시에 필요한 연출(이동 거리 / 이펙트 / 사운드) 을 제어합니다.
-
-● DashTargetMaskUI / DashSuccessCountUI
-
-대상 선택 UI
-
-대시 성공 횟수 누적 UI 표시
 
 ## ⏳ 트러블 슈팅
 
