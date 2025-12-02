@@ -382,13 +382,34 @@ private bool DetectEnemy(Vector3 startPosition)
 즉, 색상 하나만 바뀌어도 전부 다른 메테리얼로 인식되기 때문에
 Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확대되는 것이 원인이었습니다.
 
-✅ 해결 방법 
+## ✅ 해결 방법 
 
 - 이를 해결하기 위해 **Material Property Block** 방식을 적용하였습니다.
-- 
-Material Property Block는 기존 공유 메테리얼을 유지한 채, Renderer별 색상·파라미터만 개별적으로 변경할 수 있는 기능을 제공합니다.
+- Material Property Block는 기존 공유 메테리얼을 유지한 채, Renderer별 색상·파라미터만 개별적으로 변경할 수 있는 기능을 제공합니다.
 
-즉, 메테리얼 인스턴스를 새로 생성하지 않고, 드로우콜을 증가시키지 않으며, 커스터마이징 색상 적용을 그대로 유지할 수 있었습니다.
+이로인해 메테리얼 인스턴스를 새로 생성하지 않고, 드로우콜을 증가시키지 않으며, 커스터마이징 색상 적용을 그대로 유지할 수 있었습니다.
 
+```csharp
+ public void SetMaterialsColor(Renderer renderer)
+    {
+        MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
+
+        propertyBlock.SetColor("_Color_Primary", Color_Primary);
+        propertyBlock.SetColor("_Color_Secondary", Color_Secondary);
+        propertyBlock.SetColor("_Color_Leather_Primary", Color_Leather_Primary);
+        propertyBlock.SetColor("_Color_Metal_Primary", Color_Metal_Primary);
+        propertyBlock.SetColor("_Color_Leather_Secondary", Color_Leather_Secondary);
+        propertyBlock.SetColor("_Color_Metal_Dark", Color_Metal_Dark);
+        propertyBlock.SetColor("_Color_Metal_Secondary", Color_MertalSecondary);
+        propertyBlock.SetColor("_Color_Hair", Color_Hair);
+        propertyBlock.SetColor("_Color_Skin", Color_Skin);
+        propertyBlock.SetColor("_Color_Stubble", Color_Stubble);
+        propertyBlock.SetColor("_Color_Scar", Color_Scar);
+        propertyBlock.SetColor("_Color_BodyArt", Color_BodyArt);
+        propertyBlock.SetColor("_Color_Eyes", Color_Eyes);
+
+        renderer.SetPropertyBlock(propertyBlock);
+    }
+```
 
 ---
