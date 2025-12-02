@@ -163,11 +163,10 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G1.gif" width="300" style="display:inline-block;"/>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="300" style="display:inline-block;"/>
 </div>
-고속 타격 기반의 지형·적 감지형 대시 시스템 🚀
-
+고속 타격 기반의 지형·적 감지형 대시 시스템 
 
 대시 시스템은 단순한 돌진이 아니라,
-지형·적·장애물·카메라·쿨타임 UI가 모두 연결된 고급 전투 시스템으로 설계되었습니다.
+지형, 적, 장애물, 카메라, 쿨타임 UI가 모두 연결된 고급 전투 시스템으로 설계되었습니다.
 
 아래 두 가지 목표를 중심으로 구현되었습니다.
 
@@ -181,30 +180,21 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ## Target Detect
 
-시야각, 거리, 스크린 포인트, 장애물 등을 기반으로
-플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
-
-SphereCast + OverlapSphereNonAlloc 병합 검출
-
-장애물 투과 여부 선 판정
-
-타깃 UI로 현재 선택된 대상 시각화
+- 시야각, 거리, 스크린 포인트, 장애물 등을 기반으로 플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
+ - SphereCast + OverlapSphereNonAlloc 병합 검출
+ - 장애물 투과 여부 선 판정
+ - 타깃 UI로 현재 선택된 대상 시각화
 
 
 ## Ground Check
 
-대시 가능한 지점을 찾기 위해
-목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
+- 대시 가능한 지점을 찾기 위해 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
 
-작동 방식:
-
-플레이어 → 타깃 방향으로 일정 Interval만큼 전진
-
-각 시점에서 아래로 SphereCast
-
-적이 있는 위치면 Skip
-
-최초로 안전한 지면을 찾으면 그 위치로 이동 확정
+- 작동 방식
+ - 플레이어 → 타깃 방향으로 일정 Interval만큼 전진
+ - 각 시점에서 아래로 SphereCast
+ - 적이 있는 위치면 Skip
+ - 최초로 안전한 지면을 찾으면 그 위치로 이동 확정
 
 🔑 핵심 코드
 ```csharp
@@ -244,8 +234,7 @@ private bool CheckCanDashGround()
 
 ## Enemy Detection
 
-대시 경로에 적이 있는지 검사해
-충돌 위험 시 Skip 또는 Hit 처리합니다.
+- 대시 경로에 적이 있는지 검사해 충돌 감지 시 Skip 또는 Hit 처리합니다.
 
 🔑 핵심 코드
 ```csharp
@@ -279,23 +268,19 @@ private bool DetectEnemy(Vector3 startPosition)
 
 ## Obstacle Check
 
-대시 경로에 장애물이 존재하는지 사전 검출합니다.
+- 대시 경로에 장애물이 존재하는지 사전 검출합니다.
+ - SphereCast 기반 충돌 예측
 
-SphereCast 기반 충돌 예측
-
-장애물과 충돌하면 Target 자동 변경 또는 대시 취소
+- 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
 
 ## Dash Movement + Camera + UI
 
-대시 이동이 허용되면 다음 처리가 이루어집니다.
+- 대시 이동이 허용되면 다음 처리가 이루어집니다.
+ - 카메라 FOV 변화
+ - 원거리/근거리 대시별 SmoothSpeed 자동 조절
+ - 성공 카운트 UI 업데이트
+ - 대시 스택 기반 쿨타임 회복
 
-카메라 FOV 변화
-
-원거리/근거리 대시별 SmoothSpeed 자동 조절
-
-성공 카운트 UI 업데이트
-
-대시 스택 기반 쿨타임 회복
 
 ##  Dash 주요 구조
 ● DashState
