@@ -159,17 +159,15 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 
 ## ⚡ Dash System
-<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="600" style="display:inline-block;"/>
-고속 타격 기반의 지형·적 감지형 대시 시스템 
+<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="400" style="display:inline-block;"/>
+ 
+- 고속 타격 기반의 지형·적 감지형 대시 시스템 
 
-대시 시스템은 단순한 돌진이 아니라,
-지형, 적, 장애물, 카메라, 쿨타임 UI가 모두 연결된 고급 전투 시스템으로 설계되었습니다.
+대시 시스템은 단순한 돌진이 아니라 지형, 적, 장애물, 카메라, 쿨타임 UI로 구성된 전투 시스템으로 설계되었습니다.
 
 아래 두 가지 목표를 중심으로 구현되었습니다.
-
-정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화
-
-전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능
+- 정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화
+- 전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능
 
 ## ⭐ Dash 설계 핵심 요소
 <div align="center">
