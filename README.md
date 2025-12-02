@@ -1,7 +1,7 @@
 # 🎮 Unity3D Portfolio RPG Game - Chrono Breach
 
 
-## ⚙️ UML 클래스 다이어그램
+# ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_F4.drawio.png" alt="UML Diagram" width="1000" />
 
@@ -9,7 +9,7 @@
 
  ### [🧩 **UML 클래스 다이어그램 열기**](https://app.diagrams.net/?url=https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/refs/heads/main/UML_F4.drawio) (ctrl + wheel로 줌 아웃)
 
-## 📹 동영상 링크
+# 📹 동영상 링크
 **동영상 화질을 4k로 선택하여 시청해주시면 감사합니다.** 
 <a href="https://www.youtube.com/watch?v=sTdEx9n8rMI" target="_blank">
   <img src="https://img.youtube.com/vi/sTdEx9n8rMI/maxresdefault.jpg" alt="Unity Portfolio (4K)" style="width:100%;">
@@ -20,7 +20,7 @@
 
 ---
 
-## 🛠️ 정보
+# 🛠️ 정보
 
 - **Unity Version**: 2021.3.17f1
 - **제작 기간**: 1년 2개월
@@ -159,15 +159,15 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 
 ## ⚡ Dash System
-<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="400" style="display:inline-block;"/>
+<p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="400" style="display:inline-block;"/>
  
 - 고속 타격 기반의 지형·적 감지형 대시 시스템 
 
 대시 시스템은 단순한 돌진이 아니라 지형, 적, 장애물, 카메라, 쿨타임 UI로 구성된 전투 시스템으로 설계되었습니다.
 
 아래 두 가지 목표를 중심으로 구현되었습니다.
-- 정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화
-- 전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능
+- **정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화**
+- **전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능**
 
 ## ⭐ Dash 설계 핵심 요소
 <div align="center">
@@ -175,21 +175,71 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/G2.gif" width="450" style="display:inline-block;"/>
 </div>
 
-- 대시는 아래와 같은 5단계 구조로 실행됩니다.
+- 대시는 아래와 같은 구조로 실행됩니다.
 
 ## Target Detect
-- 시야각, 거리, 스크린 포인트, 장애물 등을 기반으로 플레이어가 대시할 적 또는 지면 기준점(Target Point) 을 탐지합니다.
- - SphereCast + OverlapSphereNonAlloc 병합 검출
- - 장애물 투과 여부 선 판정
- - 타깃 UI로 현재 선택된 대상 시각화
+- 대상 위치 계산
+  - BaseController 여부에 따라 피격 중심점 또는 Transform 위치를 타깃 좌표로 사용합니다.
+- 지면 검출 시 대시 불가
+  - CheckDetectGround(targetDir, distance) 에서 지면이 감지되면 해당 위치는 대시 대상에서 제외됩니다.
+- 장애물 검출 시 대시 불가
+  - CheckDetectObstacle(targetDir, distance) 결과 장애물이 차단하고 있으면 대시할 수 없습니다.
+- 근거리 대상 정밀 체크
+  - 타깃이 targetingAllowDistance 이내라면, 더 좁은 중앙 스크린 영역(targetingLimitScreenPoint) 안에 있을 때만 대시를 허용합니다.
+- 일반 타깃팅 영역 체크
+  - 근거리 조건을 충족하지 못하더라도, 넓은 기준 스크린 영역(limitDistance) 안에 위치하면 대시 가능 대상으로 인정합니다.
+- 두 조건 모두 벗어나면 대시 불가
+  - 스크린 기준점을 벗어나거나 거리 조건을 만족하지 못할 경우 대시는 허용되지 않습니다.
+```csharp
+  private bool CheckCanDashTarget(Transform targetTr)
+    {
+        BaseController targetCon = targetTr.GetComponent<BaseController>();
+        Vector3 targetPos = targetCon != null ? targetCon.damagedPosition.position : targetTr.position;
+        Vector2 point = cam.MainCam.WorldToScreenPoint(targetPos);
+        targetDir = (targetPos - centerPosition).normalized;
+        float distance = (targetPos - (controller.transform.position + (Vector3)centerOffset)).magnitude;
+
+        gizmoObstacleDir = targetDir;
+        gizmoObstacleDistance = distance;
+
+        //땅일경우
+        if (CheckDetectGround(targetDir, distance))
+        {
+            return false;
+        }
+
+        ///타겟 위치에 레이어 쏴서 장애물 있나 판단.
+        if (CheckDetectObstacle(targetDir, distance))
+        {
+            return false;
+        }
+
+        //타겟팅일 경우 
+        if (distance <= targetingAllowDistance)
+        {
+            if (centerScreenPoint.x + targetingLimitScreenPoint.x >= point.x && centerScreenPoint.x - targetingLimitScreenPoint.x <= point.x &&
+            centerScreenPoint.y + targetingLimitScreenPoint.y >= point.y && centerScreenPoint.y - targetingLimitScreenPoint.y <= point.y)
+                return true;
+        }
+
+        if (centerScreenPoint.x + limitDistance.x >= point.x && centerScreenPoint.x - limitDistance.x <= point.x &&
+            centerScreenPoint.y + limitDistance.y >= point.y && centerScreenPoint.y - limitDistance.y <= point.y)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+```
 
 ## Ground Check
 - 대시 가능한 지점을 찾기 위해 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
 - 작동 방식
- - 플레이어 → 타깃 방향으로 일정 Interval만큼 전진
- - 각 시점에서 아래로 SphereCast
- - 적이 있는 위치면 Skip
- - 최초로 안전한 지면을 찾으면 그 위치로 이동 확정
+  - 플레이어 → 타깃 방향으로 일정 Interval만큼 전진
+  - 각 시점에서 아래로 SphereCast
+  - 적이 있는 위치면 Skip
+  - 최초로 안전한 지면을 찾으면 그 위치로 이동 확정
 
 🔑 핵심 코드
 ```csharp
@@ -261,23 +311,23 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 ## Obstacle Check
-<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Ground.gif" width="400" style="display:inline-block;"/>
+<p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Ground.gif" width="400" style="display:inline-block;"/>
  
 - 대시 경로에 장애물이 존재하는지 사전 검출합니다.
- - SphereCast 기반 충돌 예측
-
+  - OverlapSphereNonAlloc 기반 충돌 예측 및 최적화
 - 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
 
 ## Dash Movement + Camera + UI
-<div align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UI1.gif" width="400" style="display:inline-block;"/>
- 
-- 대시 이동이 허용되면 다음 처리가 이루어집니다.
- - 카메라 FOV 변화
- - 원거리/근거리 대시별 SmoothSpeed 자동 조절
- - 성공 카운트 UI 업데이트
- - 대시 스택 기반 쿨타임 회복
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UI1.gif" width="400" style="display:inline-block;"/>
 
-  ```csharp
+- 타깃 UI로 현재 선택된 대상 시각화 
+- 대시 이동이 허용되면 다음 처리가 이루어집니다.
+  - 카메라 FOV 변화
+  - 원거리/근거리 대시별 SmoothSpeed 자동 조절
+  - 성공 카운트 UI 업데이트
+  - 대시 스택 기반 쿨타임 회복
+
+```csharp
  private IEnumerator DashMoveProcess_Co()
     {
         if (dashTargetTr == null)
@@ -311,8 +361,28 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 
-## ⏳ 트러블 슈팅
+# ⏳ 트러블 슈팅
+## 🎨 메테리얼 최적화 과정
+- NPC나 몬스터를 생성할 때, 캐릭터별로 지정된 색상을 적용하기 위해 메테리얼 컬러 값을 변경하는 기능을 구현하고 있었습니다.
+- 즉, 스폰된 캐릭터마다 고유한 색상을 설정하는 과정에서 자연스럽게 메테리얼을 수정하는 로직이 필요했습니다.
 
+## ⚠ 문제 발생
+- 메테리얼의 색상을 변경하는 과정에서 기존 메테리얼을 직접 수정하는 것이 아니라, Unity가 내부적으로 새로운 메테리얼 인스턴스를 생성하여 변경을 적용하고 있다는 사실을 확인했습니다.
+
+이렇게 메테리얼 인스턴스가 개별 객체마다 생성되면, 결과적으로 GPU Batching(드로우콜 병합)이 깨지는 현상이 발생하며
+- NPC, 몬스터가 많아질수록 Draw Call이 기하급수적으로 증가해 성능 저하로 이어지는 증상이 생겼습니다.
+
+## 🔍 원인 분석
+
+Unity의 메테리얼 구조상 renderer.material을 수정하면
+
+기존 메테리얼은 공유된 상태
+
+수정 순간 Renderer마다 고유한 인스턴스(Material Instance)를 생성
+하게 됩니다.
+
+즉, 색상 하나만 바뀌어도 전부 다른 메테리얼로 인식되기 때문에
+Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확대되는 것이 원인이었습니다.
 
 
 ## ⏳ 타임라인
