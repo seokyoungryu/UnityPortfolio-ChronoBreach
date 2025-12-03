@@ -446,6 +446,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 
 **1) AnchorSetting()**
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/L2_1.png" width="500" style="display:inline-block;"/>
 - 우선 AnchorSettings() 함수를 통해 정렬할 RectTrasnform들의 Anchor위치를 왼쪽 상단으로 세팅합니다.
 
 ```csharp
