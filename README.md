@@ -528,4 +528,38 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 ```
 
 
+
+## 🎨 UI 스크롤 문제
+
+Inventory, 상점 Slot, 스킬 UI 등에서는 EventTrigger를 활용해 마우스 인터랙션을 처리하고 있습니다.
+UI 생성 시 아래 메서드를 통해 각 요소에 필요한 이벤트를 동적으로 등록합니다.
+
+```csharp
+ public static void AddEventTrigger(GameObject go, EventTriggerType type, UnityAction<BaseEventData> action)
+    {
+        EventTrigger trigger = go.GetComponent<EventTrigger>();
+        if (trigger == null)
+          trigger = go.AddComponent<EventTrigger>();
+
+        EventTrigger.Entry eventTrigger = new EventTrigger.Entry { eventID = type };
+        eventTrigger.callback.AddListener(action);
+        trigger.triggers.Add(eventTrigger);
+    }
+```
+해당 방식으로 생성된 UI 요소는 버튼이 아니더라도 커서 진입, 클릭, 드래그 등 다양한 사용자 입력을 감지할 수 있습니다.
+
+
+## ⚠ 문제 발견
+- EventTrigger가 적용된 UI가 Button 기반이 아니기 때문에, ScrollRect 내에서 스크롤 드래그 우선순위가 정상적으로 전달되지 않는 문제가 확인되었습니다.
+- 그 결과 해당 UI 이미지가 스크롤 이벤트를 선점하며, 이미지가 아닌 빈 영역에서만 드래그 스크롤이 가능해졌습니다.
+
+즉, 클릭 및 마우스 오버가 요구되는 UI가 포함될 경우 ScrollRect의 입력 우선순위가 충돌하면서 부드러운 스크롤 체감이 저하되고 UX 일관성이 무너지는 결과가 나타났습니다.
+
+
+## ✅ 해결 방법
+- 마우스 Wheel + Scroll Bar를 직접 구현하여 관리하는 방식으로 해결할 수 있었습니다.
+
+  
+
+
 ---
