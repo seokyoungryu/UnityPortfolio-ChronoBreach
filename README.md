@@ -9,7 +9,8 @@
   - [Dungeon System](#-dungeon-system)
   - [Dash System](#-dash-system)
 - [트러블 슈팅](#-트러블-슈팅)
-
+  - [메테리얼 최적화 과정](#-메테리얼-최적화-과정)
+  - [Layout group 사용 중 발생한 성능 문제](#-Layout-group-사용-중-발생한-성능-문제)
 
 # ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
