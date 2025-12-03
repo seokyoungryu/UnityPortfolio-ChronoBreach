@@ -7,10 +7,9 @@
 - [정보](#-정보)
 - [핵심 기술 파트](#-핵심-기술-파트)
   - [Dungeon System](#-dungeon-system)
-  - [설계 목적](#-설계-목적)
-  - [Dungeon 구성 요소](#-dungeon-구성-요소)
-- [Dash System](#-dash-system)
-
+  - [Dash System](#-dash-system)
+- [트러블 슈팅](#-트러블-슈팅)
+- 
 # ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_F4.drawio.png" alt="UML Diagram" width="1000" />
@@ -421,5 +420,26 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
         renderer.SetPropertyBlock(propertyBlock);
     }
 ```
+
+
+
+## 🎨Layout group 사용 중 발생한 성능 문제  
+
+- 초기에는 Inventory, 상점 UI, Reward UI 등 다수의 UI 요소가 표시되는 화면에 Unity가 기본 제공하는 Layout Group을 사용하고 있었습니다.
+  레이아웃 정렬이 자동으로 이루어져 UI 구성은 편리했지만, 실제 플레이 환경에서는 예상치 못한 성능 저하가 발생했습니다. 
+
+
+## ⚠ 문제 발견
+
+- UI 요소가 많아질수록 화면 전환 및 스크롤 상황에서 프레임 저하가 눈에 띄게 증가
+- Inventory나 상점처럼 자식 UI가 많은 패널에서 Canvas Rebuild가 반복적으로 발생
+- 즉, 불필요한 작업이 발생.
+
+  
+## ✅ 해결 방법
+- Custom으로 만들어서 원할떄만 실행하도록 구현했습니다.
+- bool로 Content Size Filter 컴포넌트도 기능도 추가하여 적용 가능하게 만들었습니다.
+
+
 
 ---
