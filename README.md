@@ -9,7 +9,8 @@
   - [Dungeon System](#-dungeon-system)
   - [Dash System](#-dash-system)
 - [트러블 슈팅](#-트러블-슈팅)
-- 
+
+
 # ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_F4.drawio.png" alt="UML Diagram" width="1000" />
@@ -424,6 +425,7 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 
 
 ## 🎨Layout group 사용 중 발생한 성능 문제  
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/L1.png" width="500" style="display:inline-block;"/>
 
 - 초기에는 Inventory, 상점 UI, Reward UI 등 다수의 UI 요소가 표시되는 화면에 Unity가 기본 제공하는 Layout Group을 사용하고 있었습니다.
   레이아웃 정렬이 자동으로 이루어져 UI 구성은 편리했지만, 실제 플레이 환경에서는 예상치 못한 성능 저하가 발생했습니다. 
@@ -437,9 +439,91 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 
   
 ## ✅ 해결 방법
-- Custom으로 만들어서 원할떄만 실행하도록 구현했습니다.
-- bool로 Content Size Filter 컴포넌트도 기능도 추가하여 적용 가능하게 만들었습니다.
+- Unity 기본 Layout Group 사용을 중단하고, 레이아웃을 필요할 때만 **단일 호출**로 갱신하는 구조로 재설계하였습니다.
+- UI 변동 여부에 따라 콘텐츠 크기를 자동 재조정할 수 있도록 **Content Size Filter** 기능을 선택적 옵션으로 제공해 유연하게 활용할 수 있도록 만들었습니다.
 
+BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들었습니다.
+
+
+**1) AnchorSetting()**
+- 우선 AnchorSettings() 함수를 통해 정렬할 RectTrasnform들의 Anchor위치를 왼쪽 상단으로 세팅합니다.
+
+```csharp
+ protected void AnchorSettings()
+    {
+        if (uiRect == null)
+            uiRect = GetComponent<RectTransform>();
+        else if (uiRect != null)
+            uiRect.pivot = new Vector2(0, 1);
+
+        foreach (RectTransform rect in childRects)
+        {
+            rect.anchorMin = new Vector2(0, 1);
+            rect.anchorMax = new Vector2(0, 1);
+            rect.pivot = new Vector2(0, 1);
+        }
+    }
+```
+
+
+**1) SortLayout() — UI 배치 계산의 핵심 메서드**
+- 아래 메서드는 UI 요소를 Row 또는 Column 기준으로 배치하며, 패딩·간격·슬롯 크기 계산 후 Anchor 기준 위치를 직접 산출합니다.
+
+```csharp
+ protected override void SortLayout(List<RectTransform> rectList)
+    {
+        if (rectList.Count <= 0) 
+        {
+            uiRect.sizeDelta = new Vector2(0,0);
+            return;
+        }
+        float paddingLR = paddings.left > 0 ? paddings.left : -paddings.right;
+        float rectWidth = 0f;
+        float rectHeight = 0f + paddings.top;
+        int index = 0;
+
+        foreach (RectTransform rect in rectList)
+        {
+            float paddingBottom = paddings.bottom > 0 ? paddings.bottom : 0;
+
+            if (IsRow())
+                RowCalculate(index, ref rectWidth, ref rectHeight, rect);
+            else
+                ColumeCalculate(index, ref rectWidth, ref rectHeight, rect);
+
+            rect.anchoredPosition = new Vector2(rectWidth + paddingLR, -rectHeight + paddingBottom);
+            index++;
+        }
+
+        ContentSizeFilter(index, rectWidth, rectHeight);
+    }
+
+```
+
+**2) ContentSizeFilter() — UI 콘텐츠 크기 자동 조정 기능**
+- UI 항목이 동적으로 증가하는 경우, 전체 슬롯 영역이 UI 내부에 자연스럽게 확장되도록 Row 또는 Column 기준으로 RectTransform의 sizeDelta를 자동 산출합니다.
+
+```csharp
+   private void ContentSizeFilter(int index, float rectWidth, float rectHeight)
+    {
+        if (useContextSizeFilter && uiRect != null)
+        {
+            if (IsRow())
+            {
+                float uiRectWidth = childRects[0].rect.width * RoundToInt(index, row);
+                float uiRectHeight = childRects[0].rect.height * (row > index ? index : row);
+                uiRect.sizeDelta = new Vector2(rectWidth + childRects[0].rect.width, uiRectHeight);
+            }
+            else
+            {
+                float uirectWidth = childRects[0].rect.width * (colume > index ? index : colume);
+                float uirectHeight = childRects[0].rect.height * RoundToInt(index, colume);
+                uiRect.sizeDelta = new Vector2(uirectWidth, rectHeight + childRects[0].rect.height);
+            }
+        }
+    }
+
+```
 
 
 ---
