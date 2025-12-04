@@ -43,11 +43,12 @@
 ---
 
 # ⏳ 핵심 기술 파트
+<br><br>
 
 ## 📌 Dungeon System
 **모듈형 확장 구조의 유연한 던전 UML**🎯
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_D1.png" width="650"/> </p>
-
+<br><br>
 
 ## 🎯 설계 목적
 초기에는 단순히 모든 적 처치 시 클리어되는 구조만 구현하려 했으나, 던전별로 고유한 목표와 규칙을 제공하면 게임 플레이의 깊이와 다양성이 크게 향상된다고 판단하여 현재의 모듈형·확장형 구조로 발전시켰습니다.  
@@ -59,8 +60,12 @@
 
 ---
 
+<br><br>
+
 ## 🎯 Dungeon 구성 요소 
 아래 구성들은 던전 시스템의 핵심 데이터를 간결하게 표현한 구조입니다.  
+
+<br><br>
 
 ## Title
 - 던전의 이름, 유형, 설명 등  
@@ -68,6 +73,7 @@
 - **( Normal, Rush, Protect, Rescuer, Target )**
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Title.png" width="650"/> </p>
 
+  <br><br>
   
 ## Category
 - 사용하는 Controller 설정.
@@ -93,11 +99,15 @@ public class NormalDungeonCategory : BaseDungeonCateogry
 ```
 - Normal Category에서는 플레이어 컨트롤러가 사용 가능한 State를 세팅합니다.
 
+<br><br>
+
 ## Condition
 - 던전에 입장하기 위한 조건을 명시  
   - 플레이어 레벨  
   - 필요 아이템  
   - 특정 스테이지 선행 여부  
+
+<br><br>
 
 ## Function
 - 던전 진행 전체를 담당하는 핵심 프로세스  
@@ -131,6 +141,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 }
 
 ```
+<br><br>
 
 ## Reward
 - 클리어 보상 정보  
@@ -140,9 +151,13 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   - 아이템  
   - 골드  
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="700" style="display:inline-block;"/>
+
+  <br><br>
   
 ## MapData
 - 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
+
+<br><br>
 
 ## SpawnPosition
 - 던전 내 위치 정보 구성 요소  
@@ -159,6 +174,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 </div>
 - OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
+<br><br>
+
 ## SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
   - Enemy/Boss 스폰 리스트
@@ -169,6 +186,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/SpawnD1.png" width="650"/> </p>
 
 
+<br><br><br><br>
 
 ## ⚡ Dash System
 <p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="400" style="display:inline-block;"/>
@@ -180,6 +198,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 아래 두 가지 목표를 중심으로 구현되었습니다.
 - **정확성 : 안전하게 이동 가능한 지점만 계산하여 오동작을 최소화**
 - **전술성 : 적·지면·장애물 판정을 조합해 전략적으로 대시를 활용 가능**
+  
+<br><br>
 
 ## ⭐ Dash 설계 핵심 요소
 <div align="center">
@@ -188,7 +208,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 </div>
 
 - 대시는 아래와 같은 구조로 실행됩니다.
-
+  
+<br><br>
 ## Target Detect
 - 대상 위치 계산
   - BaseController 여부에 따라 피격 중심점 또는 Transform 위치를 타깃 좌표로 사용합니다.
@@ -244,7 +265,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
     }
 
 ```
-
+<br><br>
 ## Ground Check
 - 대시 가능한 지점을 찾기 위해 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
 - 작동 방식
@@ -288,6 +309,7 @@ private bool CheckCanDashGround()
     return false;
 }
 ```
+<br><br>
 
 ## Enemy Detection
 - 대시 경로에 적이 있는지 검사해 충돌 감지 시 Skip 또는 Hit 처리합니다.
@@ -322,13 +344,16 @@ private bool DetectEnemy(Vector3 startPosition)
 }
 ```
 
+<br><br>
+
 ## Obstacle Check
 <p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Ground.gif" width="400" style="display:inline-block;"/>
  
 - 대시 경로에 장애물이 존재하는지 사전 검출합니다.
   - OverlapSphereNonAlloc 기반 충돌 예측 및 최적화
 - 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
-
+  
+<br><br>
 ## Dash Movement + Camera + UI
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UI1.gif" width="400" style="display:inline-block;"/>
 
@@ -373,15 +398,19 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 
-# ⏳ 트러블 슈팅
 
+<br><br><br><br>
+
+
+# ⏳ 트러블 슈팅
+<br><br><br>
 
 ## 🎨 메테리얼 최적화 과정
 - NPC나 몬스터를 생성할 때, 캐릭터별로 지정된 색상을 적용하기 위해 메테리얼 컬러 값을 변경하는 기능을 구현하고 있었습니다.
 - 즉, 스폰된 캐릭터마다 고유한 색상을 설정하는 과정에서 자연스럽게 메테리얼을 수정하는 로직이 필요했습니다.
 
 
-
+<br><br>
 
 ## ⚠ 문제 발생
 - 메테리얼의 색상을 변경하는 과정에서 기존 메테리얼을 직접 수정하는 것이 아니라, Unity가 내부적으로 새로운 메테리얼 인스턴스를 생성하여 변경을 적용하고 있다는 사실을 확인했습니다.
@@ -391,7 +420,7 @@ private bool DetectEnemy(Vector3 startPosition)
 - 이로 인해 NPC나 몬스터가 많아질수록 고유 인스턴스가 기하급수적으로 늘어났고, 그만큼 드로우콜 증가 → 배칭이 깨짐 → 퍼포먼스 저하가 발생했습니다.
 
 
-
+<br><br>
 
 
 ## 🔍 원인 분석
@@ -404,7 +433,7 @@ private bool DetectEnemy(Vector3 startPosition)
 Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확대되는 것이 원인이었습니다.
 
 
-
+<br><br>
 
 ## ✅ 해결 방법 
 
@@ -437,7 +466,7 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 ```
 
 
-
+<br><br><br><br>
 
 
 
@@ -450,7 +479,7 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 
 
 
-
+<br><br>
 
 
 ## ⚠ 문제 발견
@@ -461,7 +490,7 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 
 
 
-
+<br><br>
 
   
 ## ✅ 해결 방법
@@ -471,7 +500,7 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들었습니다.
 
 
-
+<br><br>
 
 
 **1) AnchorSetting()**
