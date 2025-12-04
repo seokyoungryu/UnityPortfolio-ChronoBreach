@@ -10,8 +10,9 @@
   - [Dash System](#-dash-system)
 - [트러블 슈팅](#-트러블-슈팅)
   - [메테리얼 최적화 과정](#-메테리얼-최적화-과정)
-  - [Layout group 사용 중 발생한 성능 문제](#-Layout-group-사용-중-발생한-성능-문제)
-
+  - [Layout group 성능 문제](#-Layout-group-성능-문제)
+  - [UI 스크롤 문제](#-UI-스크롤-문제)
+    
 # ⚙️ UML 클래스 다이어그램
 프로젝트의 주요 시스템 구조를 나타내는 UML 다이어그램입니다.
 <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UML_F4.drawio.png" alt="UML Diagram" width="1000" />
@@ -373,9 +374,14 @@ private bool DetectEnemy(Vector3 startPosition)
 
 
 # ⏳ 트러블 슈팅
+
+
 ## 🎨 메테리얼 최적화 과정
 - NPC나 몬스터를 생성할 때, 캐릭터별로 지정된 색상을 적용하기 위해 메테리얼 컬러 값을 변경하는 기능을 구현하고 있었습니다.
 - 즉, 스폰된 캐릭터마다 고유한 색상을 설정하는 과정에서 자연스럽게 메테리얼을 수정하는 로직이 필요했습니다.
+
+
+
 
 ## ⚠ 문제 발생
 - 메테리얼의 색상을 변경하는 과정에서 기존 메테리얼을 직접 수정하는 것이 아니라, Unity가 내부적으로 새로운 메테리얼 인스턴스를 생성하여 변경을 적용하고 있다는 사실을 확인했습니다.
@@ -383,6 +389,10 @@ private bool DetectEnemy(Vector3 startPosition)
 즉, **공유 메테리얼(Shared Material)** 을 수정하는 것이 아니라, Renderer마다 **고유한 메테리얼 인스턴스(Material Instance)** 를 새로 생성해 적용하는 구조였습니다.
 
 - 이로 인해 NPC나 몬스터가 많아질수록 고유 인스턴스가 기하급수적으로 늘어났고, 그만큼 드로우콜 증가 → 배칭이 깨짐 → 퍼포먼스 저하가 발생했습니다.
+
+
+
+
 
 ## 🔍 원인 분석
 - Unity의 메테리얼 구조상 renderer.material을 수정하면 기존 메테리얼은 공유된 상태
@@ -392,6 +402,9 @@ private bool DetectEnemy(Vector3 startPosition)
 
 즉, 색상 하나만 바뀌어도 전부 다른 메테리얼로 인식되기 때문에
 Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확대되는 것이 원인이었습니다.
+
+
+
 
 ## ✅ 해결 방법 
 
@@ -425,11 +438,19 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 
 
 
-## 🎨Layout group 사용 중 발생한 성능 문제  
+
+
+
+
+## 🎨Layout group 성능 문제  
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/L1.png" width="500" style="display:inline-block;"/>
 
 - 초기에는 Inventory, 상점 UI, Reward UI 등 다수의 UI 요소가 표시되는 화면에 Unity가 기본 제공하는 Layout Group을 사용하고 있었습니다.
   레이아웃 정렬이 자동으로 이루어져 UI 구성은 편리했지만, 실제 플레이 환경에서는 예상치 못한 성능 저하가 발생했습니다. 
+
+
+
+
 
 
 ## ⚠ 문제 발견
@@ -437,6 +458,10 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 - UI 요소가 많아질수록 화면 전환 및 스크롤 상황에서 프레임 저하가 눈에 띄게 증가
 - Inventory나 상점처럼 자식 UI가 많은 패널에서 Canvas Rebuild가 반복적으로 발생
 - 즉, 불필요한 작업이 발생.
+
+
+
+
 
   
 ## ✅ 해결 방법
@@ -446,9 +471,13 @@ Static/Dynamic Batching이 적용되지 않고 Draw Call이 불필요하게 확�
 BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들었습니다.
 
 
+
+
+
 **1) AnchorSetting()**
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/L2_1.png" width="500" style="display:inline-block;"/>
-- 우선 AnchorSettings() 함수를 통해 정렬할 RectTrasnform들의 Anchor위치를 왼쪽 상단으로 세팅합니다.
+- 모든 RectTransform의 기준점을 Left-Top 기준(0,1) 으로 고정하여 UI 배치 시 혼동을 제거했습니다.
+- 중심점, Anchor 차이로 발생하던 재배치 오류를 방지하고 계산을 단일 좌표 기준으로 수행할 수 있습니다.
 
 ```csharp
  protected void AnchorSettings()
@@ -466,6 +495,9 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
         }
     }
 ```
+
+
+
 
 
 **1) SortLayout() — UI 배치 계산의 핵심 메서드**
@@ -502,6 +534,9 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 ```
 
+
+
+
 **2) ContentSizeFilter() — UI 콘텐츠 크기 자동 조정 기능**
 - UI 항목이 동적으로 증가하는 경우, 전체 슬롯 영역이 UI 내부에 자연스럽게 확장되도록 Row 또는 Column 기준으로 RectTransform의 sizeDelta를 자동 산출합니다.
 
@@ -531,8 +566,8 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 ## 🎨 UI 스크롤 문제
 
-Inventory, 상점 Slot, 스킬 UI 등에서는 EventTrigger를 활용해 마우스 인터랙션을 처리하고 있습니다.
-UI 생성 시 아래 메서드를 통해 각 요소에 필요한 이벤트를 동적으로 등록합니다.
+- Inventory, 상점 Slot, 스킬 UI 등에서는 EventTrigger를 활용해 마우스 인터랙션을 처리하고 있습니다.
+- UI 생성 시 아래 메서드를 통해 각 요소에 필요한 이벤트를 동적으로 등록합니다.
 
 ```csharp
  public static void AddEventTrigger(GameObject go, EventTriggerType type, UnityAction<BaseEventData> action)
@@ -549,6 +584,10 @@ UI 생성 시 아래 메서드를 통해 각 요소에 필요한 이벤트를 �
 해당 방식으로 생성된 UI 요소는 버튼이 아니더라도 커서 진입, 클릭, 드래그 등 다양한 사용자 입력을 감지할 수 있습니다.
 
 
+
+
+
+
 ## ⚠ 문제 발견
 - EventTrigger가 적용된 UI가 Button 기반이 아니기 때문에, ScrollRect 내에서 스크롤 드래그 우선순위가 정상적으로 전달되지 않는 문제가 확인되었습니다.
 - 그 결과 해당 UI 이미지가 스크롤 이벤트를 선점하며, 이미지가 아닌 빈 영역에서만 드래그 스크롤이 가능해졌습니다.
@@ -556,10 +595,150 @@ UI 생성 시 아래 메서드를 통해 각 요소에 필요한 이벤트를 �
 즉, 클릭 및 마우스 오버가 요구되는 UI가 포함될 경우 ScrollRect의 입력 우선순위가 충돌하면서 부드러운 스크롤 체감이 저하되고 UX 일관성이 무너지는 결과가 나타났습니다.
 
 
+
+
+
+
 ## ✅ 해결 방법
-- 마우스 Wheel + Scroll Bar를 직접 구현하여 관리하는 방식으로 해결할 수 있었습니다.
+- Unity ScrollRect/Scrollbar 컴포넌트를 사용하지 않고 Wheel 입력 + Custom ScrollBar UI를 직접 구현하여 동작을 세밀하게 제어하였습니다.
+- Scroll 영역 위에 마우스가 올라왔을 때만 Wheel 입력을 허용하고, 스크롤이 필요 없는 경우에는 ScrollBar를 자동으로 숨기는 방식으로 UI 효율성과 시각적 안정성을 확보하였습니다.
+- 드래그, 휠, 스크롤바 UI 이동이 모두 동일한 ScrollValue 기반으로 동기화되도록 설계하였습니다.
 
-  
 
+**1) Awake() 초기화**
+```csharp
+private void Awake()
+{
+    UIHelper.AddEventTrigger(rootRect.gameObject, EventTriggerType.PointerEnter, delegate { OnPointerEnter();});
+    UIHelper.AddEventTrigger(rootRect.gameObject, EventTriggerType.PointerExit,  delegate { OnPointerExit();  });
+
+    if (scrollbarHandler != null)
+    {
+        UIHelper.AddEventTrigger(scrollbarHandler.gameObject, EventTriggerType.BeginDrag, delegate { HandlerDragStart(); });
+        UIHelper.AddEventTrigger(scrollbarHandler.gameObject, EventTriggerType.Drag,      delegate { HandlerDrag();      });
+    }
+
+    barOriginalYSize = (!isScrollHorizontal && scrollbarBackground != null) ? scrollbarBackground.sizeDelta.y : barOriginalYSize;
+    barOriginalXSize = ( isScrollHorizontal && scrollbarBackground != null) ? scrollbarBackground.sizeDelta.x : barOriginalXSize;
+
+    limitMaxViewValue = GetMaxScrollValue();
+
+    if (scrollbarHandler != null)
+    {
+        barMaxPos = scrollbarHandler.transform.position.y + barOriginalYSize;
+        barMinPos = scrollbarHandler.transform.position.y;
+    }
+}
+
+```
+- Awake() 단계에서 각종 Pointer/Drag 이벤트를 직접 연결하여 ScrollRect 없이 입력을 제어할 수 있도록 구성하였습니다.
+- 스크롤바 크기, 좌표, 최대 이동량 등을 초기 계산하여 Update 구간의 연산량을 최소화하였습니다.
+
+
+
+
+**2) Update() 프레임 루프**
+```csharp
+private void Update()
+{
+    UpdateScrollVariables();      // 스크롤 비율 · 마우스 위치 계산
+    ProcessScrollbarVisibility(); // 스크롤 가능한 경우에만 바 표시
+    if (isMouseEnter) HandleMouseScroll(); // UI 내부일 때만 Wheel 사용
+    ApplyScrollToTarget();        // Content 이동 반영
+    ApplyScrollbarPosition();     // ScrollBar UI 위치 동기화
+}
+```
+
+
+**3) Pointer 잔입 여부**
+
+```csharp
+private void OnPointerEnter() => isMouseEnter = true;
+private void OnPointerExit()  => isMouseEnter = false;
+```
+
+- 마우스가 UI 영역 내부에 들어온 경우에만 휠 입력을 수신하도록 하였습니다.
+- 인벤토리, 상점, 보상 UI 등 복수 UI가 띄워질 때도 중복 스크롤이 발생하지 않도록 안정적으로 제어할 수 있습니다.
+
+
+
+
+**4) ScrollValue 계산**
+```csharp
+private void UpdateScrollVariables()
+{
+    if (scrollbarHandler == null) return;
+
+    testMousePos = Input.mousePosition.y;
+    currBarY     = scrollbarHandler.transform.position.y;
+    middlePos    = scrollbarHandler.transform.position.y + (barSize / 2f);
+    percent = Mathf.InverseLerp(0f, barOriginalYSize - scrollbarHandler.rect.height, scrollbarHandler.anchoredPosition.y);
+
+    if (isUpdateSize)
+        limitMaxViewValue = GetMaxScrollValue();
+}
+```
+- 스크롤 진행률(percent)과 핸들 위치를 기반으로 스크롤 상태를 갱신하도록 구현하였습니다.
+- Content 사이즈가 변경될 경우 즉시 limitMaxViewValue를 다시 계산하여 확장형 콘텐츠에도 대응 가능합니다.
+
+
+**5) 스크롤 가능 시에만 Bar UI 자동 활성화**
+```csharp
+private void ProcessScrollbarVisibility()
+{
+    if (!scrollOverRootRect) return;
+
+    bool noScroll = limitMaxViewValue <= 0;
+    scrollbarHandler?.gameObject.SetActive(!noScroll);
+    scrollbarBackground?.gameObject.SetActive(!noScroll);
+
+    if (noScroll) return;
+}
+```
+- 콘텐츠 높이가 View보다 작다면 스크롤바를 자동으로 숨기도록 하였습니다.
+- UI를 불필요하게 차지하지 않으며, 스크롤 필요 시에만 표시되는 UX가 가능합니다.
+
+
+**6) 마우스 휠**
+```csharp
+private void HandleMouseScroll()
+{
+    adjustedSensitivity = (limitMaxViewValue == 0) ? sensitivity : sensitivity * (1f / limitMaxViewValue);
+
+    float wheel = Input.GetAxisRaw("Mouse ScrollWheel") * adjustedSensitivity;
+    currentScrollValue += reverseWheel ? -wheel : wheel;
+    currentScrollValue = Mathf.Clamp(currentScrollValue, minScrollValue, maxScrollValue);
+}
+```
+- 스크롤 민감도는 콘텐츠 길이에 따라 자동 스케일링되며, 빠른·부드러운 스크롤이 모두 가능합니다.
+- 휠 방향 반전 옵션도 지원하여 제작자·사용자 경험에 맞게 적용할 수 있습니다.
+
+
+**7) ScrollBar 위치 UI 실시간 반영**
+```csharp
+private void ApplyScrollbarPosition()
+{
+    if (scrollbarHandler == null || scrollbarBackground == null) return;
+
+    if (isScrollHorizontal)
+    {
+        SetScrollBarSizeX();
+        float dir = reverseRect ? -1f : 1f;
+        scrollbarHandler.anchoredPosition = Vector3.Lerp(scrollbarHandler.anchoredPosition,
+                                                         Vector3.left * currentScrollValue * limitMaxBarValue * dir,
+                                                         Time.deltaTime * smoothDamp );
+    }
+    else
+    {
+        SetScrollBarSizeY();
+        float dir = reverseRect ? 1f : -1f;
+        scrollbarHandler.anchoredPosition = Vector3.Lerp( scrollbarHandler.anchoredPosition,
+                                                          Vector3.up * currentScrollValue * limitMaxBarValue * dir,
+                                                          Time.deltaTime * smoothDamp);
+    }
+}
+```
+- ScrollValue 값만 바뀌면 Content와 ScrollBar가 동시에 이동하도록 구조를 통일하였습니다.
+- UI 표시 상태, 드래그 반응, Wheel 입력이 모두 하나의 변수를 공유하므로 충돌 없이 동작합니다.
 
 ---
