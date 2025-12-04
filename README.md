@@ -476,6 +476,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 **1) AnchorSetting()**
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/L2_1.png" width="500" style="display:inline-block;"/>
+  
 - 모든 RectTransform의 기준점을 Left-Top 기준(0,1) 으로 고정하여 UI 배치 시 혼동을 제거했습니다.
 - 중심점, Anchor 차이로 발생하던 재배치 오류를 방지하고 계산을 단일 좌표 기준으로 수행할 수 있습니다.
 
