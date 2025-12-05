@@ -8,6 +8,7 @@
 - [핵심 기술 파트](#-핵심-기술-파트)
   - [Dungeon System](#-dungeon-system)
   - [Dash System](#-dash-system)
+  - [Item Editor Tool](#-Item-Editor-Tool)
 - [트러블 슈팅](#-트러블-슈팅)
   - [메테리얼 최적화 과정](#-메테리얼-최적화-과정)
   - [Layout group 성능 문제](#-Layout-group-성능-문제)
@@ -400,6 +401,11 @@ private bool DetectEnemy(Vector3 startPosition)
 
 <br><br><br><br>
 
+
+## ⚡ Item Editor Tool
+
+
+<br><br><br><br>
 
 # ⏳ 트러블 슈팅
 <br><br><br>
