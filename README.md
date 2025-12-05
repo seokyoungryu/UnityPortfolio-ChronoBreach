@@ -527,7 +527,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 
 
-
+<br><br><br>
 
 **1) SortLayout() — UI 배치 계산의 핵심 메서드**
 - 아래 메서드는 UI 요소를 Row 또는 Column 기준으로 배치하며, 패딩·간격·슬롯 크기 계산 후 Anchor 기준 위치를 직접 산출합니다.
@@ -564,7 +564,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 ```
 
 
-
+<br><br><br>
 
 **2) ContentSizeFilter() — UI 콘텐츠 크기 자동 조정 기능**
 - UI 항목이 동적으로 증가하는 경우, 전체 슬롯 영역이 UI 내부에 자연스럽게 확장되도록 Row 또는 Column 기준으로 RectTransform의 sizeDelta를 자동 산출합니다.
@@ -591,7 +591,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 ```
 
-
+<br><br><br>
 
 ## 🎨 UI 스크롤 문제
 
@@ -614,7 +614,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 
 
 
-
+<br><br><br>
 
 
 ## ⚠ 문제 발견
@@ -624,7 +624,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 즉, 클릭 및 마우스 오버가 요구되는 UI가 포함될 경우 ScrollRect의 입력 우선순위가 충돌하면서 부드러운 스크롤 체감이 저하되고 UX 일관성이 무너지는 결과가 나타났습니다.
 
 
-
+<br><br><br>
 
 
 
@@ -632,7 +632,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 - Unity ScrollRect/Scrollbar 컴포넌트를 사용하지 않고 Wheel 입력 + Custom ScrollBar UI를 직접 구현하여 동작을 세밀하게 제어하였습니다.
 - Scroll 영역 위에 마우스가 올라왔을 때만 Wheel 입력을 허용하고, 스크롤이 필요 없는 경우에는 ScrollBar를 자동으로 숨기는 방식으로 UI 효율성과 시각적 안정성을 확보하였습니다.
 - 드래그, 휠, 스크롤바 UI 이동이 모두 동일한 ScrollValue 기반으로 동기화되도록 설계하였습니다.
-
+<br><br>
 
 **1) Awake() 초기화**
 ```csharp
@@ -664,7 +664,7 @@ private void Awake()
 - 스크롤바 크기, 좌표, 최대 이동량 등을 초기 계산하여 Update 구간의 연산량을 최소화하였습니다.
 
 
-
+<br><br>
 
 **2) Update() 프레임 루프**
 ```csharp
@@ -677,7 +677,7 @@ private void Update()
     ApplyScrollbarPosition();     // ScrollBar UI 위치 동기화
 }
 ```
-
+<br><br>
 
 **3) Pointer 잔입 여부**
 
@@ -689,7 +689,7 @@ private void OnPointerExit()  => isMouseEnter = false;
 - 마우스가 UI 영역 내부에 들어온 경우에만 휠 입력을 수신하도록 하였습니다.
 - 인벤토리, 상점, 보상 UI 등 복수 UI가 띄워질 때도 중복 스크롤이 발생하지 않도록 안정적으로 제어할 수 있습니다.
 
-
+<br><br>
 
 
 **4) ScrollValue 계산**
@@ -709,7 +709,7 @@ private void UpdateScrollVariables()
 ```
 - 스크롤 진행률(percent)과 핸들 위치를 기반으로 스크롤 상태를 갱신하도록 구현하였습니다.
 - Content 사이즈가 변경될 경우 즉시 limitMaxViewValue를 다시 계산하여 확장형 콘텐츠에도 대응 가능합니다.
-
+<br><br>
 
 **5) 스크롤 가능 시에만 Bar UI 자동 활성화**
 ```csharp
@@ -727,7 +727,7 @@ private void ProcessScrollbarVisibility()
 - 콘텐츠 높이가 View보다 작다면 스크롤바를 자동으로 숨기도록 하였습니다.
 - UI를 불필요하게 차지하지 않으며, 스크롤 필요 시에만 표시되는 UX가 가능합니다.
 
-
+<br><br>
 **6) 마우스 휠**
 ```csharp
 private void HandleMouseScroll()
@@ -741,7 +741,7 @@ private void HandleMouseScroll()
 ```
 - 스크롤 민감도는 콘텐츠 길이에 따라 자동 스케일링되며, 빠른·부드러운 스크롤이 모두 가능합니다.
 - 휠 방향 반전 옵션도 지원하여 제작자·사용자 경험에 맞게 적용할 수 있습니다.
-
+<br><br>
 
 **7) ScrollBar 위치 UI 실시간 반영**
 ```csharp
@@ -770,4 +770,6 @@ private void ApplyScrollbarPosition()
 - ScrollValue 값만 바뀌면 Content와 ScrollBar가 동시에 이동하도록 구조를 통일하였습니다.
 - UI 표시 상태, 드래그 반응, Wheel 입력이 모두 하나의 변수를 공유하므로 충돌 없이 동작합니다.
 
+- 
+<br><br><br><br>
 ---
