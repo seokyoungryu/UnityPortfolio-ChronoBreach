@@ -403,6 +403,16 @@ private bool DetectEnemy(Vector3 startPosition)
 
 
 ## ⚡ Item Editor Tool
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item1.gif" width="800" style="display:inline-block;"/>
+
+
+## 카테고리
+<div align="center">
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I3.png" width="150" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I4.png" width="150" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I5.png" width="150" style="display:inline-block;"/>
+  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I6.png" width="150" style="display:inline-block;"/>
+</div>
 
 
 <br><br><br><br>
