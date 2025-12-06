@@ -405,6 +405,8 @@ private bool DetectEnemy(Vector3 startPosition)
 ## ⚡ Item Editor Tool
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item1.gif" width="800" style="display:inline-block;"/>
 
+<br><br>
+
 
 ## 카테고리
 <div align="center">
@@ -417,12 +419,52 @@ private bool DetectEnemy(Vector3 startPosition)
 - 카테고리 Editor Window를 만들어서 유지보수 하기 쉽게 만들었습니다.
 
 
+<br><br>
+
 ## UseableObject
+**Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.**
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I8.png" width="500" style="display:inline-block;"/>
 
 
-Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.
+<br>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I1.png" width="600" style="display:inline-block;"/>
+
+- 체력을 즉시 900을 회복해주는 포션 아이템입니다.
+- 각 아이템 재사용 쿨타임을 설정할 수 있게 만들어서 게임의 흐름을 조절할 수 있게 구현했습니다.
+<br>
+<hr>
+
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I2.png" width="600" style="display:inline-block;"/>
+
+- 마을로 복귀하는 기능을 가진 스크롤 아이템입니다.
+<br>
+<hr>
+
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I11.png" width="600" style="display:inline-block;"/>
+
+- 한 아이템의 UseableObject의 갯수를 늘려서 사용할 수 있습니다.
+- 위에는 공격력 버프, 크리티컬 버프, 15초동안 체력 회복. 3가지 기능이 있는 아이템입니다.
+<br>
+<hr>
+
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I12.png" width="600" style="display:inline-block;"/>
+- Buff UseableObject입니다. 
+- 값과 지속시간을 설정할 수 있고 중복 사용 가능 여부과 디버프 옵션을 만들었습니다.
+<hr>
+<br>
 
 
+
+## 잠재능력 확률 설정
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I9.png" width="600" style="display:inline-block;"/>
+- Equipment 카테고리 (무기, 방어구, 악세사리, 칭호)에만 존재합니다.
+- 장비 아이템의 잠재능력 등급 확률 값을 설정합니다.
+- 자동 설정을 체크하면 None 30%, Normal 40%, Rare 20%, Unique 6%, Legendary 4% 로 자동 세팅됩니다.
+
+<hr>
+<br>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I10.png" width="600" style="display:inline-block;"/>
+- 체크 해제 시 각 값을 설정할 수 있습니다.
 
 
 
