@@ -416,18 +416,34 @@ private bool DetectEnemy(Vector3 startPosition)
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I6.png" width="150" style="display:inline-block;"/>
 </div>
 
-- 카테고리 Editor Window를 만들어서 유지보수 하기 쉽게 만들었습니다.
+- 각 아이템의 카테고리를 구분하여 가독성과 유지보수 하기 쉽게 만들었습니다.
 
+
+```csharp
+            EditorGUILayout.BeginHorizontal("helpbox"); 
+            {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("카테고리", GUILayout.Width(300)))
+                {
+                    categoriWindwow = GetWindow<CategoryEditorWindow>("카테고리 선택창");
+                    categoriWindwow.minSize = new Vector2(800, 250);
+                    categoriWindwow.maxSize = new Vector2(800, 250);
+                    categoriWindwow.position = new Rect(itemwindow.position.x + 550, itemwindow.position.y + 50, itemwindow.position.width, itemwindow.position.height);
+                    categoriWindwow.Show();
+                }
+            }
+            EditorGUILayout.EndHorizontal();     
+```
+- 카테고리 버튼을 클릭하면 window Eidotr가 항상 하단에 열리도록 위치를 고정시켰습니다.
 
 <br><br>
 
 ## UseableObject
 **Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.**
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I8.png" width="500" style="display:inline-block;"/>
-
-
-<br>
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I1.png" width="600" style="display:inline-block;"/>
+<div align="center">
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I8.png" width="200" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I1.png" width="600" style="display:inline-block;"/>
+</div>
 
 - 체력을 즉시 900을 회복해주는 포션 아이템입니다.
 - 각 아이템 재사용 쿨타임을 설정할 수 있게 만들어서 게임의 흐름을 조절할 수 있게 구현했습니다.
@@ -448,6 +464,7 @@ private bool DetectEnemy(Vector3 startPosition)
 <hr>
 
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I12.png" width="600" style="display:inline-block;"/>
+  
 - Buff UseableObject입니다. 
 - 값과 지속시간을 설정할 수 있고 중복 사용 가능 여부과 디버프 옵션을 만들었습니다.
 <hr>
@@ -457,6 +474,7 @@ private bool DetectEnemy(Vector3 startPosition)
 
 ## 잠재능력 확률 설정
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I9.png" width="600" style="display:inline-block;"/>
+  
 - Equipment 카테고리 (무기, 방어구, 악세사리, 칭호)에만 존재합니다.
 - 장비 아이템의 잠재능력 등급 확률 값을 설정합니다.
 - 자동 설정을 체크하면 None 30%, Normal 40%, Rare 20%, Unique 6%, Legendary 4% 로 자동 세팅됩니다.
@@ -464,6 +482,7 @@ private bool DetectEnemy(Vector3 startPosition)
 <hr>
 <br>
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I10.png" width="600" style="display:inline-block;"/>
+  
 - 체크 해제 시 각 값을 설정할 수 있습니다.
 
 
