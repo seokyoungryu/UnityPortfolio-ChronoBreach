@@ -414,6 +414,20 @@ private bool DetectEnemy(Vector3 startPosition)
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I6.png" width="150" style="display:inline-block;"/>
 </div>
 
+- 카테고리 Editor Window를 만들어서 유지보수 하기 쉽게 만들었습니다.
+
+
+## UseableObject
+
+
+Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.
+
+
+
+
+
+
+
 
 <br><br><br><br>
 
