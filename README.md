@@ -825,6 +825,7 @@ private void UpdateScrollVariables()
         limitMaxViewValue = GetMaxScrollValue();
 }
 ```
+
 - 스크롤 진행률(percent)과 핸들 위치를 기반으로 스크롤 상태를 갱신하도록 구현하였습니다.
 - Content 사이즈가 변경될 경우 즉시 limitMaxViewValue를 다시 계산하여 확장형 콘텐츠에도 대응 가능합니다.
 <br><br>
@@ -842,6 +843,7 @@ private void ProcessScrollbarVisibility()
     if (noScroll) return;
 }
 ```
+
 - 콘텐츠 높이가 View보다 작다면 스크롤바를 자동으로 숨기도록 하였습니다.
 - UI를 불필요하게 차지하지 않으며, 스크롤 필요 시에만 표시되는 UX가 가능합니다.
 
@@ -857,6 +859,7 @@ private void HandleMouseScroll()
     currentScrollValue = Mathf.Clamp(currentScrollValue, minScrollValue, maxScrollValue);
 }
 ```
+
 - 스크롤 민감도는 콘텐츠 길이에 따라 자동 스케일링되며, 빠른·부드러운 스크롤이 모두 가능합니다.
 - 휠 방향 반전 옵션도 지원하여 제작자·사용자 경험에 맞게 적용할 수 있습니다.
 <br><br>
@@ -885,9 +888,9 @@ private void ApplyScrollbarPosition()
     }
 }
 ```
+
 - ScrollValue 값만 바뀌면 Content와 ScrollBar가 동시에 이동하도록 구조를 통일하였습니다.
 - UI 표시 상태, 드래그 반응, Wheel 입력이 모두 하나의 변수를 공유하므로 충돌 없이 동작합니다.
 
-- 
 <br><br><br><br>
 ---
