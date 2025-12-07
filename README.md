@@ -441,7 +441,7 @@ private bool DetectEnemy(Vector3 startPosition)
 <hr>
 
 ## 아이템 타입
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item2.gif" width="1000" style="display:inline-block;"/>
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item2.gif" width="1000" style="display:inline-block;"/>
 
 - 아이템 타입 Enum을 변경하며 해당 타입에 맞는 GUI가 변경되며 값을 설정할 수 있습니다.
   
@@ -501,7 +501,7 @@ private bool DetectEnemy(Vector3 startPosition)
 <hr>
 
 ## 저장
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I13.png" width="600" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I13.png" width="1000" style="display:inline-block;"/>
   
 - .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
 
