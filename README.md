@@ -436,10 +436,22 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 - 카테고리 버튼을 클릭하면 window Eidotr가 항상 하단에 열리도록 위치를 고정시켰습니다.
 
-<br><br>
+
+<br><br><br>
+<hr>
+
+## 아이템 타입
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item2.gif" width="1000" style="display:inline-block;"/>
+
+- 아이템 타입 Enum을 변경하며 해당 타입에 맞는 GUI가 변경되며 값을 설정할 수 있습니다.
+  
+
+<br><br><br>
+<hr>
 
 ## UseableObject
 **Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.**
+
 <div align="center">
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I8.png" width="200" style="display:inline-block;"/>
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I1.png" width="600" style="display:inline-block;"/>
@@ -467,8 +479,8 @@ private bool DetectEnemy(Vector3 startPosition)
   
 - Buff UseableObject입니다. 
 - 값과 지속시간을 설정할 수 있고 중복 사용 가능 여부과 디버프 옵션을 만들었습니다.
-<hr>
 <br>
+<hr>
 
 
 
@@ -479,11 +491,26 @@ private bool DetectEnemy(Vector3 startPosition)
 - 장비 아이템의 잠재능력 등급 확률 값을 설정합니다.
 - 자동 설정을 체크하면 None 30%, Normal 40%, Rare 20%, Unique 6%, Legendary 4% 로 자동 세팅됩니다.
 
-<hr>
 <br>
+<hr>
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I10.png" width="600" style="display:inline-block;"/>
   
 - 체크 해제 시 각 값을 설정할 수 있습니다.
+
+<br>
+<hr>
+
+## 저장
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I13.png" width="600" style="display:inline-block;"/>
+  
+- .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
+
+
+<br><br><br><br>
+
+
+
+
 
 
 
