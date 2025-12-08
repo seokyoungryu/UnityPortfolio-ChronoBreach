@@ -9,6 +9,8 @@
   - [Dungeon System](#-dungeon-system)
   - [Dash System](#-dash-system)
   - [Item Editor Tool](#-Item-Editor-Tool)
+  - [잠재능력 Editor Tool](#-잠재능력-Editor-Tool)
+    
 - [트러블 슈팅](#-트러블-슈팅)
   - [메테리얼 최적화 과정](#-메테리얼-최적화-과정)
   - [Layout group 성능 문제](#-Layout-group-성능-문제)
@@ -525,6 +527,36 @@ private bool DetectEnemy(Vector3 startPosition)
 
 
 ## ⚡ 잠재능력 Editor Tool
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential1.gif" width="1000" style="display:inline-block;"/>
+  
+
+
+
+## 잠재능력 Function ScriptableObject
+
+
+```csharp
+[CreateAssetMenu(menuName = "Potential/Max Hp Percentage", fileName = "MaxHpPecentagePotentialFunction")]
+public class MaxHpPercentPotentialFunction : PotentialFunctionObject
+{
+    public override void Apply(float value, PlayerStatus playerStatus)
+    {
+        playerStatus.MaxHpPercentage += value;
+        float additiveHp = playerStatus.CurrentHealth * value;
+        playerStatus.SetCurrentHP(playerStatus.CurrentHealth + (int)additiveHp);
+    }
+
+    public override void Remove(float value, PlayerStatus playerStatus)
+    {
+        playerStatus.MaxHpPercentage -= value;
+        float additiveHp = playerStatus.CurrentHealth * value;
+        playerStatus.SetCurrentHP(playerStatus.CurrentHealth - (int)additiveHp);
+    }
+
+}
+```
+
+
 
 
 
