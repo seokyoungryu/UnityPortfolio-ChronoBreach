@@ -532,15 +532,22 @@ private bool DetectEnemy(Vector3 startPosition)
 ## ⚡ 잠재능력 Editor Tool
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential1.gif" width="800" style="display:inline-block;"/>
   
-- Equipment 카테고리 (무기, 방어구, 악세사리, 칭호)에만 존재합니다.
-
+- 장비 기반 아이템(Weapon / Armor / Accessory / Title) 에만 적용되는 잠재능력 시스템을 관리하기 위해 제작된 Unity Editor 확장 툴입니다.
+- 등급별 수치 범위, Split 구간, 확률 값을 시각적으로 확인하며 편집할 수 있어, 데이터 밸런싱 및 생산성에 최적화 되게 만들었습니다.
 
 <br>
 <hr>
 
 ## 잠재능력 Function ScriptableObject
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p6.png" width="600" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p7.png" width="300" style="display:inline-block;"/>
 
 
+- 잠재능력 효과는 PotentialFunctionObject를 상속하는 ScriptableObject 단위로 독립화되어 있습니다.
+- 각 잠재능력은 Apply() / Remove() 메서드를 오버라이드하여 장비 장착,해제 상황에 대응하도록 구현했으며,
+  신규 효과 추가 시 클래스만 생성하면 즉시 시스템에 편입될 수 있도록 구조적 확장성을 확보했습니다.
+
+>밑에는 최대 체력 % ScriptableObject 부분입니다.
 ```csharp
 [CreateAssetMenu(menuName = "Potential/Max Hp Percentage", fileName = "MaxHpPecentagePotentialFunction")]
 public class MaxHpPercentPotentialFunction : PotentialFunctionObject
@@ -574,17 +581,25 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
     }
 ```
 
-- 잠재능력 Function은 Apply, Remove를 override 하는 형식으로 관리하여 사용합니다.
-  
 
 <br>
 <hr>
 
 
 ## 카테고리
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp6.png" width="600" style="display:inline-block;"/>
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp7.gif" width="600" style="display:inline-block;"/>
+- 잠재능력(Potential) 시스템은 장비 타입별 옵션 특성 및 밸런스를 독립적으로 관리하기 위해 다음 5개의 Category로 세분화하였습니다.
 
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp6.png" width="600" style="display:inline-block;"/>
+<div align="center">
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp7.png" width="190" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp8.png" width="190" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp9.png" width="190" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp10.png" width="190" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp11.png" width="190" style="display:inline-block;"/>
+</div>
+
+- Common 카테고리는 장비 유형과 관계없이 모든 Potential에 공통 적용되는 기반 옵션을 정의합니다.
+- 각 전용 카테고리는 해당 장비에서만 사용 가능한 고유 Potential 옵션을 세팅합니다.
 
 <br>
 <hr>
@@ -592,7 +607,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 ## 세부 설정
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential2.gif" width="800" style="display:inline-block;"/>
 
-  - 각 등급마다 최소 ~ 최대 값을 입력하고 Split Count를 입력해서 분할 개수를 정합니다. 
+- 각 등급마다 최소 ~ 최대 값을 입력하고 Split Count를 입력해서 분할 개수를 정합니다. 
 - 각 분할 퍼센트는 직접 수정할 수 있으며, 정보의 Split 범위 값은는 자동으로 나눠집니다. 
 - Split Count는 최소 2 ~ 최대 5를 넘을 수 없습니다.
 
@@ -614,7 +629,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 <br>
 <hr>
-##  In Game UI
+## In Game UI
 <div align="center">
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p1.png" width="165" style="display:inline-block;"/>
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p2.png" width="165" style="display:inline-block;"/>
