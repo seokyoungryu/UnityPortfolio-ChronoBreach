@@ -405,10 +405,20 @@ private bool DetectEnemy(Vector3 startPosition)
 ## ⚡ Item Editor Tool
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item1.gif" width="800" style="display:inline-block;"/>
 
+- 아이템 에디터 툴은 게임 내 모든 아이템 데이터를 효율적으로 관리하고, ScriptableObject를 기반으로 무기·장비·소모품 등 다양한 항목을 직관적으로 생성·편집할 수 있도록 설계되었습니다.
+- 프로젝트 전체 밸런싱 및 아이템 제작 속도를 극적으로 향상시키는 핵심 개발 도구입니다.
 <br><br>
 
 
-## 카테고리
+## 🎯 설계 목표
+
+- 아이템 데이터의 종류가 증가할수록 수작업 수정과 관리 비용이 기하급수적으로 늘어났으며, 이를 효율적으로 해결하기 위해 다음 두 가지 목표를 중심으로 개발하였습니다.
+  - 단일 창에서 모든 아이템 관리하고 추가 ,수정 ,삭제 구현
+  - 즉시 적용 가능한 편집 환경 구축 ScriptableObject 저장
+
+
+
+## 📦 아이템 카테고리
 <div align="center">
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I3.png" width="150" style="display:inline-block;"/>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I4.png" width="150" style="display:inline-block;"/>
@@ -416,7 +426,7 @@ private bool DetectEnemy(Vector3 startPosition)
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I6.png" width="150" style="display:inline-block;"/>
 </div>
 
-- 각 아이템의 카테고리를 구분하여 가독성과 유지보수 하기 쉽게 만들었습니다.
+- 각 아이템은 명확한 Category 체계로 분류되며, 특성에 따라 개별 속성과 기능이 다르게 적용될 수 있습니다.
 
 
 ```csharp
@@ -434,13 +444,14 @@ private bool DetectEnemy(Vector3 startPosition)
             }
             EditorGUILayout.EndHorizontal();     
 ```
+- CategoryEditorWindow를 따로 구현하여 해당 Editor Window를 사용하는 식으로 구현했습니다.
 - 카테고리 버튼을 클릭하면 window Eidotr가 항상 하단에 열리도록 위치를 고정시켰습니다.
 
 
 <br><br><br>
 <hr>
 
-## 아이템 타입
+## 📦 아이템 타입
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item2.gif" width="1000" style="display:inline-block;"/>
 
 - 아이템 타입 Enum을 변경하며 해당 타입에 맞는 GUI가 변경되며 값을 설정할 수 있습니다.
@@ -449,9 +460,13 @@ private bool DetectEnemy(Vector3 startPosition)
 <br><br><br>
 <hr>
 
-## UseableObject
+## 📦 UseableObject
 **Item에 UseableObject ScriptableObject로 다양한 아이템 기능을 구현.**
 
+- 아이템 기능은 UseableObject ScriptableObject 조합 방식으로 정의됩니다.
+- 즉, 하나의 아이템이 여러 효과를 동시에 가질 수 있으며, 개발자가 원하는 만큼 기능을 추가하여 확장형 설계가 가능합니다.
+
+>밑에는 아이템 기능 예시입니다.
 <div align="center">
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I8.png" width="200" style="display:inline-block;"/>
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I1.png" width="600" style="display:inline-block;"/>
@@ -484,7 +499,7 @@ private bool DetectEnemy(Vector3 startPosition)
 
 
 
-## 잠재능력 확률 설정
+## 📦 잠재능력 확률 설정
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I9.png" width="600" style="display:inline-block;"/>
   
 - Equipment 카테고리 (무기, 방어구, 악세사리, 칭호)에만 존재합니다.
@@ -495,12 +510,12 @@ private bool DetectEnemy(Vector3 startPosition)
 <hr>
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I10.png" width="600" style="display:inline-block;"/>
   
-- 체크 해제 시 각 값을 설정할 수 있습니다.
+-자동 체크 해제 시, 개발자가 등급별 확률을 세부 조정할 수 있습니다.
 
 <br>
 <hr>
 
-## 저장
+## 📦 저장
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I13.png" width="1000" style="display:inline-block;"/>
   
 - .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
@@ -509,7 +524,7 @@ private bool DetectEnemy(Vector3 startPosition)
 <br><br><br><br>
 
 
-
+## ⚡ 잠재능력 Editor Tool
 
 
 
