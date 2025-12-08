@@ -77,6 +77,7 @@
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Title.png" width="650"/> </p>
 
   <br><br>
+  <hr>
   
 ## Category
 - 사용하는 Controller 설정.
@@ -103,6 +104,7 @@ public class NormalDungeonCategory : BaseDungeonCateogry
 - Normal Category에서는 플레이어 컨트롤러가 사용 가능한 State를 세팅합니다.
 
 <br><br>
+<hr>
 
 ## Condition
 - 던전에 입장하기 위한 조건을 명시  
@@ -111,6 +113,7 @@ public class NormalDungeonCategory : BaseDungeonCateogry
   - 특정 스테이지 선행 여부  
 
 <br><br>
+<hr>
 
 ## Function
 - 던전 진행 전체를 담당하는 핵심 프로세스  
@@ -145,6 +148,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ```
 <br><br>
+<hr>
 
 ## Reward
 - 클리어 보상 정보  
@@ -156,11 +160,13 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/R1.png" width="700" style="display:inline-block;"/>
 
   <br><br>
-  
+<hr>
+
 ## MapData
 - 던전에 사용되는 던전 Scene index와 위치, 회전 등의 맵 정보.
 
 <br><br>
+<hr>
 
 ## SpawnPosition
 - 던전 내 위치 정보 구성 요소  
@@ -178,6 +184,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 - OnDrawGizmos() 함수로 Root Transform의 child Transform의 위치들을 시각적으로 표시하며 positions 리스트에 자동 추가합니다.
 
 <br><br>
+<hr>
 
 ## SpawnData 
 - 전투 구성에 필요한 모든 스폰 및 라운드 데이터  
@@ -189,7 +196,7 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 <p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/SpawnD1.png" width="650"/> </p>
 
 
-<br><br><br><br>
+<br><br><br><br><br><br>
 
 ## ⚡ Dash System
 <p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Dash.gif" width="400" style="display:inline-block;"/>
@@ -269,6 +276,8 @@ public class NormalDungeonFunction : BaseDungeonFunction<NormalDungeonTitle>
 
 ```
 <br><br>
+<hr>
+
 ## Ground Check
 - 대시 가능한 지점을 찾기 위해 목표점까지의 수평 이동 거리를 기반으로 일정 간격으로 지면을 샘플링합니다.
 - 작동 방식
@@ -313,6 +322,7 @@ private bool CheckCanDashGround()
 }
 ```
 <br><br>
+<hr>
 
 ## Enemy Detection
 - 대시 경로에 적이 있는지 검사해 충돌 감지 시 Skip 또는 Hit 처리합니다.
@@ -348,6 +358,7 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 <br><br>
+<hr>
 
 ## Obstacle Check
 <p align="center">  <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Ground.gif" width="400" style="display:inline-block;"/>
@@ -357,6 +368,8 @@ private bool DetectEnemy(Vector3 startPosition)
 - 장애물과 충돌하면 Target 자동 변경 또는 대시 취소
   
 <br><br>
+<hr>
+
 ## Dash Movement + Camera + UI
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/UI1.gif" width="400" style="display:inline-block;"/>
 
@@ -401,7 +414,7 @@ private bool DetectEnemy(Vector3 startPosition)
 ```
 
 
-<br><br><br><br>
+<br><br><br><br><br><br>
 
 
 ## ⚡ Item Editor Tool
@@ -523,7 +536,7 @@ private bool DetectEnemy(Vector3 startPosition)
 - .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
 
 
-<br><br><br><br>
+<br><br><br><br><br><br>
 <hr>
 
 
@@ -650,11 +663,9 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 
-<br><br><br><br>
+<br><br><br><br><br><br>
 
 # ⏳ 트러블 슈팅
-<br><br><br>
-
 ## 🎨 메테리얼 최적화 과정
 - NPC나 몬스터를 생성할 때, 캐릭터별로 지정된 색상을 적용하기 위해 메테리얼 컬러 값을 변경하는 기능을 구현하고 있었습니다.
 - 즉, 스폰된 캐릭터마다 고유한 색상을 설정하는 과정에서 자연스럽게 메테리얼을 수정하는 로직이 필요했습니다.
