@@ -524,13 +524,19 @@ private bool DetectEnemy(Vector3 startPosition)
 
 
 <br><br><br><br>
+<hr>
+
+
 
 
 ## ⚡ 잠재능력 Editor Tool
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential1.gif" width="1000" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential1.gif" width="800" style="display:inline-block;"/>
   
+- Equipment 카테고리 (무기, 방어구, 악세사리, 칭호)에만 존재합니다.
 
 
+<br>
+<hr>
 
 ## 잠재능력 Function ScriptableObject
 
@@ -555,6 +561,71 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 }
 ```
+
+```csharp
+ public void Apply(bool isEquip , PlayerStatus playerStatus)
+    {
+        if (clipData.potentialFunctionObject == null) return;
+
+        if (isEquip)
+            clipData.potentialFunctionObject.Apply(potentialValue, playerStatus);
+        else
+            clipData.potentialFunctionObject.Remove(potentialValue, playerStatus);
+    }
+```
+
+- 잠재능력 Function은 Apply, Remove를 override 하는 형식으로 관리하여 사용합니다.
+  
+
+<br>
+<hr>
+
+
+## 카테고리
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp6.png" width="600" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp7.gif" width="600" style="display:inline-block;"/>
+
+
+<br>
+<hr>
+
+## 세부 설정
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Potential2.gif" width="800" style="display:inline-block;"/>
+
+  - 각 등급마다 최소 ~ 최대 값을 입력하고 Split Count를 입력해서 분할 개수를 정합니다. 
+- 각 분할 퍼센트는 직접 수정할 수 있으며, 정보의 Split 범위 값은는 자동으로 나눠집니다. 
+- Split Count는 최소 2 ~ 최대 5를 넘을 수 없습니다.
+
+<hr>
+
+>예시)밑에 사진처럼 Normal 등급의 Split Count가 3개이고 각 퍼센트가 60% , 35%, 5% 일경우
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp4.png" width="500" style="display:inline-block;"/>
+
+- 해당 아이템의 Normal 등급 잠재능력에서의 수치는 60% 확률로 10 ~ 40 사이 값이되며, 35% 확률로 40 ~70,  5% 확률로 70 ~ 100 값이 됩니다.
+
+<hr>
+
+
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp5.png" width="500" style="display:inline-block;"/>
+
+- 각 등급의 값의 범위는 밑에 한눈에 보기 쉽게 나타냈습니다.
+
+
+
+<br>
+<hr>
+##  In Game UI
+<div align="center">
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p1.png" width="165" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p2.png" width="165" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p3.png" width="165" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p4.png" width="165" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p5.png" width="165" style="display:inline-block;"/>
+</div>
+<p align="center">  None -> Normal -> Rare -> Unique -> Legendary 
+
+- In Game에서의 아이템 잠재능력 UI입니다.
+- 등급별로 텍스트의 색을 변경하여 한 눈에 구분하기 쉽게 구현했습니다. 
 
 
 
