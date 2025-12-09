@@ -535,6 +535,10 @@ private bool DetectEnemy(Vector3 startPosition)
   
 - .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
 
+<br>
+<hr>
+
+## enum 분류 
 
 ```csharp
  private string GetInspectorName(BaseItemClip clip)
@@ -578,7 +582,7 @@ private bool DetectEnemy(Vector3 startPosition)
     }
 ```
 
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I15.png" width="800" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item3.gif" width="800" style="display:inline-block;"/>
 
 - 각 카테고리, 타입 별로 분류하여 enum 파일을 만들어서 Item 데이터를 선택할때 가독성을 높였습니다.
 
