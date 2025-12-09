@@ -536,6 +536,55 @@ private bool DetectEnemy(Vector3 startPosition)
 - .csv 파일로 Item Editor 데이터를 저장 / 불러오기로 관리합니다.
 
 
+```csharp
+ private string GetInspectorName(BaseItemClip clip)
+    {
+        string retName = "[InspectorName(|*|)]";
+
+        switch (clip.itemCategoryType)
+        {
+            case ItemCategoryType.EQUIPMENT:
+                if (clip.equipmentTpye == EquipmentTpye.WEAPON)
+                    retName = retName.Replace("*", "Equipment/Weapon/" + clip.itemName);
+                else if (clip.equipmentTpye == EquipmentTpye.ARMOR)
+                    retName = retName.Replace("*", "Equipment/Armor/" + clip.itemName);
+                else if (clip.equipmentTpye == EquipmentTpye.ACCESSORIES)
+                    retName = retName.Replace("*", "Equipment/Accessorie/" + clip.itemName);
+                else if (clip.equipmentTpye == EquipmentTpye.TITLE)
+                    retName = retName.Replace("*", "Equipment/Title/" + clip.itemName);
+                break;
+
+            case ItemCategoryType.CONSUMABLE:
+                if (clip.consumableType == ConsumableType.ENCHANT)
+                    retName = retName.Replace("*", "Consumable/Enchant/" + clip.itemName);
+                else if (clip.consumableType == ConsumableType.POSION)
+                    retName = retName.Replace("*", "Consumable/Posion/" + clip.itemName);
+                break;
+
+            case ItemCategoryType.MATERIAL:
+                if (clip.materialType == MaterialType.CRAFT)
+                    retName = retName.Replace("*", "Material/Craft/" + clip.itemName);
+                else if (clip.materialType == MaterialType.EXTRA)
+                    retName = retName.Replace("*", "Material/Extra/" + clip.itemName);
+                break;
+
+            case ItemCategoryType.QUESTITEM:
+                if (clip.questIType == QuestIType.QUEST)
+                    retName = retName.Replace("*", "Quest/" + clip.itemName);
+                break;
+        }
+
+        return retName.Replace('|', '"');
+    }
+```
+
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/I15.png" width="800" style="display:inline-block;"/>
+
+- 각 카테고리, 타입 별로 분류하여 enum 파일을 만들어서 Item 데이터를 선택할때 가독성을 높였습니다.
+
+  
+
+
 <br><br><br><br><br><br>
 <hr>
 
