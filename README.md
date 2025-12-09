@@ -625,7 +625,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 - Split Count는 최소 2 ~ 최대 5를 넘을 수 없습니다.
 
 <hr>
-
+<br>
 >예시)밑에 사진처럼 Normal 등급의 Split Count가 3개이고 각 퍼센트가 60% , 35%, 5% 일경우
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/pp4.png" width="500" style="display:inline-block;"/>
 
@@ -645,9 +645,9 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 ## In Game UI
 <div align="center">
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p1.png" width="165" style="display:inline-block;"/>
-   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p2.png" width="165" style="display:inline-block;"/>
-   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p3.png" width="165" style="display:inline-block;"/>
-   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p4.png" width="165" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p2.png" width="155" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p3.png" width="150" style="display:inline-block;"/>
+   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p4.png" width="155" style="display:inline-block;"/>
    <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/p5.png" width="165" style="display:inline-block;"/>
 </div>
 <p align="center">  None -> Normal -> Rare -> Unique -> Legendary 
