@@ -1094,5 +1094,80 @@ private void ApplyScrollbarPosition()
 - ScrollValue 값만 바뀌면 Content와 ScrollBar가 동시에 이동하도록 구조를 통일하였습니다.
 - UI 표시 상태, 드래그 반응, Wheel 입력이 모두 하나의 변수를 공유하므로 충돌 없이 동작합니다.
 
-<br><br><br><br>
+
+
+
+<br><br><br><br><br>
+
+
+
+
+
+
+
+
+## 🎨 Mesh Combine Tool 발생한 빌드 속도 저하
+
+- 프로젝트 중반부, 저는 씬 최적화를 위해 Mesh Combine Tool을 제작하여 여러 개의 모델을 하나의 Mesh로 병합하는 작업을 진행하고 있었습니다.
+- 불필요하게 분리된 기하 구조를 통합하고, DrawCall 감소를 기대할 수 있는 작업이였고 실제로 개발 첫 단계에서는 씬 내 게임오브젝트 수가 줄어들며 에디터에서의 Scene 이동 역시 원활해졌습니다.
+
+- **그러나 어느 시점부터 빌드가 이전보다 비정상적으로 느려지기 시작했습니다. 처음에는 단순한 PC 성능 문제라고 생각했지만, 점차 빌드 시간이 몇 분 단위로 증가하더니 결국 프로젝트를 저장하고 다시 여는 데만 수십 분이 소요되는 상황까지 이어졌습니다.**
+
+<br><br>
+<hr>
+
+## ⚠  원인 추적 – 예상 외의 범인
+
+- 빌드 속도가 느려진 이유를 파악하기 위해 저는 먼저 Profiler, Frame Debuger  등 여러 요소를 점검했습니다. 그러다 결국 의심해야 할 대상이 명확하게 드러났습니다.
+
+<p align="center"><span style="font-weight: bold;">Scene 파일의 크기가 몇 GB에 달하고 있었습니다.</span></p>
+
+과거 ProBuilder 사용 경험이 떠올랐습니다. 
+Mesh를 Scene 내부에 포함한 상태로 방치하면 Binary가 누적되어 파일용량이 기하급수적으로 증가할 수 있다는 점이었습니다.
+- 이에 따라 Mesh Combine Tool 내부를 다시 확인했고 Combine할때 Mesh를 Asset으로 저장하지 않은 채 Scene 내부에 그대로 포함시키고 있었습니다.
+
+
+여러 번의 Combine 작업을 통해 생성된 Mesh 데이터들이 씬 파일 내부에 계속 쌓이고 있었고,
+결국 씬을 열 때마다 Unity가 GB 단위 Mesh를 로드할때 초기 로딩 시간이 급증하는, 빌드 속도 저하의 근본 원인이었습니다.
+
+
+## ✅ 해결
+
+문제 해결 방식은 명확했습니다.
+Scene에 남아 있는 Combined Mesh를 모두 제거하고 Mesh 데이터를 프리팹 Asset으로 변환하여 외부 저장하도록 Combine Tool을 개선했습니다.
+
+아래는 개선 이후 추가한 코드 방식입니다.
+
+```csharp
+ GameObject newGo = new GameObject(parentName);
+        newGo.AddComponent<MeshFilter>().sharedMesh = mesh;
+        newGo.AddComponent<MeshRenderer>().sharedMaterial = filters[0].GetComponent<MeshRenderer>().sharedMaterial;
+        newGo.transform.parent = parent.transform;
+
+        if (!System.IO.Directory.Exists(combineMeshFolderPath))
+            System.IO.Directory.CreateDirectory(combineMeshFolderPath);
+
+        int fileIndex = 1;
+        string fileName = combineMeshFolderPath + newGo.transform.parent.name + "_" + parentName;
+        string meshPath = fileName + ".asset";
+        while (System.IO.File.Exists(meshPath))
+        {
+            fileName += fileIndex;
+            meshPath = fileName + ".asset";
+            fileIndex++;
+        }
+
+        AssetDatabase.CreateAsset(mesh, meshPath);
+        AssetDatabase.SaveAssets();
+```
+
+- 이후 Scene에서 메시에 해당하는 오브젝트를 정리한 결과
+  - 씬 용량 수 GB	-> 수백 MB 이하로 감소
+  - 빌드 시간 수 분~수십분	-> 수초~1분 내로 안정화
+  - Scene 저장 시 잦은 프리징 -> 안정적인 편집 환경으로 회복
+
+
+**수 GB 단위의 데이터가 빠져나가자 프로젝트는 다시 쾌적하게 돌아왔습니다.**
+**이번 경험을 통해 저는 최적화는 단순히 병합과 제거가 아니라 데이터가 어디에 저장되고 어떻게 관리되는지까지 고려해야 한다는 점을 다시 확실히 배웠습니다.**
+
 ---
