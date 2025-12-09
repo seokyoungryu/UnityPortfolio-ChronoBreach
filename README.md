@@ -540,6 +540,13 @@ private bool DetectEnemy(Vector3 startPosition)
 
 ## enum 분류 
 
+- 아이템은 Category → Type → ItemName의 계층 Enum 구조로 관리되며 트리 구조처럼 정렬된 Inspector UI를 보여줍니다.
+- 단일 Enum에 모든 아이템을 나열하는 방식 대신, 카테고리와 타입을 독립된 Enum 파일로 분리하여 아이템 수가 증가해도 검색 과정의 가독성을 유지할 수 있도록 설계했습니다.
+- 결과적으로 아이템 선택 과정에서 스크롤 탐색 없이 원하는 타입으로 즉시 접근 가능하며, 대규모 아이템 확장 시에도 관리 구조가 흔들리지 않도록 안정성을 확보하였습니다.
+
+<p align="center"> <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item3.gif" width="500" style="display:inline-block;"/>
+
+
 ```csharp
  private string GetInspectorName(BaseItemClip clip)
     {
@@ -582,9 +589,7 @@ private bool DetectEnemy(Vector3 startPosition)
     }
 ```
 
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Item3.gif" width="800" style="display:inline-block;"/>
 
-- 각 카테고리, 타입 별로 분류하여 enum 파일을 만들어서 Item 데이터를 선택할때 가독성을 높였습니다.
 
   
 
