@@ -716,6 +716,57 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 
+<br><br><br><br><br><br>
+
+
+
+
+
+
+
+## ⚡ 콘솔(커맨드) 창
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con1.gif" width="500" style="display:inline-block;"/>
+
+프로젝트가 커질수록, 단순 UI 기반 수동 설정만으로는 반복 작업 비용이 크게 증가했습니다.
+아이템 생성, 데이터 필드 수정, 오브젝트 등록, 테스트 명령 입력 등 사소해 보이는 일들이 쌓이고 쌓여 개발 속도는 점점 느려지고 유지보수 난이도는 기하급수적으로 증가했습니다.
+
+- 특히, 다음 문제가 발생했습니다.
+  - 모든 기능을 버튼/인스펙터에서 하나씩 눌러야 함
+  - 테스트 과정에서 매번 씬을 이동하거나 메뉴 UI를 열었다 닫는 시간이 누적
+  - 개발 과정에서 자주 사용하는 명령들이 절차적으로 너무 길음
+  - 반복적인 입력은 실수를 유발하고, 수정 테스트 루프가 길어짐
+
+**그래서 저는 개발용 Console UI를 직접 구축하기로 결정했습니다.**
+
+
+## 🎯 설계 목표
+<br>
+
+**1.명령 한 줄로 기능 실행**
+- 복잡한 인스펙터 조작 없이, 필요한 기능을 즉시 호출할 수 있습니다.
+
+<br>
+
+**2.자동 검색·자동 완성 지원**
+- 자주 사용하는 명령을 빠르게 찾고 다시 실행할 수 있어 테스트 반복 비용을 줄입니다.
+
+<br>
+
+**3.확장성 중심 구조**
+- 필요한 기능이 있다면 여러개를 만들어서 테스트 가능합니다. 
+
+<br>
+
+**4.실행 결과 확인 가능**
+- 명령 실행 기록이 UI에 표시되어 성공/실패 여부를 즉각 검증할 수 있습니다.
+
+<br>
+
+**.5테스트 흐름 방해 최소화**
+- 입력 포커스 유지, 마우스 진입 처리 등 사용 간섭을 줄여 개발 집중도를 높입니다.
+
+
+
 
 
 
@@ -953,6 +1004,7 @@ BaseLayoutGroup을 부모로, Grid / Horizontal / Vertical의 기능을 만들�
 - Unity ScrollRect/Scrollbar 컴포넌트를 사용하지 않고 Wheel 입력 + Custom ScrollBar UI를 직접 구현하여 동작을 세밀하게 제어하였습니다.
 - Scroll 영역 위에 마우스가 올라왔을 때만 Wheel 입력을 허용하고, 스크롤이 필요 없는 경우에는 ScrollBar를 자동으로 숨기는 방식으로 UI 효율성과 시각적 안정성을 확보하였습니다.
 - 드래그, 휠, 스크롤바 UI 이동이 모두 동일한 ScrollValue 기반으로 동기화되도록 설계하였습니다.
+  
 <br><br>
 
 **1) Awake() 초기화**
@@ -1031,6 +1083,7 @@ private void UpdateScrollVariables()
 
 - 스크롤 진행률(percent)과 핸들 위치를 기반으로 스크롤 상태를 갱신하도록 구현하였습니다.
 - Content 사이즈가 변경될 경우 즉시 limitMaxViewValue를 다시 계산하여 확장형 콘텐츠에도 대응 가능합니다.
+  
 <br><br>
 
 **5) 스크롤 가능 시에만 Bar UI 자동 활성화**
@@ -1051,6 +1104,7 @@ private void ProcessScrollbarVisibility()
 - UI를 불필요하게 차지하지 않으며, 스크롤 필요 시에만 표시되는 UX가 가능합니다.
 
 <br><br>
+
 **6) 마우스 휠**
 ```csharp
 private void HandleMouseScroll()
@@ -1065,6 +1119,7 @@ private void HandleMouseScroll()
 
 - 스크롤 민감도는 콘텐츠 길이에 따라 자동 스케일링되며, 빠른·부드러운 스크롤이 모두 가능합니다.
 - 휠 방향 반전 옵션도 지원하여 제작자·사용자 경험에 맞게 적용할 수 있습니다.
+  
 <br><br>
 
 **7) ScrollBar 위치 UI 실시간 반영**
