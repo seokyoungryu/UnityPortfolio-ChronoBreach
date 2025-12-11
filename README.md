@@ -728,7 +728,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 ## ⚡ 콘솔(커맨드) 창
 <p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con1.gif" width="600" style="display:inline-block;"/>
 
-프로젝트가 커질수록, 단순 UI 기반 수동 설정만으로는 반복 작업 비용이 크게 증가했습니다.
+프로젝트가 커질수록, 단순 UI 기반 수동 설정만으로는 반복 작업 비용이 크게 증가했습니다.  
 아이템 생성, 데이터 필드 수정, 오브젝트 등록, 테스트 명령 입력 등 사소해 보이는 일들이 쌓이고 쌓여 개발 속도는 점점 느려지고 유지보수 난이도는 기하급수적으로 증가했습니다.
 
 - 특히, 다음 문제가 발생했습니다.
@@ -741,26 +741,48 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 ## 🎯 설계 목표
-<br>
 
 **1.명령 한 줄로 기능 실행**
-- 복잡한 인스펙터 조작 없이, 필요한 기능을 즉시 호출할 수 있습니다.
-
+  - 복잡한 인스펙터 조작 없이, 필요한 기능을 즉시 호출할 수 있습니다.
 
 **2.자동 검색·자동 완성 지원**
-- 자주 사용하는 명령을 빠르게 찾고 다시 실행할 수 있어 테스트 반복 비용을 줄입니다.
-
+  - 자주 사용하는 명령을 빠르게 찾고 다시 실행할 수 있어 테스트 반복 비용을 줄입니다.
 
 **3.확장성 중심 구조**
-- 필요한 기능이 있다면 여러개를 만들어서 테스트 가능합니다. 
-
+  - 필요한 기능이 있다면 여러개를 만들어서 테스트 가능합니다. 
 
 **4.실행 결과 확인 가능**
-- 명령 실행 기록이 UI에 표시되어 성공/실패 여부를 즉각 검증할 수 있습니다.
-
+  - 명령 실행 기록이 UI에 표시되어 성공/실패 여부를 즉각 검증할 수 있습니다.
 
 **.5테스트 흐름 방해 최소화**
-- 입력 포커스 유지, 마우스 진입 처리 등 사용 간섭을 줄여 개발 집중도를 높입니다.
+  - 입력 포커스 유지, 마우스 진입 처리 등 사용 간섭을 줄여 개발 집중도를 높입니다.
+
+
+## 기능 사용  
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con2.gif" width="600" style="display:inline-block;"/>
+
+- 콘솔 명령을 통해 인벤토리 내 장비 목록을 조회한 뒤, 해당 목록의 0번 인덱스 장비 아이템의 잠재 능력을 재설정하는 과정을 시연한 예시입니다.
+
+<hr>
+
+
+
+
+
+이런식의 기능들을 사용하며  디버깅 및 밸런싱 작업 시 특정 장비의 옵션을 즉시 수정할 수 있도록 설계되어  
+반복되는 수동 작업을 대폭 줄여 개발 효율을 향상시킵니다.
+
+
+
+
+## History 기능
+
+
+## Searchable 기능
+
+
+## 등록
+
 
 
 
