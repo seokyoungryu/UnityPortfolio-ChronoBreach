@@ -726,7 +726,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 ## ⚡ 콘솔(커맨드) 창
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con1.gif" width="500" style="display:inline-block;"/>
+<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con1.gif" width="600" style="display:inline-block;"/>
 
 프로젝트가 커질수록, 단순 UI 기반 수동 설정만으로는 반복 작업 비용이 크게 증가했습니다.
 아이템 생성, 데이터 필드 수정, 오브젝트 등록, 테스트 명령 입력 등 사소해 보이는 일들이 쌓이고 쌓여 개발 속도는 점점 느려지고 유지보수 난이도는 기하급수적으로 증가했습니다.
