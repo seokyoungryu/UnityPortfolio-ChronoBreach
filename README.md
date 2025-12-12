@@ -785,22 +785,106 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 ## History 기능
 
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con5.gif" width="600" style="display:inline-block;"/>
 
-## Searchable 기능
+- 편리성을 위해 전에 입력했던 명령어를 ↑ ↓ 로 다시 선택할 수 있게 구현했습니다.
 
+  
+
+
+
+
+
+
+<br><br><br>
+<hr>
+
+## Searchable 
+
+
+
+
+
+
+
+
+
+<br><br><br>
+<hr>
+
+## 예외처리
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con2.png" width="400" style="display:inline-block;"/>
+
+- 위 사진과 같이 명령어가 존재하지 않거나, 입력값 갯수가 다를경우 등 System Error 메세지를 출력하도록 했습니다.
+
+
+
+
+<br><br><br>
+<hr>
 
 ## 등록
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con1.png" width="400" style="display:inline-block;"/>
+
+- 인스펙터서 커맨드 기능을 등록합니다.
+- 값이 필요한 명령어에는 ( )로 입력 타입을 명시하고, 입력 가능한 범위를 설정합니다. 
+
+
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con5.png" width="400" style="display:inline-block;"/>
+
+- 위와 같이 커맨드를 원하는 형식으로 등록한 후, 내부 코드에서는 해당 정보를 기준으로 실제 입력 값을 변환하여 실행합니다.
+- Key 값으로 등록된 명령어를 빠르게 탐색하여, 사용자가 입력한 문자열을 해당 명령어 로직으로 매핑하는 구조로 설계했습니다.
 
 
 
 
+<br><br><br>
+<hr>
+
+## Help Options
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con6.png" width="400" style="display:inline-block;"/>
+>Help Option입니다. (-l, -h) 두개를 구현했습니다. 
+>사용은 해당 명령어 뒤에 붙여서 사용합니다. 
+>ex) Print All Command List -l
+
+**-l Help Option**
+
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con3.png" width="400" style="display:inline-block;"/>
+
+- 이 옵션은 해당 명령어가 성공적으로 실행됬는지 확인하는 옵션입니다.
+- 노란색 Text로 표시되며, 명령어마다 출력되는 내용이 다르게 나옵니다.
+
+```csharp
+  if (CheckSameHelpOption("-h", currHelpOption))
+        {
+            onExcuteLog?.Invoke($"Print All Item List", ConsoleSystemLogType.SYSTEM_NORMAL_LOG);
+            return;
+        }
+```
+
+
+<hr>
+<br>
+
+**-h Help Option**
+
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con4.png" width="400" style="display:inline-block;"/>
+
+- 이 옵션은 해당 명령어가 무엇인지, 혹은 범위가 어떻게 되는지 등을 확인하는 옵션입니다.
+
+
+```csharp
+ if (CheckSameHelpOption("-l", currHelpOption))
+        {
+            string log = $"Success! Print Item List {itemListCount}";
+            onExcuteLog?.Invoke(log, ConsoleSystemLogType.SYSTEM_POSITIVE_LOG);
+        }
+```
 
 
 
-
-
-
-<br><br><br><br><br><br>
+<hr><hr>
+<br><br><br><br><br><br><br>
 
 # ⏳ 트러블 슈팅
 ## 🎨 메테리얼 최적화 과정
