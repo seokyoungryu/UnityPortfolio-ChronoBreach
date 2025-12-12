@@ -71,7 +71,6 @@ public class ConsoleUI : UIRoot
         if (inputField.isFocused)
             MouseEnterUI();
 
-        //ÀÌºÎºÐÀÌ.. searchable¿¡¼­ ¼±ÅÃÇÏ·Á°í ´Ù¿î ¾Ö·Î¿ì¸¦ ´©¸¦¶§ ¹Ø¿¡µµ ÀÛµ¿ÇÔ..
         if (OnCanHistoryInvoke())
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
@@ -95,7 +94,7 @@ public class ConsoleUI : UIRoot
                 SetPreviousCommand(currPreviousIndex);
             }
             else if(Input.anyKeyDown && !Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.DownArrow))
-            {   //Áï ÀÌ·¸°Ô ÇßÀ»¶§ searchable¿¡¼­ ¹ØÀ¸·Î ¼±ÅÃ °¡´ÉÇÏ°Ô.. 
+            {  
                 isInputHistory = false;
                 isDoingHistory = false;
             }
@@ -228,7 +227,7 @@ public class ConsoleUI : UIRoot
         maxPreviousIndex = previousCommands.Count - 1;
         currPreviousIndex = -1;
         isDoingHistory = false;
-        //ÄÜ¼Ö ÇÁ·Î¼¼½º ½ÇÇà. 
+        //ì½˜ì†” í”„ë¡œì„¸ìŠ¤ ì‹¤í–‰. 
         onExcuteSummitProcess?.Invoke(text);
 
         inputField.text = string.Empty;
