@@ -797,8 +797,8 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 <p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con5.gif" width="600" style="display:inline-block;"/>
 
-- 편리성을 위해 전에 입력했던 명령어를 ↑ ↓ 로 다시 선택할 수 있게 구현했습니다.
-
+- 편리성을 위해 입력했던 명령어를 자동으로 기록하여, 키보드 ↑/↓ 입력만으로 이전 또는 다음 명령어를 빠르게 탐색할 수 있도록 구성했습니다.  
+- 반복 입력이 필요한 디버깅,테스트 환경에서 생산성을 크게 향상시키며, 동일한 명령을 다시 입력할 때 발생할 수 있는 오타도 방지합니다.
 
 
 
@@ -823,6 +823,8 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 검색 결과가 없으면 검색창(rootContainer)은 자동으로 닫힙니다.
 
+<br>
+<hr>
 
 >현재 입력된 문자열을 기준으로 검색 가능한 텍스트 목록을 필터링하여 배열로 반환합니다.
 ```csharp
@@ -844,7 +846,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 <hr>
 
 
->입력한 문장(input)이 특정 검색 문자열(searchable)과 동일한 구조인지 검사합니다.
+>입력한 문장(input)이 특정 검색 문자열(searchable)과 동일한 구조인지 검사합니다.  
 >단어 단위 및 문자 단위 prefix 비교를 수행하며, 필터에 정의된 값(value) 영역은 비교에서 제외합니다.
 ```csharp
 
@@ -900,7 +902,7 @@ public bool CheckIsSameSentence(string input, string searchable)
 <br><br>
 <hr>
 
->현재 입력된 문자열을 기반으로 검색 결과를 생성하고, UI를 갱신하며, 풀링된 Task 오브젝트를 재사용하여 리스트를 구성합니다.
+>현재 입력된 문자열을 기반으로 검색 결과를 생성하고, UI를 갱신하며, 풀링된 Task 오브젝트를 재사용하여 리스트를 구성합니다.  
 >필터 적용, Task 재생성, 스크롤 초기화 및 마우스 이벤트 등록까지 검색 UI 전체를 관리하는 핵심 메서드입니다.
 ```csharp
  public void GetText(string currSearchText)
@@ -985,9 +987,10 @@ public bool CheckIsSameSentence(string input, string searchable)
 ## 예외처리
 <p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con2.png" width="400" style="display:inline-block;"/>
 
-- 위 사진과 같이 명령어가 존재하지 않거나, 입력값 갯수가 다를경우 등 System Error 메세지를 출력하도록 했습니다.
+- 등록되지 않은 명령어를 입력하거나, 필요한 인수 개수가 맞지 않을 때 시스템 오류 메시지를 시각적으로 표시하여 즉시 문제를 인지할 수 있도록 했습니다.
+- 예외 케이스는 입력값 검증 단계에서 선제적으로 처리되며, 잘못된 명령어 실행으로 인해 발생할 수 있는 내부 로직 오류를 사전에 방지합니다.
 
-
+**잘못된 입력이 반복되더라도 시스템이 중단되지 않고 안정적으로 동작하도록 입력 검증 로직을 모듈화해 유지보수성을 향상했습니다.**
 
 
 <br><br><br>
