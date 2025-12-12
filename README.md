@@ -740,6 +740,9 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 **그래서 저는 개발용 Console UI를 직접 구축하기로 결정했습니다.**
 
 
+<hr>
+
+
 ## 🎯 설계 목표
 
 **1.명령 한 줄로 기능 실행**
@@ -756,6 +759,9 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 **.5테스트 흐름 방해 최소화**
   - 입력 포커스 유지, 마우스 진입 처리 등 사용 간섭을 줄여 개발 집중도를 높입니다.
+
+<br><br><br>
+<hr>
 
 
 ## 기능 사용  
@@ -777,10 +783,14 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 
-이런식의 기능들을 사용하며  디버깅 및 밸런싱 작업 시 특정 장비의 옵션을 즉시 수정할 수 있도록 설계되어  
+이런식의 기능들을 사용하며 디버깅 및 밸런싱 작업 시 특정 장비의 옵션을 즉시 수정할 수 있도록 설계되어  
 반복되는 수동 작업을 대폭 줄여 개발 효율을 향상시킵니다.
 
 
+
+
+<br><br><br>
+<hr>
 
 
 ## History 기능
@@ -788,10 +798,6 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 <p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con5.gif" width="600" style="display:inline-block;"/>
 
 - 편리성을 위해 전에 입력했던 명령어를 ↑ ↓ 로 다시 선택할 수 있게 구현했습니다.
-
-  
-
-
 
 
 
@@ -801,11 +807,175 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 ## Searchable 
 
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con6.gif" width="600" style="display:inline-block;"/>
+
+입력한 문자열을 기반으로 자동 검색(Search Suggestion) 목록을 생성하고,  
+키보드/마우스 입력으로 검색 결과를 탐색 및 선택할 수 있도록 구성된 UI 검색 시스템입니다.
 
 
 
+**입력한 텍스트를 전달받아**
+  - 1.검색 조건에 맞는 문자열을 필터링
+  - 2.필터 단어(key → transValue) 자동 치환
+  - 3.기존 Task 오브젝트 반환(Object Pooling)
+  - 4.새 Task 오브젝트 재생성
+  - 5.스크롤 및 레이아웃 초기화
+
+검색 결과가 없으면 검색창(rootContainer)은 자동으로 닫힙니다.
 
 
+>현재 입력된 문자열을 기준으로 검색 가능한 텍스트 목록을 필터링하여 배열로 반환합니다.
+```csharp
+ public string[] GetSeachableTexts2(string currrInput)
+    {
+        List<string> retStr = new List<string>();
+
+        for (int i = 0; i < searchableList.Length; i++)
+        {
+            if (CheckIsSameSentence(currrInput, searchableList[i]))
+                retStr.Add(searchableList[i]);
+        }
+
+        return retStr.ToArray();
+    }
+```
+
+<br><br>
+<hr>
+
+
+>입력한 문장(input)이 특정 검색 문자열(searchable)과 동일한 구조인지 검사합니다.
+>단어 단위 및 문자 단위 prefix 비교를 수행하며, 필터에 정의된 값(value) 영역은 비교에서 제외합니다.
+```csharp
+
+public bool CheckIsSameSentence(string input, string searchable)
+{
+    // 입력값이 비어 있으면 비교 불가
+    if (input == string.Empty || input == "" || input.Trim() == "")
+        return false;
+
+    // 특정 key가 있는 위치(해당 위치는 비교 제외)
+    int valueIndex = GetValue(searchable);
+
+    // 단어 단위로 분리
+    string[] inputWordSplit = input.ToLower().Split(' ');
+    string[] searchWordSplit = searchable.ToLower().Split(' ');
+
+    // 입력한 단어 배열만큼 비교 수행
+    for (int i = 0; i < inputWordSplit.Length; i++)
+    {
+        // valueIndex 위치는 비교에서 제외 (특정 키워드 필터링 목적)
+        if (valueIndex != -1 && valueIndex == i)
+        {
+            Debug.Log(inputWordSplit[i]);
+            continue;
+        }
+
+        // 검색 대상 단어가 모자라면 불일치
+        if (searchWordSplit.Length <= i)
+            return false;
+
+        char[] inputCharSplit = inputWordSplit[i].ToCharArray();
+        char[] searchCharSplit = searchWordSplit[i].ToCharArray();
+
+        // char 단위 앞에서부터 비교 (prefix 비교)
+        for (int x = 0; x < inputCharSplit.Length; x++)
+        {
+            // 검색 대상 문자열이 더 짧으면 불일치
+            if (x >= searchCharSplit.Length)
+                return false;
+
+            // 다른 글자가 발견되면 불일치
+            if (inputCharSplit[x] != searchCharSplit[x])
+                return false;
+        }
+    }
+
+    // 모든 단어가 prefix 조건을 만족하면 동일 문장으로 판단
+    return true;
+}
+
+```
+
+<br><br>
+<hr>
+
+>현재 입력된 문자열을 기반으로 검색 결과를 생성하고, UI를 갱신하며, 풀링된 Task 오브젝트를 재사용하여 리스트를 구성합니다.
+>필터 적용, Task 재생성, 스크롤 초기화 및 마우스 이벤트 등록까지 검색 UI 전체를 관리하는 핵심 메서드입니다.
+```csharp
+ public void GetText(string currSearchText)
+    {
+        selectIndex = -1;
+
+    // 현재 입력값으로 검색된 문자열 리스트 반환
+    findCommandLists = GetSeachableTexts2(currSearchText);
+
+    // 스크롤용 RectTransform 리스트 초기화
+    scrollTasks.Clear();
+
+    // 검색 결과 내에서 key → transValue로 UI 표시용 문자열 치환
+    for (int i = 0; i < findCommandLists.Length; i++)
+        for (int x = 0; x < filters.Count; x++)
+            if (findCommandLists[i].Contains(filters[x].key))
+                findCommandLists[i] = findCommandLists[i].Replace(filters[x].key, filters[x].transValue);
+
+    // 검색 결과가 없을 경우 UI 닫기
+    if (findCommandLists == null || findCommandLists.Length <= 0)
+    {
+        isOpenSearchable = false;
+        rootContainer.gameObject.SetActive(false);
+        return;
+    }
+
+    // 검색창 열기
+    rootContainer.gameObject.SetActive(true);
+    isOpenSearchable = true;
+
+    // 기존 Task 오브젝트들 반환
+    for (int i = 0; i < tasks.Count; i++)
+        ObjectPooling.Instance.SetOBP(taskList.ToString(), tasks[i].gameObject);
+    tasks.Clear();
+
+    // 검색된 문자열을 기반으로 새로운 Task 생성
+    for (int i = 0; i < findCommandLists.Length; i++)
+    {
+        SearchableTextTask task = ObjectPooling.Instance
+            .GetOBP(taskList.ToString())
+            .GetComponent<SearchableTextTask>();
+
+        task.transform.parent = taskContainer;
+        task.transform.SetAsFirstSibling();   // 입력된 순서 역순 배치
+        task.SettingTask(findCommandLists[i]);
+        tasks.Add(task);
+
+        // 스크롤 이동용 RectTransform 저장
+        if (task.GetComponent<RectTransform>())
+            scrollTasks.Add(task.GetComponent<RectTransform>());
+    }
+
+    // UI 상단 기준 정렬을 위해 리스트 반전
+    tasks.Reverse();
+    layoutGroup.Excute();
+    scrollTasks.Reverse();
+
+    // 스크롤 UI에 Task 목록 전달
+    scroll.SettingTask(scrollTasks.ToArray());
+
+    // 마우스 선택 가능할 경우 이벤트 등록
+    if (canMouseSelect)
+    {
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            int index = i;
+            UIHelper.AddEventTrigger(tasks[i].gameObject, EventTriggerType.PointerEnter,
+                delegate { SelectByMouse(index); });
+
+            UIHelper.AddEventTrigger(tasks[i].gameObject, EventTriggerType.PointerClick,
+                delegate { ClickByMouse(index); });
+        }
+    }
+}
+```
 
 
 
