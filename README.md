@@ -759,13 +759,21 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 ## 기능 사용  
-<p align="center">   <img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con2.gif" width="600" style="display:inline-block;"/>
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con2.gif" width="600" style="display:inline-block;"/>
 
 - 콘솔 명령을 통해 인벤토리 내 장비 목록을 조회한 뒤, 해당 목록의 0번 인덱스 장비 아이템의 잠재 능력을 재설정하는 과정을 시연한 예시입니다.
 
 <hr>
 
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con3.gif" width="600" style="display:inline-block;"/>
 
+- 콘솔 명령을 통해 플레이어의 레벨을 55 증가 시키는 기능 시연입니다. 
+
+<hr>
+
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con4.gif" width="600" style="display:inline-block;"/>
+
+- 콘솔 명령을 통해 플레이어의 전체적인 이동속도를 10 증가 시키는 기능 시연입니다.
 
 
 
