@@ -92,7 +92,7 @@ public class SearchableText : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸Å°³º¯¼ö word°¡ ÇÊÅÍÀÇ ´Ü¾îµéÁß µ¿ÀÏÇÑ°Ô ÀÖ´Ù¸é true.
+    /// ë§¤ê°œë³€ìˆ˜ wordê°€ í•„í„°ì˜ ë‹¨ì–´ë“¤ì¤‘ ë™ì¼í•œê²Œ ìˆë‹¤ë©´ true.
     /// </summary>
     public bool FilterExceptionWord(string word,string[] filters)
     {
@@ -317,7 +317,7 @@ public class SearchableText : MonoBehaviour
 
         for (int i = 0; i < inputWordSplit.Length; i++)
         {
-            if (valueIndex != -1 && valueIndex == i)  //°ª ÀÎµ¦½ºÀÏ °æ¿ì ´ÙÀ½À¸·Î.
+            if (valueIndex != -1 && valueIndex == i)  
             {
                 Debug.Log(inputWordSplit[i]);
                 continue;
@@ -351,12 +351,12 @@ public class SearchableText : MonoBehaviour
             searchListSplit = searchableList[i].ToLower().ToCharArray();
             for (int x = 0; x < currTextSplit.Length; x++)
             {
-                if(currTextSplit[x] == '¡Ú' && x == (currTextSplit.Length -1))
+                if(currTextSplit[x] == 'â˜…' && x == (currTextSplit.Length -1))
                 {
                     searchTexts.Add(searchableList[i]);
                     break;
                 }
-                if (currTextSplit[x] == '¡Ú') continue;   
+                if (currTextSplit[x] == 'â˜…') continue;   
                 if (searchListSplit.Length < currTextSplit.Length || searchListSplit[x] != currTextSplit[x])
                     break;
                 if (x == (currTextSplit.Length - 1))
