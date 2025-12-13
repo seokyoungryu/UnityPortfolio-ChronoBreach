@@ -764,6 +764,11 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 <hr>
 
 
+## 구조
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/ConU.drawio" width="600" style="display:inline-block;"/>
+
+
+
 ## 기능 사용  
 <p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/Con2.gif" width="600" style="display:inline-block;"/>
 
@@ -802,6 +807,8 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 
+
+
 <br><br><br>
 <hr>
 
@@ -826,7 +833,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 <br>
 <hr>
 
->현재 입력된 문자열을 기준으로 검색 가능한 텍스트 목록을 필터링하여 배열로 반환합니다.
+- 현재 입력된 문자열을 기준으로 검색 가능한 텍스트 목록을 필터링하여 배열로 반환합니다.
 ```csharp
  public string[] GetSeachableTexts2(string currrInput)
     {
@@ -846,8 +853,8 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 <hr>
 
 
->입력한 문장(input)이 특정 검색 문자열(searchable)과 동일한 구조인지 검사합니다.  
->단어 단위 및 문자 단위 prefix 비교를 수행하며, 필터에 정의된 값(value) 영역은 비교에서 제외합니다.
+- 입력한 문장(input)이 특정 검색 문자열(searchable)과 동일한 구조인지 검사합니다.  
+- 단어 단위 및 문자 단위 prefix 비교를 수행하며, 필터에 정의된 값(value) 영역은 비교에서 제외합니다.
 ```csharp
 
 public bool CheckIsSameSentence(string input, string searchable)
@@ -902,8 +909,8 @@ public bool CheckIsSameSentence(string input, string searchable)
 <br><br>
 <hr>
 
->현재 입력된 문자열을 기반으로 검색 결과를 생성하고, UI를 갱신하며, 풀링된 Task 오브젝트를 재사용하여 리스트를 구성합니다.  
->필터 적용, Task 재생성, 스크롤 초기화 및 마우스 이벤트 등록까지 검색 UI 전체를 관리하는 핵심 메서드입니다.
+- 현재 입력된 문자열을 기반으로 검색 결과를 생성하고, UI를 갱신하며, 풀링된 Task 오브젝트를 재사용하여 리스트를 구성합니다.  
+- 필터 적용, Task 재생성, 스크롤 초기화 및 마우스 이벤트 등록까지 검색 UI 전체를 관리하는 핵심 메서드입니다.
 ```csharp
  public void GetText(string currSearchText)
     {
@@ -1017,8 +1024,8 @@ public bool CheckIsSameSentence(string input, string searchable)
 ## Help Options
 <p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/con6.png" width="500" style="display:inline-block;"/>
   
->Help Option입니다. (-l, -h) 두개를 구현했습니다. 
->사용은 해당 명령어 뒤에 붙여서 사용합니다. 
+- Help Option입니다. (-l, -h) 두개를 구현했습니다. 
+  - 사용은 해당 명령어 뒤에 붙여서 사용합니다. 
 >ex) Print All Command List -l
 
 **-l Help Option**
@@ -1029,7 +1036,7 @@ public bool CheckIsSameSentence(string input, string searchable)
 - 노란색 Text로 표시되며, 명령어마다 출력되는 내용이 다르게 나옵니다.
 
 ```csharp
-  if (CheckSameHelpOption("-h", currHelpOption))
+        if (CheckSameHelpOption("-h", currHelpOption))
         {
             onExcuteLog?.Invoke($"Print All Item List", ConsoleSystemLogType.SYSTEM_NORMAL_LOG);
             return;
@@ -1048,7 +1055,7 @@ public bool CheckIsSameSentence(string input, string searchable)
 
 
 ```csharp
- if (CheckSameHelpOption("-l", currHelpOption))
+       if (CheckSameHelpOption("-l", currHelpOption))
         {
             string log = $"Success! Print Item List {itemListCount}";
             onExcuteLog?.Invoke(log, ConsoleSystemLogType.SYSTEM_POSITIVE_LOG);
