@@ -765,7 +765,7 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 ## 구조
-<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/ConU.drawio.png" width="800" style="display:inline-block;"/>
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/ConU.drawio.png" width="1200" style="display:inline-block;"/>
 
 - 콘솔 시스템은 ConsolePresenter를 중심으로 한 MVP(Model–View–Presenter) 구조로 설계되었습니다.
 - 각 컴포넌트(ConsoleUI, ConsoleProcess, SearchableText)는 서로를 직접 참조하지 않으며, 
