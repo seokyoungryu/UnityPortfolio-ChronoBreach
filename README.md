@@ -765,8 +765,87 @@ public class MaxHpPercentPotentialFunction : PotentialFunctionObject
 
 
 ## 구조
-<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/ConU.drawio" width="600" style="display:inline-block;"/>
+<p align="center"><img src="https://raw.githubusercontent.com/seokyoungryu/UnityPortfolio-ChronoBreach/main/UI/ConU.drawio.png" width="800" style="display:inline-block;"/>
 
+- 콘솔 시스템은 ConsolePresenter를 중심으로 한 MVP(Model–View–Presenter) 구조로 설계되었습니다.
+- 각 컴포넌트(ConsoleUI, ConsoleProcess, SearchableText)는 서로를 직접 참조하지 않으며, 
+  delegate 및 이벤트 기반 통신을 통해 상호 작용하도록 구현했습니다.
+- 이를 통해 UI, 입력 처리, 검색 및 실행 로직을 명확히 분리하여 낮은 결합도와 높은 유지보수성을 목표로 했습니다.
+
+
+## 구조 특징
+
+- View(ConsoleUI)
+  - 사용자 입력 및 출력 전용 계층으로, 로직을 포함하지 않습니다.
+- Presenter(ConsolePresenter)
+  - 모든 이벤트를 중계하며, 각 컴포넌트 간 의존성을 제거합니다.
+- Model(ConsoleProcess, SearchableText)
+  - 커맨드 처리와 검색 기능을 담당하며 UI와 완전히 분리되어 있습니다.
+
+<br>
+<hr>
+
+**ConsolePresenter 역할**
+
+- UI 입력 이벤트를 수신하고, 이를 적절한 처리 로직으로 전달하는 중앙 제어자 역할을 수행합니다.
+- 검색 요청, 명령 실행, 로그 출력, Task 초기화 등 전체 콘솔 흐름을 조율합니다.
+- History 입력 상태에 따라 검색 갱신을 제한하여 입력 충돌을 사전에 방지합니다.
+
+```csharp
+public class ConsolePresenter : MonoBehaviour
+{
+    [SerializeField] private ConsoleUI consoleUI;
+    [SerializeField] private ConsoleProcess consoleProcess;
+    [SerializeField] private SearchableText searchable;
+
+    private void Awake()
+    {
+        consoleUI.InputField.onSubmit.AddListener(OnSummit);
+
+        searchable.onGetSearchableTests += consoleProcess.GetTextList;
+        searchable.onGetSearchableFilters += consoleProcess.GetTextFilters;
+        consoleProcess.onClear += consoleUI.ClearAllTask;
+        searchable.onSelect += consoleUI.SettingInputFieldText;
+        consoleUI.onExcuteSummitProcess += consoleProcess.Excute;
+
+        consoleProcess.onExcuteLog += consoleUI.ExcuteSystemLog;
+        consoleUI.onCanHistroy += searchable.IsSelectSearchableTest;
+        searchable.onCanUpdate += SearchableCanUpdate;
+    }
+
+    private void OnDestroy()
+    {
+        consoleUI.InputField.onSubmit.RemoveListener(OnSummit);
+
+        searchable.onGetSearchableTests -= consoleProcess.GetTextList;
+        searchable.onGetSearchableFilters -= consoleProcess.GetTextFilters;
+        consoleProcess.onClear -= consoleUI.ClearAllTask;
+
+        searchable.onSelect -= consoleUI.SettingInputFieldText;
+        consoleUI.onExcuteSummitProcess -= consoleProcess.Excute;
+        consoleProcess.onExcuteLog -= consoleUI.ExcuteSystemLog;
+        consoleUI.onCanHistroy -= searchable.IsSelectSearchableTest;
+        searchable.onCanUpdate -= SearchableCanUpdate;
+    }
+
+
+    public bool SearchableCanUpdate()
+    {
+        if (consoleUI.GetIsDoingHistory())
+            return false;
+        else
+            return true;
+    }
+
+    public void OnSummit(string text)
+    {
+        if (searchable.CurrentSelectTask != null) return;
+        consoleUI.ExcuteSummit(text);
+    }
+
+}
+
+```
 
 
 ## 기능 사용  
